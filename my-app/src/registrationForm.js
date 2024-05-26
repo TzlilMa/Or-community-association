@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth,setDoc, doc, db } from './fireBase/firebase';
+import { auth, setDoc, doc, db } from './fireBase/firebase';
 import './registrationForm.css'; // Import the CSS file
-
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const RegistrationForm = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [age, setAge] = useState('');
   const [personalStory, setPersonalStory] = useState('');
+  const [isStoryPublic, setIsStoryPublic] = useState(false);
   const [sex, setSex] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const [error, setError] = useState(null);
@@ -18,12 +20,18 @@ const RegistrationForm = () => {
   const handleRegistration = async (e) => {
     e.preventDefault();
     try {
+      // Check if age is above 0
+      if (age <= 0) {
+        setError("Age must be above 0.");
+        return;
+      }
+      
       // Create user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       // Store additional user data in Firestore
-      await addUserToFirestore(user.email, { email, firstName, lastName, age, personalStory, sex, isAdmin });
+      await addUserToFirestore(user.email, { email, firstName, lastName, age, personalStory, isStoryPublic, sex, isAdmin });
 
       // Clear form fields
       setEmail('');
@@ -32,8 +40,12 @@ const RegistrationForm = () => {
       setLastName('');
       setAge('');
       setPersonalStory('');
+      setIsStoryPublic(false);
       setSex('');
       setIsAdmin(false);
+
+      // Redirect to login page
+      navigate('/');
     } catch (error) {
       setError(error.message);
     }
@@ -68,18 +80,12 @@ const RegistrationForm = () => {
         <label>Age:</label>
         <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
         <br />
-        <label>Personal Story:</label>
-        <textarea value={personalStory} onChange={(e) => setPersonalStory(e.target.value)} />
-        <br />
-        <label>Sex:</label>
+        <label>Gender:</label>
         <select value={sex} onChange={(e) => setSex(e.target.value)}>
           <option value="">Select</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
-        <br />
-        <label>Is Admin:</label>
-        <input type="checkbox" checked={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />
         <br />
         <button type="submit">Register</button>
       </form>

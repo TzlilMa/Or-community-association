@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+/*import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import 'react-calendar/dist/Calendar.css'; // Import the CSS file
 import './CalendarComponent.css'; // Custom CSS for the calendar
 
 const CalendarComponent = () => {
@@ -43,3 +43,4 @@ const CalendarComponent = () => {
 };
 
 export default CalendarComponent;
+*/
