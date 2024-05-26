@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './firebase';
+import { auth } from '../fireBase/firebase';
 import './loginPage.css';
 
-const Login = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -27,9 +27,12 @@ const Login = () => {
       // Navigate to personal area with email
       navigate('/personal-area', { state: { email: user.email } });
     } catch (error) {
-      setError("Invalid email or password.");
-      console.error('Error during login:', error);
+      setError('Invalid email or password.');
     }
+  };
+
+  const handleSignup = () => {
+    navigate('/registrationForm');
   };
 
   return (
@@ -57,8 +60,9 @@ const Login = () => {
         {error && <p className="error-message">{error}</p>}
         <button type="submit">Login</button>
       </form>
+      <p>Don't have an account? <button onClick={handleSignup}>Sign Up</button></p>
     </div>
   );
 };
 
-export default Login;
+export default LoginPage;
