@@ -1,8 +1,8 @@
 // src/navBar.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import './NavigationBar.css';  // Assuming you have some CSS for styling
-import logo from './logo.jpeg';  // Adjust the path to your logo file
+import '../styles/NavigationBar.css';  // Assuming you have some CSS for styling
+import logo from '../assets/logo.jpeg';  // Adjust the path to your logo file
 
 const NavigationBar = ({ email, firstName }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);

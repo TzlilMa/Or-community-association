@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, setDoc, doc, db } from './fireBase/firebase';
-import './registrationForm.css'; // Import the CSS file
+import { auth, setDoc, doc, db } from '../fireBase/firebase';
+import '../styles/registrationForm.css'; // Import the CSS file
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const RegistrationForm = () => {

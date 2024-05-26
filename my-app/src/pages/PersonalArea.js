@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth, db, doc, getDoc } from '../fireBase/firebase'; // Adjust the import path as needed
-import NavigationBar from '../navBar'; // Import NavigationBar component
-import '../NavigationBar.css'; // Import NavigationBar CSS file
+import NavigationBar from '../components/navBar'; // Import NavigationBar component
+import '../styles/NavigationBar.css'; // Import NavigationBar CSS file
 
 const PersonalArea = () => {
   const navigate = useNavigate();
@@ -23,6 +23,11 @@ const PersonalArea = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        if (!email) {
+          console.error('Email is not provided.');
+          return;
+        }
+  
         const userDoc = await getDoc(doc(db, 'users', email));
         if (userDoc.exists()) {
           const userData = userDoc.data();
@@ -34,9 +39,10 @@ const PersonalArea = () => {
         console.error('Error fetching user data:', error);
       }
     };
-
+  
     fetchUserData();
   }, [email]);
+  
 
   return (
     <div>
