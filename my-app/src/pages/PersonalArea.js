@@ -22,9 +22,8 @@ const PersonalArea = () => {
     <div>
       <NavigationBar email={email} firstName={firstName} />
       <div className="personal-area-content">
-        <h2>Welcome to your Personal Area</h2>
-        {firstName && <p>Welcome, {firstName}!</p>}
-        {email && <p>Your email: {email}</p>}
+        <h1>Welcome to your Personal Area</h1>
+
         <p>This is a protected route. Only accessible after login.</p>
         <button onClick={handleLogout}>Exit</button>
       </div>

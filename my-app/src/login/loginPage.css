@@ -41,4 +41,12 @@
   .error-message {
     color: red;
   }
+  .personal-area-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+  
   
