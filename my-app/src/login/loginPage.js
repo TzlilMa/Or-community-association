@@ -13,10 +13,22 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/personal-area');
+      console.log('Attempting to sign in...');
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log('Sign-in successful:', userCredential);
+
+      // Access user information
+      const user = userCredential.user;
+      console.log('User ID:', user.uid);
+      console.log('User Email:', user.email);
+      console.log('Display Name:', user.first);  // Display name of the user
+      console.log('Is Email Verified:', user.emailVerified);
+      
+      // Navigate to personal area with email
+      navigate('/personal-area', { state: { email: user.email } });
     } catch (error) {
-      setError(alert("password wrong"));
+      setError("Invalid email or password.");
+      console.error('Error during login:', error);
     }
   };
 

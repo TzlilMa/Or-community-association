@@ -1,11 +1,13 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../login/firebase'; // Adjust the import path as needed
 import NavigationBar from '../navBar'; // Import NavigationBar component
 import '../NavigationBar.css'; // Import NavigationBar CSS file
 
 const PersonalArea = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { email, firstName } = location.state || {};  // Access email and firstName from the state
 
   const handleLogout = async () => {
     try {
@@ -18,10 +20,14 @@ const PersonalArea = () => {
 
   return (
     <div>
-      <NavigationBar />
-      <h2>Welcome to your Personal Area</h2>
-      <p>This is a protected route. Only accessible after login.</p>
-      <button onClick={handleLogout}>Exit</button>
+      <NavigationBar email={email} firstName={firstName} />
+      <div className="personal-area-content">
+        <h2>Welcome to your Personal Area</h2>
+        {firstName && <p>Welcome, {firstName}!</p>}
+        {email && <p>Your email: {email}</p>}
+        <p>This is a protected route. Only accessible after login.</p>
+        <button onClick={handleLogout}>Exit</button>
+      </div>
     </div>
   );
 };
