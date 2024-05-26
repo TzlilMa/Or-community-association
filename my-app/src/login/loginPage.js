@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase';
-import './Login.css';
+import './loginPage.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +16,7 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/personal-area');
     } catch (error) {
-      setError(error.message);
+      setError(alert("password wrong"));
     }
   };
 
