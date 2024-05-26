@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useLocation} from 'react-router-dom';
 import { auth } from '../fireBase/firebase'; // Adjust the import path as needed
 import NavigationBar from '../navBar'; // Import NavigationBar component
 import '../NavigationBar.css'; // Import NavigationBar CSS file
