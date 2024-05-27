@@ -2,9 +2,9 @@ import React from 'react';
 import { auth } from '../fireBase/firebase';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
-import InstagramLogo from '../assets/brand-instagram.png'; // Ensure the path is correct
-import FacebookLogo from '../assets/brand-facebook.png'; // Ensure the path is correct
-import '../styles/Header.css'; // Import the CSS file for styling the header
+import InstagramLogo from '../assets/brand-instagram.png';
+import FacebookLogo from '../assets/brand-facebook.png'; 
+import '../styles/Header.css'; 
 
 const Header = ({ user, onComponentChange }) => {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ const Header = ({ user, onComponentChange }) => {
           <button id="chat-btn" onClick={() => handleComponentClick('Chat')}>לוח מודעות</button>
           <button id="chat-btn" onClick={() => handleComponentClick('Notices')}>צ'אט</button>
           <button id="stories-btn">סיפורים</button>
-          <button id="events-btn">אירועים</button>
+          <button id="events-btn " onClick={() => handleComponentClick('Calendar')}>אירועים</button>
           <button id="conact-btn">צור קשר</button>
           <button id="personal-area-btn" onClick={() => handleComponentClick('PersonalArea')}>האזור האישי</button>
         </div>
