@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { db, doc, getDoc } from '../fireBase/firebase';
 import Header from '../components/Header';
-import PersonalArea from '../components/PeronalArea';
-import ImageSlider from '../components/ImageSlider'; // Import the ImageSlider component
+import PersonalArea from '../components/PeronalArea'; // Ensure the correct import path
+import ContentLayout from '../components/ContentLayout'; // Import the new ContentLayout component
+import '../styles/Homepage.css'; // Import the CSS file for styling the homepage
 
 const Homepage = () => {
   const location = useLocation();
@@ -41,7 +42,7 @@ const Homepage = () => {
   return (
     <div>
       <Header user={{ firstName }} onComponentChange={handleComponentChange} />
-      <ImageSlider /> {/* Add the ImageSlider component below the Header */}
+      <ContentLayout /> {/* Use the new ContentLayout component */}
       <div className="personal-area-content">
         {activeComponent === 'PersonalArea' && <PersonalArea />}
         {/* Add more components as needed */}

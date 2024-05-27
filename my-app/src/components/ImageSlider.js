@@ -19,8 +19,10 @@ const ImageSlider = () => {
   }, []);
 
   return (
-    <div className="image-slider">
-      <img src={images[currentIndex]} alt={`Slide ${currentIndex}`} className="slider-image" />
+    <div className="image-slider-container">
+      <div className="image-slider">
+        <img src={images[currentIndex]} alt={`Slide ${currentIndex}`} className="slider-image" />
+      </div>
     </div>
   );
 };
