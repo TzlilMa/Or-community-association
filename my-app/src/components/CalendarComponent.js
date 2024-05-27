@@ -1,46 +1,85 @@
-/*import React, { useState } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Import the CSS file
-import './CalendarComponent.css'; // Custom CSS for the calendar
+import React, { useState, useEffect } from 'react';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import './Calendar.css';
 
-const CalendarComponent = () => {
-  const [date, setDate] = useState(new Date());
-  const events = {
-    '2024-05-20': [{ title: 'Event 1' }, { title: 'Event 2' }],
-    '2024-05-21': [{ title: 'Event 3' }],
+const Calendar = ({ currentUser }) => {
+  const [events, setEvents] = useState([]);
+  const [userEvents, setUserEvents] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const eventsSnapshot = await firebase.firestore().collection('events').get();
+      const eventsData = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setEvents(eventsData);
+
+      const userEventsSnapshot = await firebase.firestore().collection('users_event').where('email', '==', currentUser.email).get();
+      const userEventsData = userEventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setUserEvents(userEventsData);
+    };
+    fetchEvents();
+  }, [currentUser.email]);
+
+  const handleRegister = async (eventID) => {
+    await firebase.firestore().collection('users_event').add({ email: currentUser.email, eventID });
+    setUserEvents([...userEvents, { email: currentUser.email, eventID }]);
   };
 
-  const handleDateChange = (newDate) => {
-    setDate(newDate);
+  const handleUnregister = async (eventID) => {
+    const userEventDoc = userEvents.find(ue => ue.eventID === eventID);
+    await firebase.firestore().collection('users_event').doc(userEventDoc.id).delete();
+    setUserEvents(userEvents.filter(ue => ue.eventID !== eventID));
   };
 
-  const formatDate = (date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+  const handleAddEvent = async (eventDate) => {
+    const newEvent = { eventDate, description: 'New Event' };
+    const newEventDoc = await firebase.firestore().collection('events').add(newEvent);
+    setEvents([...events, { id: newEventDoc.id, ...newEvent }]);
   };
 
-  const selectedDateEvents = events[formatDate(date)] || [];
+  const handleEditEvent = async (eventID, newDescription) => {
+    await firebase.firestore().collection('events').doc(eventID).update({ description: newDescription });
+    setEvents(events.map(event => event.id === eventID ? { ...event, description: newDescription } : event));
+  };
+
+  const handleCancelEvent = async (eventID) => {
+    await firebase.firestore().collection('events').doc(eventID).delete();
+    setEvents(events.filter(event => event.id !== eventID));
+  };
+
+  const renderCalendarDays = () => {
+    const daysInMonth = new Date().getDate();
+    const daysArray = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
+    return daysArray.map(day => {
+      const dayEvents = events.filter(event => new Date(event.eventDate).getDate() === day);
+      const isRegistered = userEvents.some(ue => dayEvents.some(event => event.id === ue.eventID));
+      return (
+        <div
+          key={day}
+          className={`calendar-day ${dayEvents.length ? 'event-day' : ''}`}
+          onClick={() => setSelectedDate(day)}
+        >
+          {day}
+          {isRegistered && <div className="registered">Registered</div>}
+        </div>
+      );
+    });
+  };
 
   return (
-    <div className="calendar-container">
-      <Calendar onChange={handleDateChange} value={date} className="custom-calendar" />
-      <div className="events-list">
-        <h2>Events on {date.toDateString()}:</h2>
-        {selectedDateEvents.length > 0 ? (
-          <ul>
-            {selectedDateEvents.map((event, index) => (
-              <li key={index}>{event.title}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No events for this date.</p>
-        )}
-      </div>
+    <div className="calendar">
+      {renderCalendarDays()}
+      {selectedDate && currentUser.is_admin && (
+        <div className="admin-controls">
+          <button onClick={() => handleAddEvent(selectedDate)}>Add Event</button>
+          <button onClick={() => handleCancelEvent(selectedDate)}>Cancel Event</button>
+          <button onClick={() => handleEditEvent(selectedDate, 'Edited Event Description')}>Edit Event</button>
+        </div>
+      )}
     </div>
   );
 };
 
-export default CalendarComponent;
-*/
+export default Calendar;
