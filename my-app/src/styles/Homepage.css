@@ -1,0 +1,30 @@
+/* Homepage.css */
+
+.homepage-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  
+  .left-side {
+    flex: 1;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .right-side {
+    flex: 1;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .personal-area-content {
+    margin-top: 20px;
+  }
+  

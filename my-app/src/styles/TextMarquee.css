@@ -1,0 +1,32 @@
+/* TextMarquee.css */
+
+.marquee-container {
+  width: 500px; /* Fixed width */
+  height: 500px; /* Fixed height */
+  overflow: hidden;
+  position: relative;
+  background-color: #f0f0f0; /* Background color of the container */
+  border: 1px solid #ccc; /* Border of the container */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  direction: rtl; /* Ensure right-to-left text direction for Hebrew */
+}
+
+.marquee {
+  width: 100%;
+  white-space: pre-wrap; /* Ensure white spaces and line breaks are respected */
+  will-change: transform;
+  position: absolute;
+  top: 0;
+  animation: marquee-animation 20s linear infinite; /* Adjust the duration as needed */
+}
+
+@keyframes marquee-animation {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
