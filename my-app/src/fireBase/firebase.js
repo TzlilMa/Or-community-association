@@ -1,7 +1,7 @@
 // src/firebase.js
 import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, query, where, getDocs, addDoc, deleteDoc, updateDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore'; // Import getDoc
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,13 +14,8 @@ const firebaseConfig = {
     measurementId: "G-WQC7J9KNV4"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// Initialize Firebase Authentication and get a reference to the service
+const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Initialize Firestore and get a reference to the database
-const db = getFirestore(app);
-
-export { auth, db, doc, setDoc, getDoc }; // Export auth, db, doc, setDoc, and getDoc
+export { db, auth, collection, query, where, getDocs, addDoc, deleteDoc, updateDoc, doc, getDoc, setDoc };

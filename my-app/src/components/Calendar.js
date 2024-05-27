@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import { db, collection, query, where, getDocs, addDoc, deleteDoc, updateDoc, doc } from '../fireBase/firebase';
 import '../styles/Calendar.css';
 
 const Calendar = ({ currentUser }) => {
@@ -10,41 +9,41 @@ const Calendar = ({ currentUser }) => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const eventsSnapshot = await firebase.firestore().collection('events').get();
+      const eventsSnapshot = await getDocs(collection(db, 'events'));
       const eventsData = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setEvents(eventsData);
 
-      const userEventsSnapshot = await firebase.firestore().collection('users_event').where('email', '==', currentUser.email).get();
+      const userEventsSnapshot = await getDocs(query(collection(db, 'users_event'), where('email', '==', currentUser.email)));
       const userEventsData = userEventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setUserEvents(userEventsData);
     };
     fetchEvents();
-  }, [currentUser.email]);
+  }, [currentUser.email, db]);
 
   const handleRegister = async (eventID) => {
-    await firebase.firestore().collection('users_event').add({ email: currentUser.email, eventID });
+    await addDoc(collection(db, 'users_event'), { email: currentUser.email, eventID });
     setUserEvents([...userEvents, { email: currentUser.email, eventID }]);
   };
 
   const handleUnregister = async (eventID) => {
     const userEventDoc = userEvents.find(ue => ue.eventID === eventID);
-    await firebase.firestore().collection('users_event').doc(userEventDoc.id).delete();
+    await deleteDoc(doc(db, 'users_event', userEventDoc.id));
     setUserEvents(userEvents.filter(ue => ue.eventID !== eventID));
   };
 
   const handleAddEvent = async (eventDate) => {
     const newEvent = { eventDate, description: 'New Event' };
-    const newEventDoc = await firebase.firestore().collection('events').add(newEvent);
+    const newEventDoc = await addDoc(collection(db, 'events'), newEvent);
     setEvents([...events, { id: newEventDoc.id, ...newEvent }]);
   };
 
   const handleEditEvent = async (eventID, newDescription) => {
-    await firebase.firestore().collection('events').doc(eventID).update({ description: newDescription });
+    await updateDoc(doc(db, 'events', eventID), { description: newDescription });
     setEvents(events.map(event => event.id === eventID ? { ...event, description: newDescription } : event));
   };
 
   const handleCancelEvent = async (eventID) => {
-    await firebase.firestore().collection('events').doc(eventID).delete();
+    await deleteDoc(doc(db, 'events', eventID));
     setEvents(events.filter(event => event.id !== eventID));
   };
 
