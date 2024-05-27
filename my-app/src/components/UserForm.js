@@ -6,7 +6,9 @@ const UserForm = ({ username }) => {
   const [userData, setUserData] = useState({
     firstName: '',
     lastName: '',
-    email: '',
+    age: '',
+    sex: '',
+    personalStory: '',
     // Add other fields as needed
   });
   const [loading, setLoading] = useState(true);
@@ -78,17 +80,38 @@ const UserForm = ({ username }) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="age">Age:</label>
         <input
-          type="email"
-          id="email"
-          name="email"
-          value={userData.email}
+          type="number"
+          id="age"
+          name="age"
+          value={userData.age}
           onChange={handleChange}
-          required
         />
       </div>
-      {/* Add more form fields as needed */}
+      <div className="form-group">
+        <label htmlFor="sex">Sex:</label>
+        <select
+          id="sex"
+          name="sex"
+          value={userData.sex}
+          onChange={handleChange}
+        >
+          <option value="">Select...</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div className="form-group">
+        <label htmlFor="personalStory">Personal Story:</label>
+        <textarea
+          id="personalStory"
+          name="personalStory"
+          value={userData.personalStory}
+          onChange={handleChange}
+        ></textarea>
+      </div>
       <button type="submit">Update Information</button>
     </form>
   );
