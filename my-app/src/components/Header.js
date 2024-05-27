@@ -1,20 +1,24 @@
-// src/components/Header.js
 import React from 'react';
 import { auth } from '../fireBase/firebase';
 import { useNavigate } from 'react-router-dom';
-import Logo from './Logo'
-import '../styles/Header.css'; // Import the CSS file for styling the header
+import Logo from './Logo';
+import '../styles/Header.css';
 
-const Header = ({ user }) => {
+const Header = ({ user, onComponentChange }) => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await auth.signOut();
-      navigate('/'); // Redirect to the login page after logout
+      navigate('/');
     } catch (error) {
       console.error('Error logging out:', error);
     }
+  };
+
+  const handleComponentClick = (componentName) => {
+    // Call the parent component's function to change the active component
+    onComponentChange(componentName);
   };
 
   return (
@@ -24,14 +28,14 @@ const Header = ({ user }) => {
         {user && <p className="greeting">שלום {user.firstName}</p>}
       </div>
       
-      {user && ( // Conditionally render the buttons if user is logged in
+      {user && (
         <div className="center-section">
-          <button id="chat-btn">לוח מודעות</button>
-          <button id="chat-btn">צ'אט</button>
+          <button id="chat-btn" onClick={() => handleComponentClick('Chat')}>לוח מודעות</button>
+          <button id="chat-btn" onClick={() => handleComponentClick('Notices')}>צ'אט</button>
           <button id="stories-btn">סיפורים</button>
           <button id="events-btn">אירועים</button>
           <button id="conact-btn">צור קשר</button>
-          <button id="personal-area-btn">האזור האישי</button>
+          <button id="personal-area-btn" onClick={() => handleComponentClick('PersonalArea')}>האזור האישי</button>
         </div>
       )}
       <div className="right-section">

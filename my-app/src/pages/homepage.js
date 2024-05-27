@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { db, doc, getDoc } from '../fireBase/firebase'; // Adjust the import path as needed
-import Header from '../components/Header'; // Import the Header component
+import { db, doc, getDoc } from '../fireBase/firebase';
+import Header from '../components/Header';
+import PersonalArea from '../components/PeronalArea';
 
 const Homepage = () => {
   const location = useLocation();
-  const { email } = location.state || {}; // Access email from the state
+  const { email } = location.state || {};
   const [firstName, setFirstName] = useState('');
+  const [activeComponent, setActiveComponent] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -19,7 +21,7 @@ const Homepage = () => {
         const userDoc = await getDoc(doc(db, 'users', email));
         if (userDoc.exists()) {
           const userData = userDoc.data();
-          setFirstName(userData.firstName); // Assuming 'firstName' is the field name in the user document
+          setFirstName(userData.firstName);
         } else {
           console.error('User document does not exist.');
         }
@@ -31,11 +33,16 @@ const Homepage = () => {
     fetchUserData();
   }, [email]);
 
+  const handleComponentChange = (componentName) => {
+    setActiveComponent(componentName);
+  };
+
   return (
     <div>
-      <Header user={{ firstName }} /> {/* Pass the user information to the Header component */}
+      <Header user={{ firstName }} onComponentChange={handleComponentChange} />
       <div className="personal-area-content">
-        
+        {activeComponent === 'PersonalArea' && <PersonalArea />}
+        {/* Add more components as needed */}
       </div>
     </div>
   );
