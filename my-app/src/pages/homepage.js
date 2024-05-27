@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { db, doc, getDoc } from '../fireBase/firebase'; // Adjust the import path as needed
 import Header from '../components/Header'; // Import the Header component
+import ImageSlider from '../components/ImageSlider'; // Import the ImageSlider component
 
 const Homepage = () => {
   const location = useLocation();
@@ -34,8 +35,9 @@ const Homepage = () => {
   return (
     <div>
       <Header user={{ firstName }} /> {/* Pass the user information to the Header component */}
+      <ImageSlider /> {/* Add the ImageSlider component below the Header */}
       <div className="personal-area-content">
-        
+        {/* Additional content can go here */}
       </div>
     </div>
   );
