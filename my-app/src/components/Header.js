@@ -38,8 +38,6 @@ const Header = ({ user, onComponentChange }) => {
         </div>
       </div>
       
-      {user && (
-
       {user && ( // Conditionally render the buttons if user is logged in
         <div className="center-section">
           <button id="chat-btn" onClick={() => handleComponentClick('Chat')}>לוח מודעות</button>
