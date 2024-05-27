@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import PersonalArea from '../components/PeronalArea'; // Ensure the correct import path
 import ContentLayout from '../components/ContentLayout'; // Import the new ContentLayout component
 import '../styles/Homepage.css'; // Import the CSS file for styling the homepage
+import Calendar from '../components/Calendar';
 
 const Homepage = () => {
   const location = useLocation();
