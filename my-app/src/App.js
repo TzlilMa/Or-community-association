@@ -13,6 +13,7 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
+        <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/homepage" element={<PrivateRoute><Homepage /></PrivateRoute>} />
           <Route path="/registrationForm" element={<RegistrationForm />} />

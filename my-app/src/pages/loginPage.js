@@ -18,7 +18,7 @@ const LoginPage = () => {
       const user = userCredential.user;
       
       // Navigate to personal area with email
-      navigate('/personal-area', { state: { email: user.email } });
+      navigate('/homepage', { state: { email: user.email } });
     } catch (error) {
       setError('Invalid email or password.');
     }
