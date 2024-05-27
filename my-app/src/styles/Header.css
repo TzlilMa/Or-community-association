@@ -29,6 +29,17 @@
   align-items: center;
 }
 
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between social icons */
+}
+
+.social-logo {
+  width: 40px; /* Adjust the size as needed */
+  height: 40px; /* Adjust the size as needed */
+}
+
 .center-section {
   flex: 1; /* Take up remaining space */
   display: flex;

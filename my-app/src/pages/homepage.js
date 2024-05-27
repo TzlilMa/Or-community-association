@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { db, doc, getDoc } from '../fireBase/firebase';
 import Header from '../components/Header';
 import PersonalArea from '../components/PeronalArea';
+import ImageSlider from '../components/ImageSlider'; // Import the ImageSlider component
 
 const Homepage = () => {
   const location = useLocation();
@@ -40,6 +41,7 @@ const Homepage = () => {
   return (
     <div>
       <Header user={{ firstName }} onComponentChange={handleComponentChange} />
+      <ImageSlider /> {/* Add the ImageSlider component below the Header */}
       <div className="personal-area-content">
         {activeComponent === 'PersonalArea' && <PersonalArea />}
         {/* Add more components as needed */}
