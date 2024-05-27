@@ -1,24 +1,12 @@
-// src/pages/PersonalArea.js
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { auth, db, doc, getDoc } from '../fireBase/firebase'; // Adjust the import path as needed
-import NavigationBar from '../components/navBar'; // Import NavigationBar component
-import '../styles/NavigationBar.css'; // Import NavigationBar CSS file
+import { useLocation } from 'react-router-dom';
+import { db, doc, getDoc } from '../fireBase/firebase'; // Adjust the import path as needed
+import Header from '../components/Header'; // Import the Header component
 
 const Homepage = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const { email } = location.state || {}; // Access email from the state
   const [firstName, setFirstName] = useState('');
-
-  const handleLogout = async () => {
-    try {
-      await auth.signOut();
-      navigate('/'); // Redirect to the login page after logout
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -42,16 +30,12 @@ const Homepage = () => {
   
     fetchUserData();
   }, [email]);
-  
 
   return (
     <div>
-      <NavigationBar email={email} firstName={firstName} />
+      <Header user={{ firstName }} /> {/* Pass the user information to the Header component */}
       <div className="personal-area-content">
-        <h1>Welcome to your Personal Area</h1>
-        <p>Hello, {firstName}</p>
-        <p>This is a protected route. Only accessible after login.</p>
-        <button onClick={handleLogout}>Exit</button>
+        
       </div>
     </div>
   );
