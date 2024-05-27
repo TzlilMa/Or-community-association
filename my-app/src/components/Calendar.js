@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import './Calendar.css';
+import '../styles/Calendar.css';
 
 const Calendar = ({ currentUser }) => {
   const [events, setEvents] = useState([]);

@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { db, doc, getDoc } from '../fireBase/firebase';
 import Header from '../components/Header';
 import PersonalArea from '../components/PeronalArea';
+import Calendar from '../components/Calendar';
 import ImageSlider from '../components/ImageSlider'; // Import the ImageSlider component
 
 const Homepage = () => {
@@ -44,6 +45,7 @@ const Homepage = () => {
       <ImageSlider /> {/* Add the ImageSlider component below the Header */}
       <div className="personal-area-content">
         {activeComponent === 'PersonalArea' && <PersonalArea />}
+        {activeComponent === 'Calendar' && <Calendar />}
         {/* Add more components as needed */}
       </div>
     </div>
