@@ -13,16 +13,9 @@ const LoginPage = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      console.log('Attempting to sign in...');
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log('Sign-in successful:', userCredential);
-
       // Access user information
       const user = userCredential.user;
-      console.log('User ID:', user.uid);
-      console.log('User Email:', user.email);
-      console.log('Display Name:', user.first);  // Display name of the user
-      console.log('Is Email Verified:', user.emailVerified);
       
       // Navigate to personal area with email
       navigate('/personal-area', { state: { email: user.email } });
@@ -33,6 +26,10 @@ const LoginPage = () => {
 
   const handleSignup = () => {
     navigate('/registrationForm');
+  };
+
+  const handleForgetPwd = () => {
+    navigate('/resetPassword')
   };
 
   return (
@@ -60,6 +57,7 @@ const LoginPage = () => {
         {error && <p className="error-message">{error}</p>}
         <button type="submit">Login</button>
       </form>
+      <button onClick={handleForgetPwd}>?שכחת את הסיסמא</button>
       <p>Don't have an account? <button onClick={handleSignup}>Sign Up</button></p>
     </div>
   );

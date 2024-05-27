@@ -45,7 +45,7 @@ const RegistrationForm = () => {
       setIsAdmin(false);
 
       // Redirect to login page
-      navigate('/');
+      navigate('/login');
     } catch (error) {
       setError(error.message);
     }
