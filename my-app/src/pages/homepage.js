@@ -5,13 +5,12 @@ import Header from '../components/Header';
 import PersonalArea from '../components/PeronalArea'; // Ensure the correct import path
 import ContentLayout from '../components/ContentLayout'; // Import the new ContentLayout component
 import '../styles/Homepage.css'; // Import the CSS file for styling the homepage
-import Calendar from '../components/Calendar';
 
 const Homepage = () => {
   const location = useLocation();
   const { email } = location.state || {};
   const [firstName, setFirstName] = useState('');
-  const [activeComponent, setActiveComponent] = useState(null);
+  const [activeComponent, setActiveComponent] = useState('ContentLayout'); // Default to ContentLayout
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -43,11 +42,9 @@ const Homepage = () => {
   return (
     <div>
       <Header user={{ firstName }} onComponentChange={handleComponentChange} />
-      <ContentLayout /> {/* Use the new ContentLayout component */}
-      <div className="personal-area-content">
+      <div className="component-content">
+        {activeComponent === 'ContentLayout' && <ContentLayout />}
         {activeComponent === 'PersonalArea' && <PersonalArea />}
-        {activeComponent === 'Calendar' && <Calendar />}
-        {/* Add more components as needed */}
       </div>
     </div>
   );
