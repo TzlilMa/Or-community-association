@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../fireBase/firebase';
 import '../styles/loginPage.css';
 
@@ -9,6 +9,19 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  // Check if the user is already authenticated
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // If user is authenticated, navigate to the homepage
+        navigate('/homepage', { state: { email: user.email } });
+      }
+    });
+
+    // Clean up the subscription
+    return () => unsubscribe();
+  }, [navigate]);
 
   const handleLogin = async (event) => {
     event.preventDefault();

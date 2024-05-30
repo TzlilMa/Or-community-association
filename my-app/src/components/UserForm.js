@@ -90,7 +90,7 @@ const UserForm = ({ username }) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="sex">Sex:</label>
+        <label htmlFor="Gendar">Gendar:</label>
         <select
           id="sex"
           name="sex"
