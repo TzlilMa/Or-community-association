@@ -1,87 +1,108 @@
+/* styles/Header.css */
+
+/* Existing styles remain the same */
+
 .header {
-  position: absolute; /* Change position to absolute */
-  top: 0;
-  left: 0;
-  width: 100%; /* Ensure the header covers the entire width of the viewport */
-  height: 10%; /* Adjust height as needed */
-  background-color: #acb7c3; /* Adjust background color as needed */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1000; /* Ensure the header is on top of other content */
+  position: fixed; /* Fixed position to keep the header at the top */
+  top: 0; /* Align the header to the top of the viewport */
+  left: 0; /* Align the header to the left of the viewport */
+  width: 100%; /* Ensure the header spans the full width of the viewport */
+  z-index: 9999; /* Set a high z-index to ensure the header is on top of other content */
+  background-color: #ffffff; /* Add background color as needed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for visual separation */
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space elements evenly horizontally */
+  align-items: center; /* Center elements vertically */
+  padding: 10px 20px; /* Add padding to the header */
 }
 
-.logo-container {
-  margin-right: 2%;
-}
-
-.logo-image {
-  max-height: 100%; /* Ensure the logo fills the height of the header */
-  width: auto;
-}
-
+.left-section,
+.center-section,
 .right-section {
-  display: flex;
-  align-items: center;
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center elements vertically */
 }
 
 .social-icons {
   display: flex;
   align-items: center;
-  gap: 20px; /* Space between social icons */
+  margin-right: 20px;
 }
 
 .social-logo {
-  width: 30px; /* Adjust the size as needed */
-  height: 30px; /* Adjust the size as needed */
-}
-
-.center-section {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Align buttons to the left */
-}
-
-.left-section {
-  display: flex;
-  align-items: center;
-}
-
-.greeting {
+  width: 30px; /* Adjust size as needed */
+  height: 30px; /* Adjust size as needed */
   margin-right: 10px;
 }
 
-#exit {
-  /* Add styles for the exit button */
-  background-color: #ff6347; /* Red color */
-  color: #fff; /* White text color */
-  padding: 4px 8px; /* Smaller padding */
-  border: none;
-  border-radius: 4px;
+.greeting {
+  margin-right: 20px;
+}
+
+.logout-btn {
+  color: #333; /* Change text color to black */
+  background-color: transparent; /* Keep background transparent */
+  border: 2px solid #333; /* Add border */
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 16px;
+  padding: 8px 16px; /* Add padding for better spacing */
+  transition: all 0.3s ease; /* Add transition for smooth hover effect */
 }
 
-button:hover {
-  background-color: #e0e0e0; /* Slightly darker grey on hover */
-  color: #000; /* Darker text color on hover */
+.logout-btn:hover {
+  background-color: #333; /* Change background color on hover */
+  color: #fff; /* Change text color on hover */
 }
 
-button {
-  margin: 0 5px; /* Add margin to buttons */
-  padding: 4px 8px; /* Use slightly larger padding */
-  font-size: 0.8em; /* Adjust font size for a slightly larger look */
-  border-radius: 4px; /* Keep border-radius for rounded corners */
-  border: 1px solid #ccc; /* Add a border for better visual separation */
-  background-color: #f5f5f5; /* Light grey background */
-  color: #333; /* Dark text color */
+.nav-btn {
+  color: #333; /* Change text color to black */
+  background-color: transparent; /* Keep background transparent */
+  border: 2px solid #333; /* Add border */
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 16px;
+  padding: 8px 16px; /* Add padding for better spacing */
+  margin-bottom: 10px; /* Add margin between buttons */
+  transition: all 0.3s ease; /* Add transition for smooth hover effect */
 }
 
-button:hover {
-  background-color: #e0e0e0; /* Slightly darker grey on hover */
-  color: #000; /* Darker text color on hover */
+.nav-btn:hover {
+  background-color: #333; /* Change background color on hover */
+  color: #fff; /* Change text color on hover */
+}
+
+.logo-container {
+  display: flex; /* Ensure logo container stays in line */
+  align-items: center; /* Vertically center logo and text */
+  margin-right: 25px;
+}
+
+.logo-image {
+  width: 100px; /* Adjust size as needed */
+  height: auto; /* Maintain aspect ratio */
+  cursor: pointer; /* Set cursor to pointer when hovering over the logo */
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column; /* Stack header items vertically on smaller screens */
+    padding: 10px; /* Reduce padding for smaller screens */
+  }
+
+  .left-section {
+    order: 2; /* Move left section to bottom on smaller screens */
+    margin-top: 10px; /* Add some space between sections */
+  }
+
+  .right-section {
+    order: 1; /* Move right section to top on smaller screens */
+  }
+
+  .center-section {
+    width: 100%; /* Make center section full width on smaller screens */
+    order: 3; /* Move center section to bottom on smaller screens */
+  }
+
+  .nav-btn {
+    margin-bottom: 5px; /* Reduce margin between buttons on smaller screens */
+  }
 }
