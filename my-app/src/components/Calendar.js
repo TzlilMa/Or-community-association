@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { db, collection, addDoc, getDocs, Timestamp } from '../fireBase/firebase'; // Adjust the import path as necessary
-import '../styles/Calendar.css'; // Ensure you have the appropriate CSS
+import { useAuth } from '../fireBase/AuthContext';
+import { db, collection, addDoc, getDocs, Timestamp, doc, updateDoc, arrayUnion, query, where, increment } from '../fireBase/firebase'; // Import Firebase functions
+import '../styles/Calendar.css';
+import EventForm from './EventForm';
+import CalendarDay from './CalendarDay';
+
 
 const Calendar = () => {
+  const { currentUser } = useAuth();
   const [events, setEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [newEvent, setNewEvent] = useState({ name: '', location: '', numUsers: 0 });
+  const [newEvent, setNewEvent] = useState({ name: '', location: '', description: '', numUsers: 0, time: '' });
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const today = new Date();
@@ -18,16 +24,96 @@ const Calendar = () => {
       const eventsData = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setEvents(eventsData);
     };
+  
     fetchEvents();
-  }, []);
+  
+    const fetchUserData = async () => {
+      try {
+        // Fetch user data based on the current user's email
+        const userQuerySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', currentUser.email)));
+        
+        // If user exists and isAdmin is true, set isAdmin to true
+        if (!userQuerySnapshot.empty) {
+          const userData = userQuerySnapshot.docs[0].data();
+          setIsAdmin(userData.isAdmin || false);
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        setIsAdmin(false);
+      }
+    };
+  
+    if (currentUser) {
+      fetchUserData();
+      console.log("currentUser:", currentUser);
+      console.log("isAdmin:", isAdmin);
+    }
+  }, [currentUser, isAdmin]); // Update when currentUser or isAdmin changes
+  
 
   const handleAddEvent = async () => {
-    const eventDate = new Date(selectedDate);
-    const newEventDoc = { ...newEvent, date: Timestamp.fromDate(eventDate) };
-    await addDoc(collection(db, 'events'), newEventDoc);
-    setEvents([...events, { ...newEventDoc, id: newEventDoc.id }]);
-    setNewEvent({ name: '', location: '', numUsers: 0 });
-    setSelectedDate(null);
+    
+
+    if (!selectedDate || !newEvent.time) {
+      alert('Please select a date and time for the event.');
+      return;
+    }
+
+    const [hours, minutes] = newEvent.time.split(':').map(Number);
+
+    if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours >= 24 || minutes < 0 || minutes >= 60) {
+      alert('Please enter a valid time in 24-hour format.');
+      return;
+    }
+
+    const eventDateTime = new Date(selectedDate);
+    eventDateTime.setHours(hours, minutes, 0, 0);
+
+    const eventTimestamp = Timestamp.fromDate(eventDateTime);
+
+    const { time, ...eventData } = newEvent;
+
+    const newEventDoc = { ...eventData, date: eventTimestamp };
+
+    try {
+      const docRef = await addDoc(collection(db, 'events'), newEventDoc);
+      setEvents([...events, { ...newEventDoc, id: docRef.id }]);
+      setNewEvent({ name: '', location: '', description: '', numUsers: 0, time: '' });
+      setSelectedDate(null);
+      alert('Event added successfully!');
+    } catch (error) {
+      console.error('Error adding event:', error);
+      alert('An error occurred while adding the event. Please try again later.');
+    }
+  };
+
+  const handleRegisterForEvent = async (eventId) => {
+    if (!currentUser) {
+      alert('Please log in to register for events.');
+      return;
+    }
+
+    try {
+      const eventRef = doc(db, 'events', eventId);
+      await updateDoc(eventRef, {
+        registeredUsers: arrayUnion(currentUser.email)
+      });
+
+      // Increment the numUsers field by 1
+    await updateDoc(eventRef, {
+      numUsers: increment(1),
+      registeredUsers: arrayUnion(currentUser.email)
+    });
+
+      alert('Successfully registered for the event!');
+      // Update the local state to reflect the registration
+      setEvents(events.map(event => event.id === eventId ? { ...event, registeredUsers: [...(event.registeredUsers || []), currentUser.email] } : event));
+    } catch (error) {
+      console.error('Error registering for event:', error);
+      alert('An error occurred while registering for the event. Please try again later.');
+    }
   };
 
   const renderDaysOfWeek = () => {
@@ -59,7 +145,13 @@ const Calendar = () => {
             onClick={() => setSelectedDate(new Date(currentYear, currentMonth, day))}
           >
             {day}
-            {events.some(event => new Date(event.date.toDate()).getDate() === day && new Date(event.date.toDate()).getMonth() === currentMonth && new Date(event.date.toDate()).getFullYear() === currentYear) && (
+            {events.some(event => {
+              const eventDate = event.date?.toDate();
+              return eventDate &&
+                eventDate.getDate() === day &&
+                eventDate.getMonth() === currentMonth &&
+                eventDate.getFullYear() === currentYear;
+            }) && (
               <div className="event-indicator">•</div>
             )}
           </div>
@@ -75,32 +167,36 @@ const Calendar = () => {
           {today.toLocaleString('default', { month: 'long' })} {currentYear}
         </h2>
       </div>
-      {renderDaysOfWeek()}
-      {renderDaysInMonth()}
-      {selectedDate && (
-        <div className="add-event-form">
-          <h3>Add Event for {selectedDate.toDateString()}</h3>
-          <input
-            type="text"
-            placeholder="Event Name"
-            value={newEvent.name}
-            onChange={e => setNewEvent({ ...newEvent, name: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Location"
-            value={newEvent.location}
-            onChange={e => setNewEvent({ ...newEvent, location: e.target.value })}
-          />
-          <input
-            type="number"
-            placeholder="Number of Users"
-            value={newEvent.numUsers}
-            onChange={e => setNewEvent({ ...newEvent, numUsers: parseInt(e.target.value) })}
-          />
-          <button onClick={handleAddEvent}>Add Event</button>
+      <div className="calendar-content">
+        <div className="calendar-column">
+          {renderDaysOfWeek()}
+          {renderDaysInMonth()}
         </div>
-      )}
+        <div className="details-column">
+        {selectedDate && (
+  <div className="event-details-container">
+    {isAdmin && (
+      <div className="event-form">
+        <EventForm
+          selectedDate={selectedDate}
+          handleAddEvent={handleAddEvent}
+          newEvent={newEvent}
+          setNewEvent={setNewEvent}
+        />
+      </div>
+    )}
+    <div className="event-details">
+      <CalendarDay
+        selectedDate={selectedDate}
+        events={events}
+        handleRegisterForEvent={handleRegisterForEvent}
+        currentUser={currentUser}
+      />
+    </div>
+  </div>
+)}
+        </div>
+      </div>
     </div>
   );
 };
