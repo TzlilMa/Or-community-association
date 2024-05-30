@@ -45,7 +45,7 @@ const Homepage = () => {
       <Header user={{ firstName }} onComponentChange={handleComponentChange} />
       <div className="component-content">
         {activeComponent === 'ContentLayout' && <ContentLayout />}
-        {activeComponent === 'PersonalArea' && <PersonalArea />}
+        {activeComponent === 'PersonalArea' && (<PersonalArea />)}
         {activeComponent === 'Calendar' && <Calendar />}
       </div>
     </div>
