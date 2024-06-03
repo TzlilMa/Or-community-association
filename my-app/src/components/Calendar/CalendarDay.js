@@ -24,7 +24,6 @@ const CalendarDay = ({ selectedDate, events, handleRegisterForEvent, currentUser
 
   return (
     <div className="calendar-day-events">
-      <h3>Events on {selectedDate.toDateString()}</h3>
       {renderEventDetails()}
     </div>
   );
