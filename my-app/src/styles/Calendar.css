@@ -1,28 +1,47 @@
 .calendar-container {
   width: 100%;
-  max-width: 600px;
+  max-width: 700px; /* Increase the maximum width of the calendar */
   margin: 0 auto;
   text-align: center;
 }
 
-.calendar-header {
-  margin-bottom: 20px;
-}
-
-.days-of-week, .days-grid {
+.days-of-week {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row; /* Ensure days of the week are displayed in a row */
+  justify-content: space-between; /* Add space between the names of the days */
+  margin-bottom: 10px; /* Add space between days of the week and calendar */
 }
 
-.day-header, .calendar-day, .day-empty {
-  width: calc(100% / 7);
+.days-of-week .day-header {
+  flex: 1; /* Ensure equal distribution of space among day headers */
+}
+
+.days-grid {
+  display: flex;
+  flex-direction: column; /* Ensure days are printed in rows */
+}
+
+.calendar-week {
+  display: flex; /* Display each week as a flex container */
+}
+
+.calendar-day {
+  flex: 1; /* Ensure equal distribution of space among days */
+  min-width: 0; /* Allow content to shrink if needed */
+  cursor: pointer;
+  position: relative;
   padding: 10px;
   box-sizing: border-box;
 }
 
-.calendar-day {
-  cursor: pointer;
-  position: relative;
+.day-empty {
+  flex: 1; /* Ensure empty days take up the same space as other days */
+  min-width: 0; /* Allow content to shrink if needed */
+}
+
+.calendar-header {
+  margin-bottom: 100px 0px 20px 0;
+  padding-top: 50px;
 }
 
 .event-indicator {
@@ -30,7 +49,7 @@
   bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
-  color: red;
+  color: rgb(135, 53, 53);
 }
 
 .add-event-form {
@@ -45,4 +64,23 @@
 
 .add-event-form button {
   padding: 5px 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px; /* Adjust the gap between buttons if needed */
+  justify-content: center; /* Center the buttons horizontally */
+  margin-bottom: 10px; /* Add space between buttons and date */
+}
+
+.action-button {
+  padding: 5px 10px; /* Adjust padding for smaller buttons */
+  font-size: 14px; /* Adjust font size for smaller buttons */
+  cursor: pointer;
+  background-color: green;
+}
+
+.action-button:disabled {
+  cursor: not-allowed;
+  background-color: grey; /* Grey out the disabled button */
 }
