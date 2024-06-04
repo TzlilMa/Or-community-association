@@ -7,13 +7,11 @@ import Homepage from './pages/homepage';
 import RegistrationForm from './pages/registrationFormPage';
 import ResetPassword from './pages/resetPwdPage';
 import PrivateRoute from './PrivateRoute';
-import Header from './components/Header';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <Header />
         <Routes>
         <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
