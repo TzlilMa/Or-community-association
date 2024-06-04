@@ -1,0 +1,23 @@
+.admin-actions-event-detail{
+    display: flex;    
+    margin-bottom: 5%;
+}
+
+.admin-event-detail-btn, .admin-delete-detail-btn {
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 3%;
+}
+
+.admin-delete-detail-btn {
+    background-color: rgb(138, 10, 10);
+}
+
+.admin-delete-detail-btn:hover {
+    background-color: brown;
+}

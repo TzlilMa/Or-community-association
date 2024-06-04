@@ -29,7 +29,7 @@ const Calendar = () => {
     const fetchUserData = async () => {
       try {
         const userQuerySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', currentUser.email)));
-        if (!userQuerySnapshot.empty) {
+        if (!userQuerySnapshot.empty) {          
           const userData = userQuerySnapshot.docs[0].data();
           setIsAdmin(userData.isAdmin || false);
         } else {
@@ -78,6 +78,16 @@ const Calendar = () => {
     }
   };
 
+  const updateEvents = async () => {
+    try {
+      const eventsSnapshot = await getDocs(collection(db, 'events'));
+      const eventsData = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setEvents(eventsData);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
+
   const handleRegisterForEvent = async (eventId) => {
     if (!currentUser) {
       alert('Please log in to register for events.');
@@ -116,12 +126,12 @@ const Calendar = () => {
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
     const weeks = [[]];
-
+  
     let currentWeek = 0;
     for (let i = 0; i < firstDayOfMonth; i++) {
       weeks[currentWeek].push(null);
     }
-
+  
     for (let day = 1; day <= daysInMonth; day++) {
       if (weeks[currentWeek].length === 7) {
         weeks.push([]);
@@ -129,47 +139,55 @@ const Calendar = () => {
       }
       weeks[currentWeek].push(day);
     }
-
+  
+    // Ensure the last week is correctly filled
+    while (weeks[currentWeek].length < 7) {
+      weeks[currentWeek].push(null);
+    }
+  
     return (
       <div className="days-grid">
         {weeks.map((week, index) => (
           <div key={index} className="calendar-week">
-            {week.reverse().map((day, index) => ( // Reverse the days to print from right to left
-              <div
-                key={index}
-                className={`calendar-day ${day ? '' : 'day-empty'} ${
-                  day &&
-                  new Date(currentYear, currentMonth, day).toDateString() === today.toDateString()
-                    ? 'today'
-                    : ''
-                }`}
-                onClick={() => {
-                  if (day) {
-                    const selectedDate = new Date(currentYear, currentMonth, day);
-                    setSelectedDate(selectedDate);
-                    setShowEventForm(false);
-                    setShowEvents(false);
-                  }
-                }}
-              >
-                {events.some(event => {
-                  const eventDate = event.date?.toDate();
-                  return eventDate &&
-                    eventDate.getDate() === day &&
-                    eventDate.getMonth() === currentMonth &&
-                    eventDate.getFullYear() === currentYear;
-                }) ? (
-                  <div className="event-indicator">{day}</div>
-                ) : (
-                  day
-                )}
-              </div>
-            ))}
+            {week.reverse().map((day, dayIndex) => {
+              const isToday = day && new Date(currentYear, currentMonth, day).toDateString() === today.toDateString();
+              const hasEvent = events.some(event => {
+                const eventDate = event.date?.toDate();
+                return eventDate &&
+                  eventDate.getDate() === day &&
+                  eventDate.getMonth() === currentMonth &&
+                  eventDate.getFullYear() === currentYear;
+              });
+  
+              return (
+                <div
+                  key={dayIndex}
+                  className={`calendar-day ${day ? '' : 'day-empty'} ${isToday ? 'today' : ''}`}
+                  onClick={() => {
+                    if (day) {
+                      const selectedDate = new Date(currentYear, currentMonth, day);
+                      setSelectedDate(selectedDate);
+                      setShowEventForm(false);
+                      setShowEvents(false);
+                    }
+                  }}
+                >
+                  {day && hasEvent ? (
+                    <div className={`event-indicator ${isToday ? 'today' : ''}`}>{day}</div>
+                  ) : (
+                    <div className={`event-indicator no-event ${isToday ? 'today' : ''}`}>{day}</div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>
     );
   };
+  
+  
+  
 
   const selectedDateString = selectedDate ? selectedDate.toDateString() : '';
   const hasEventsOnSelectedDate = selectedDate && events.some(event => {
@@ -224,17 +242,18 @@ const Calendar = () => {
               {showEvents && hasEventsOnSelectedDate && (
                 <div className="event-details">
                   <CalendarDay
-                    selectedDate={selectedDate}
-                    events={events.filter(event => {
-                      const eventDate = event.date?.toDate();
-                      return eventDate &&
-                        eventDate.getDate() === selectedDate.getDate() &&
-                        eventDate.getMonth() === selectedDate.getMonth() &&
-                        eventDate.getFullYear() === selectedDate.getFullYear();
-                    })}
-                    handleRegisterForEvent={handleRegisterForEvent}
-                    currentUser={currentUser}
-                  />
+                      selectedDate={selectedDate}
+                      events={events.filter(eventItem => {
+                        const eventDate = eventItem.date?.toDate();
+                        return eventDate &&
+                          eventDate.getDate() === selectedDate.getDate() &&
+                          eventDate.getMonth() === selectedDate.getMonth() &&
+                          eventDate.getFullYear() === selectedDate.getFullYear();
+                      })}
+                      handleRegisterForEvent={handleRegisterForEvent}
+                      currentUser={currentUser}
+                      updateEvents={updateEvents}
+                    />
                 </div>
               )}
             </div>

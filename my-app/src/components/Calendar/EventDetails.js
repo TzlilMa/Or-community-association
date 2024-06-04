@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { db, doc, updateDoc, getDoc, increment } from '../../fireBase/firebase'; // Import Firebase functions
-
-const EventDetails = ({ event, currentUser, handleRegisterForEvent }) => {
+import { db, doc, updateDoc, getDoc, increment, getDocs, query, collection, where, deleteDoc } from '../../fireBase/firebase'; // Import Firebase functions
+import '../../styles/EventDetails.css'
+const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents }) => {
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     // Check if the current user is registered for the event
@@ -11,7 +12,25 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent }) => {
     } else {
       setIsRegistered(false);
     }
-  }, [event, currentUser]);
+
+    const fetchUserData = async () => {
+      try {
+        const userQuerySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', currentUser.email)));
+        if (!userQuerySnapshot.empty) {          
+          const userData = userQuerySnapshot.docs[0].data();
+          setIsAdmin(userData.isAdmin || false);
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        setIsAdmin(false);
+      }
+    };
+    
+    fetchUserData();
+
+  }, [event, currentUser, isAdmin]);
 
   const handleRegisterClick = () => {
     if (isRegistered) {
@@ -57,20 +76,50 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent }) => {
     }
   };
 
+  const handleDeleteEvent = async () => {
+    try {
+      await deleteDoc(doc(db, "events", event.id));
+      // Call the updateEvents function after successful deletion
+      updateEvents();
+      alert('Event deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting event:', error);
+      alert('An error occurred while deleting the event. Please try again later.');
+    }
+  };
+
+  const handleEditEvent = async() => {
+    console.log("helo");
+    // const res = await db.collection('events').doc(event.id).delete();
+  }
+
+  const handleShowParticipants = async() => {
+    console.log("helo");
+    // const res = await db.collection('events').doc(event.id).delete();
+  }
+
   return (
     <div className="event-details">
       <h4>{event.name}</h4>
-      <p>איפה?  {event.location}</p>
-      <p>שעה {event.date?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} </p>
+      <p>מקום:  {event.location}</p>
+      <p>שעה: {event.date?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} </p>
       <p>{event.description}</p>
-      {isRegistered ? (
+      {isAdmin && (
+      <div className='admin-actions-event-detail'>
+        <button className='admin-delete-detail-btn' onClick={handleDeleteEvent}>מחק אירוע</button>
+        <button className='admin-event-detail-btn' onClick={handleEditEvent}>ערוך אירוע</button>
+        <button className='admin-event-detail-btn' onClick={handleShowParticipants}>הצג רשימת משתתפים</button>
+      </div>
+      )
+}
+      {!isAdmin && (isRegistered ? (
         <div>
           <p>רשום</p>
           <button onClick={handleRegisterClick}>בטל רישום לאירוע</button>
         </div>
       ) : (
         <button onClick={handleRegisterClick}>תרשום אותי</button>
-      )}
+      ))}
     </div>
   );
 };

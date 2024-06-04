@@ -1,7 +1,7 @@
 import React from 'react';
 import EventDetails from './EventDetails'; // Import the EventDetails component
 
-const CalendarDay = ({ selectedDate, events, handleRegisterForEvent, currentUser }) => {
+const CalendarDay = ({ selectedDate, events, handleRegisterForEvent, currentUser, updateEvents }) => {
   const renderEventDetails = () => {
     const filteredEvents = events.filter(event => {
       const eventDate = event.date?.toDate();
@@ -18,6 +18,7 @@ const CalendarDay = ({ selectedDate, events, handleRegisterForEvent, currentUser
         event={event} 
         currentUser={currentUser} 
         handleRegisterForEvent={handleRegisterForEvent} 
+        updateEvents={updateEvents}
       />
     ));
   };
