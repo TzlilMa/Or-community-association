@@ -45,7 +45,7 @@ const RegistrationForm = () => {
       await createUserWithEmailAndPassword(auth, email, password);
 
       // Store additional user data in Firestore with email as document ID
-      await addUserToFirestore(email, { firstName, lastName, dateOfBirth, age, personalStory, isStoryPublic, gender, isAdmin });
+      await addUserToFirestore(email, {email, firstName, lastName, dateOfBirth, age, personalStory, isStoryPublic, gender, isAdmin });
 
       // Clear form fields
       setEmail('');
