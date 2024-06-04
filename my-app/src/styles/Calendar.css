@@ -5,51 +5,65 @@
   text-align: center;
 }
 
+
 .days-of-week {
   display: flex;
-  flex-direction: row; /* Ensure days of the week are displayed in a row */
-  justify-content: space-between; /* Add space between the names of the days */
-  margin-bottom: 10px; /* Add space between days of the week and calendar */
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .days-of-week .day-header {
-  flex: 1; /* Ensure equal distribution of space among day headers */
+  flex: 1;
 }
 
 .days-grid {
   display: flex;
-  flex-direction: column; /* Ensure days are printed in rows */
+  flex-direction: column;
 }
 
 .calendar-week {
-  display: flex; /* Display each week as a flex container */
+  display: flex;
 }
 
 .calendar-day {
-  flex: 1; /* Ensure equal distribution of space among days */
-  min-width: 0; /* Allow content to shrink if needed */
+  flex: 1;
+  min-width: 0;
   cursor: pointer;
   position: relative;
-  padding: 10px;
+  padding-right: 6%;
+  padding-top: 5%;
   box-sizing: border-box;
+  text-align: right;
+  overflow: hidden;
+  font-size: 14px;
 }
 
 .day-empty {
-  flex: 1; /* Ensure empty days take up the same space as other days */
-  min-width: 0; /* Allow content to shrink if needed */
+  flex: 1;
+  min-width: 0;
 }
 
 .calendar-header {
-  margin-bottom: 100px 0px 20px 0;
+  margin-bottom: 20px;
   padding-top: 50px;
 }
 
 .event-indicator {
-  position: absolute;
-  bottom: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgb(135, 53, 53);
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+}
+
+.has-events {
+  background-color: red;
 }
 
 .add-event-form {
@@ -68,19 +82,19 @@
 
 .actions {
   display: flex;
-  gap: 10px; /* Adjust the gap between buttons if needed */
-  justify-content: center; /* Center the buttons horizontally */
-  margin-bottom: 10px; /* Add space between buttons and date */
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 .action-button {
-  padding: 5px 10px; /* Adjust padding for smaller buttons */
-  font-size: 14px; /* Adjust font size for smaller buttons */
+  padding: 5px 10px;
+  font-size: 14px;
   cursor: pointer;
   background-color: green;
 }
 
 .action-button:disabled {
   cursor: not-allowed;
-  background-color: grey; /* Grey out the disabled button */
+  background-color: grey;
 }

@@ -116,12 +116,12 @@ const Calendar = () => {
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
     const weeks = [[]];
-  
+
     let currentWeek = 0;
     for (let i = 0; i < firstDayOfMonth; i++) {
       weeks[currentWeek].push(null);
     }
-  
+
     for (let day = 1; day <= daysInMonth; day++) {
       if (weeks[currentWeek].length === 7) {
         weeks.push([]);
@@ -129,7 +129,7 @@ const Calendar = () => {
       }
       weeks[currentWeek].push(day);
     }
-  
+
     return (
       <div className="days-grid">
         {weeks.map((week, index) => (
@@ -137,8 +137,13 @@ const Calendar = () => {
             {week.reverse().map((day, index) => ( // Reverse the days to print from right to left
               <div
                 key={index}
-                className={`calendar-day ${day ? '' : 'day-empty'}`}
-                onClick={() => { 
+                className={`calendar-day ${day ? '' : 'day-empty'} ${
+                  day &&
+                  new Date(currentYear, currentMonth, day).toDateString() === today.toDateString()
+                    ? 'today'
+                    : ''
+                }`}
+                onClick={() => {
                   if (day) {
                     const selectedDate = new Date(currentYear, currentMonth, day);
                     setSelectedDate(selectedDate);
@@ -147,15 +152,16 @@ const Calendar = () => {
                   }
                 }}
               >
-                {day || ''}
                 {events.some(event => {
                   const eventDate = event.date?.toDate();
                   return eventDate &&
                     eventDate.getDate() === day &&
                     eventDate.getMonth() === currentMonth &&
                     eventDate.getFullYear() === currentYear;
-                }) && (
-                  <div className="event-indicator">•</div>
+                }) ? (
+                  <div className="event-indicator">{day}</div>
+                ) : (
+                  day
                 )}
               </div>
             ))}
@@ -164,13 +170,6 @@ const Calendar = () => {
       </div>
     );
   };
-  
-  
-  
-  
-
-  
-  
 
   const selectedDateString = selectedDate ? selectedDate.toDateString() : '';
   const hasEventsOnSelectedDate = selectedDate && events.some(event => {
