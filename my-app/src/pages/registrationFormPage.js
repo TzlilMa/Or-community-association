@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, setDoc, doc, db } from '../fireBase/firebase';
-import '../styles/registrationForm.css'; // Import the CSS file
+import { auth, setDoc, doc, db, signOut } from '../fireBase/firebase';
+import '../styles/registrationForm.css';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const RegistrationForm = () => {
@@ -10,39 +10,58 @@ const RegistrationForm = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [age, setAge] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [age, setAge] = useState(null);
   const [personalStory, setPersonalStory] = useState('');
   const [isStoryPublic, setIsStoryPublic] = useState(false);
-  const [sex, setSex] = useState('');
+  const [gender, setGender] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (dateOfBirth) {
+      const birthDate = new Date(dateOfBirth);
+      const today = new Date();
+      const ageInMilliseconds = today - birthDate;
+      const calculatedAge = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25));
+      setAge(calculatedAge);
+    } else {
+      setAge(null);
+    }
+  }, [dateOfBirth]);
 
   const handleRegistration = async (e) => {
     e.preventDefault();
     try {
-      // Check if age is above 0
-      if (age <= 0) {
-        setError("Age must be above 0.");
+      // Check if dateOfBirth is valid
+      const currentDate = new Date();
+      const birthDate = new Date(dateOfBirth);
+      if (birthDate >= currentDate) {
+        setError("Date of birth must be in the past.");
         return;
       }
-      
-      // Create user in Firebase Authentication
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
 
-      // Store additional user data in Firestore
-      await addUserToFirestore(user.email, { email, firstName, lastName, age, personalStory, isStoryPublic, sex, isAdmin });
+      // Create user in Firebase Authentication
+      await createUserWithEmailAndPassword(auth, email, password);
+
+      // Store additional user data in Firestore with email as document ID
+      await addUserToFirestore(email, { firstName, lastName, dateOfBirth, age, personalStory, isStoryPublic, gender, isAdmin });
 
       // Clear form fields
       setEmail('');
       setPassword('');
       setFirstName('');
       setLastName('');
-      setAge('');
+      setDateOfBirth('');
+      setAge(null);
       setPersonalStory('');
       setIsStoryPublic(false);
-      setSex('');
+      setGender('');
       setIsAdmin(false);
+      setError(null);
+
+      // Sign out the user
+      await signOut(auth);
 
       // Redirect to login page
       navigate('/login');
@@ -77,11 +96,11 @@ const RegistrationForm = () => {
         <label>Last Name:</label>
         <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
         <br />
-        <label>Age:</label>
-        <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
+        <label>Date of Birth:</label>
+        <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required />
         <br />
         <label>Gender:</label>
-        <select value={sex} onChange={(e) => setSex(e.target.value)}>
+        <select value={gender} onChange={(e) => setGender(e.target.value)}>
           <option value="">Select</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
