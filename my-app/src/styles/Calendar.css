@@ -52,6 +52,9 @@
 }
 
 .calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
   padding-top: 50px;
 }
@@ -134,4 +137,23 @@
 .action-button:disabled {
   cursor: not-allowed;
   background-color: grey;
+}
+
+.calendar-header h2 {
+  margin: 0;
+}
+
+.changeMonth-btn {
+  border: none;
+  font-size: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  color: grey;
+  background-color: white;
+  width: 3%;
+}
+
+.changeMonth-btn:hover {
+  background-color: white;
+  color:rgb(0, 0, 0)
 }

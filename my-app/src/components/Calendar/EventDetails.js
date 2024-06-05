@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { db, doc, updateDoc, getDoc, increment, getDocs, query, collection, where, deleteDoc } from '../../fireBase/firebase'; // Import Firebase functions
-import '../../styles/EventDetails.css'
+import ParticipantList from './ParticipantList';
+import EventEditForm from './EventEditForm';
+import '../../styles/EventDetails.css';
+
 const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents }) => {
   const [isRegistered, setIsRegistered] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [showParticipantList, setShowParticipantList] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   useEffect(() => {
     // Check if the current user is registered for the event
@@ -88,38 +93,79 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
     }
   };
 
-  const handleEditEvent = async() => {
-    console.log("helo");
-    // const res = await db.collection('events').doc(event.id).delete();
-  }
+  const handleEditEvent = () => {
+    setShowEditForm(true);
+  };
 
-  const handleShowParticipants = async() => {
-    console.log("helo");
-    // const res = await db.collection('events').doc(event.id).delete();
-  }
+  const handleCloseEditForm = () => {
+    setShowEditForm(false);
+  };
+
+  const handleSubmitEditForm = async (updatedEvent) => {
+    try {
+      const eventRef = doc(db, 'events', event.id);
+      await updateDoc(eventRef, updatedEvent);
+      alert('Event updated successfully!');
+      updateEvents(); // Update the events list
+      setShowEditForm(false);
+    } catch (error) {
+      console.error('Error updating event:', error);
+      alert('An error occurred while updating the event. Please try again later.');
+    }
+  };
+
+  const handleShowParticipants = () => {
+    setShowParticipantList(true);
+  };
+
+  const handleCloseParticipantList = () => {
+    setShowParticipantList(false);
+  };
+
 
   return (
     <div className="event-details">
       <h4>{event.name}</h4>
-      <p>מקום:  {event.location}</p>
-      <p>שעה: {event.date?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} </p>
+      <p>מקום: {event.location}</p>
+      <p>שעה: {event.date?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
       <p>{event.description}</p>
       {isAdmin && (
-      <div className='admin-actions-event-detail'>
-        <button className='admin-delete-detail-btn' onClick={handleDeleteEvent}>מחק אירוע</button>
-        <button className='admin-event-detail-btn' onClick={handleEditEvent}>ערוך אירוע</button>
-        <button className='admin-event-detail-btn' onClick={handleShowParticipants}>הצג רשימת משתתפים</button>
-      </div>
-      )
-}
-      {!isAdmin && (isRegistered ? (
-        <div>
-          <p>רשום</p>
-          <button onClick={handleRegisterClick}>בטל רישום לאירוע</button>
+        <div className="admin-actions-event-detail">
+          <button className="admin-delete-detail-btn" onClick={handleDeleteEvent}>
+            מחק אירוע
+          </button>
+          <button className="admin-event-detail-btn" onClick={handleEditEvent}>
+            ערוך אירוע
+          </button>
+          <button className="admin-event-detail-btn" onClick={handleShowParticipants}>
+            הצג רשימת משתתפים
+          </button>
         </div>
-      ) : (
-        <button onClick={handleRegisterClick}>תרשום אותי</button>
-      ))}
+      )}
+      {!isAdmin && (
+        isRegistered ? (
+          <div>
+            <p>רשום</p>
+            <button onClick={handleRegisterClick}>בטל רישום לאירוע</button>
+          </div>
+        ) : (
+          <button onClick={handleRegisterClick}>תרשום אותי</button>
+        )
+      )}
+      {showParticipantList && (
+        <ParticipantList
+          event={event}
+          participantIds={event.registeredUsers}
+          onClose={handleCloseParticipantList}
+        />
+      )}
+      {showEditForm && (
+        <EventEditForm
+          event={event}
+          onSubmit={handleSubmitEditForm}
+          onCancel={handleCloseEditForm}
+        />
+      )}
     </div>
   );
 };

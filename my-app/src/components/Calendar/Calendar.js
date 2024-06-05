@@ -6,6 +6,7 @@ import EventForm from './EventForm';
 import CalendarDay from './CalendarDay';
 
 const Calendar = () => {
+  const today = new Date();
   const { currentUser } = useAuth();
   const [events, setEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -13,11 +14,11 @@ const Calendar = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showEventForm, setShowEventForm] = useState(false);
   const [showEvents, setShowEvents] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
+  const [currentYear, setCurrentYear] = useState(today.getFullYear());
 
   const daysOfWeek = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
-  const today = new Date();
-  const currentMonth = today.getMonth();
-  const currentYear = today.getFullYear();
+  
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -58,7 +59,8 @@ const Calendar = () => {
       alert('Please enter a valid time in 24-hour format.');
       return;
     }
-
+    
+    console.log(selectedDate)
     const eventDateTime = new Date(selectedDate);
     eventDateTime.setHours(hours, minutes, 0, 0);
     const eventTimestamp = Timestamp.fromDate(eventDateTime);
@@ -186,7 +188,25 @@ const Calendar = () => {
     );
   };
   
+  const handlePrevMonth = () => {
+    setCurrentMonth((prevMonth) => {
+      const newMonth = prevMonth === 0 ? 11 : prevMonth - 1;
+      if (newMonth === 11) {
+        setCurrentYear((prevYear) => prevYear - 1);
+      }
+      return newMonth;
+    });
+  };
   
+  const handleNextMonth = () => {
+    setCurrentMonth((prevMonth) => {
+      const newMonth = prevMonth === 11 ? 0 : prevMonth + 1;
+      if (newMonth === 0) {
+        setCurrentYear((prevYear) => prevYear + 1);
+      }
+      return newMonth;
+    });
+  };
   
 
   const selectedDateString = selectedDate ? selectedDate.toDateString() : '';
@@ -201,8 +221,12 @@ const Calendar = () => {
   return (
     <div className="calendar-container">
       <div className="calendar-header">
-        <h2>{today.toLocaleString('default', { month: 'long' })} {currentYear}</h2>
-      </div>
+  <button className="changeMonth-btn" onClick={handlePrevMonth}>&#8249;</button>
+  <h2>
+    {new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} {currentYear}
+  </h2>
+  <button className="changeMonth-btn" onClick={handleNextMonth}>&#8250;</button>
+</div>
       <div className="calendar-content">
         <div className="calendar-column">
           {renderDaysOfWeek()}
