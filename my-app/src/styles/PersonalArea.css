@@ -1,0 +1,94 @@
+body, html, #root, .App {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the start of the flex container */
+}
+
+.personal-area {
+  padding: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%; /* Height is 80% of the viewport height */
+  margin-top: 10%; /* Add margin-top to push it lower */
+  width: 60%; /* Width is 60% of the viewport width */
+  background-color: #ba3e3e;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
+  border-radius: 8px; /* Rounded corners */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+.user-form {
+  padding: 2%; /* Padding inside the container */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack the children vertically */
+  justify-content: flex-start; /* Align items to the start of the flex container */
+  align-items: center; /* Center horizontally */
+  width: 100%; /* Full width of the personal-area */
+  height: 100%; /* Height is 100% of the viewport height */
+  background-color: #dad5d5; /* Background color of the container */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
+  border-radius: 8px; /* Rounded corners */
+  text-align: center; /* Center the text */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+/* Grouping for each form field */
+.form-group {
+  width: 90%; /* Set width to 90% of the user-form */
+  margin-bottom: 2%; /* Margin below each form group */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack the children vertically */
+  align-items: center; /* Center the elements horizontally */
+}
+
+/* Label for each form field */
+.form-group label {
+  width: 100%; /* Full width */
+  margin-bottom: 1%; /* Margin below the label */
+  font-weight: bold; /* Bold text */
+  text-align: center; /* Center align the text */
+  font-size: 1em; /* Decrease font size for the labels */
+}
+
+/* Input, select, and textarea fields */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%; /* Full width of the form group */
+  padding: 1.5%; /* Increase padding inside the input field */
+  margin-bottom: 2%; /* Margin below the input field */
+  border: 1px solid #ccc; /* Border color and style */
+  border-radius: 4px; /* Rounded corners */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  font-size: 1em; /* Keep the font size of input fields */
+}
+
+/* Specific styling for the textarea under Personal Story */
+.form-group #personalStory {
+  height: 150px; /* Increase the height of the textarea */
+}
+
+/* Submit button */
+button[type="submit"] {
+  padding: 1.5%; /* Increase padding inside the button */
+  border: none;
+  border-radius: 4px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1em; /* Keep the font size of the button */
+  cursor: pointer;
+  width: 90%; /* Adjust width to fit inside the user-form */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  align-self: center; /* Center the button */
+}
+
+/* Submit button on hover */
+button[type="submit"]:hover {
+  background-color: #45a049; /* Darker background color on hover */
+}

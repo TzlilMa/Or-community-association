@@ -1,27 +1,53 @@
 // src/App.js
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './fireBase/AuthContext';
-import Login from './pages/loginPage';
+import React, { useEffect, useState } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import Header from './components/Header';
+import Calendar from './components/Calendar/Calendar';
+import PersonalArea from './components/PeronalArea';
+import LoginPage from './pages/loginPage';
 import Homepage from './pages/homepage';
 import RegistrationForm from './pages/registrationFormPage';
-import ResetPassword from './pages/resetPwdPage';
-import PrivateRoute from './PrivateRoute';
+import ResetPwdPage from './pages/resetPwdPage';
+import { auth } from './fireBase/firebase';
+import './App.css'; // Global CSS if any
 
-function App() {
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <AuthProvider>
-      <Router>
+    <div className="App">
+      {isAuthenticated ? (
+        <>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/personal-area" element={<PersonalArea username="exampleUsername" />} />
+            {/* Add other routes as needed */}
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </>
+      ) : (
         <Routes>
-        <Route path="/" element={<Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/homepage" element={<PrivateRoute><Homepage /></PrivateRoute>} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/registrationForm" element={<RegistrationForm />} />
-          <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/resetPassword" element={<ResetPwdPage />} />
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
-      </Router>
-    </AuthProvider>
+      )}
+    </div>
   );
-}
+};
 
 export default App;

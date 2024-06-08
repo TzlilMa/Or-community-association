@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, setDoc, doc, db, signOut } from '../fireBase/firebase';
 import '../styles/registrationForm.css';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -33,7 +33,6 @@ const RegistrationForm = () => {
   const handleRegistration = async (e) => {
     e.preventDefault();
     try {
-      // Check if dateOfBirth is valid
       const currentDate = new Date();
       const birthDate = new Date(dateOfBirth);
       if (birthDate >= currentDate) {
@@ -41,13 +40,9 @@ const RegistrationForm = () => {
         return;
       }
 
-      // Create user in Firebase Authentication
       await createUserWithEmailAndPassword(auth, email, password);
+      await addUserToFirestore(email, { email, firstName, lastName, dateOfBirth, age, personalStory, isStoryPublic, gender, isAdmin });
 
-      // Store additional user data in Firestore with email as document ID
-      await addUserToFirestore(email, {email, firstName, lastName, dateOfBirth, age, personalStory, isStoryPublic, gender, isAdmin });
-
-      // Clear form fields
       setEmail('');
       setPassword('');
       setFirstName('');
@@ -60,10 +55,8 @@ const RegistrationForm = () => {
       setIsAdmin(false);
       setError(null);
 
-      // Sign out the user
       await signOut(auth);
 
-      // Redirect to login page
       navigate('/login');
     } catch (error) {
       setError(error.message);
@@ -80,34 +73,30 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div>
-      <h2>Registration Form</h2>
-      {error && <p>{error}</p>}
-      <form onSubmit={handleRegistration}>
-        <label>Email:</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <br />
-        <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <br />
-        <label>First Name:</label>
-        <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-        <br />
-        <label>Last Name:</label>
-        <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
-        <br />
-        <label>Date of Birth:</label>
-        <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required />
-        <br />
-        <label>Gender:</label>
-        <select value={gender} onChange={(e) => setGender(e.target.value)}>
-          <option value="">Select</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-        <br />
-        <button type="submit">Register</button>
-      </form>
+    <div className="registration-page">
+      <div className="registration-container">
+        <h2>Registration Form</h2>
+        {error && <p className="error-message">{error}</p>}
+        <form className="registration-form" onSubmit={handleRegistration}>
+          <label>Email:</label>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <label>Password:</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <label>First Name:</label>
+          <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+          <label>Last Name:</label>
+          <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+          <label>Date of Birth:</label>
+          <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required />
+          <label>Gender:</label>
+          <select value={gender} onChange={(e) => setGender(e.target.value)}>
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <button type="submit">Register</button>
+        </form>
+      </div>
     </div>
   );
 };

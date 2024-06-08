@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../fireBase/firebase';
 import { useNavigate } from 'react-router-dom';
+import '../styles/resetPwdPage.css'; // Import the CSS file
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
@@ -18,22 +19,28 @@ const ResetPassword = () => {
       await sendPasswordResetEmail(auth, email);
       setMessage('Password reset email sent. Please check your inbox.');
       setTimeout(() => {
-        navigate('/login'); // Redirect to login page after a delay
-      }, 5000); // Redirect after 5 seconds
+        navigate('/login');
+      }, 5000);
     } catch (error) {
       setError(error.message);
     }
   };
 
   return (
-    <div>
+    <div className="reset-container">
       <h1>Reset Password</h1>
-      {message && <p style={{ color: 'green' }}>{message}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {message && <p className="message">{message}</p>}
+      {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
         </div>
         <button type="submit">Send Reset Email</button>
       </form>
