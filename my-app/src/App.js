@@ -7,7 +7,8 @@ import PersonalArea from './components/PeronalArea';
 import LoginPage from './pages/loginPage';
 import Homepage from './pages/homepage';
 import RegistrationForm from './pages/registrationFormPage';
-import ResetPwdPage from './pages/resetPwdPage';
+import ResetPassword from './pages/resetPwdPage';
+import Documents from './components/Documents';
 import { auth } from './fireBase/firebase';
 import './App.css'; // Global CSS if any
 
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="/" element={<Homepage />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/personal-area" element={<PersonalArea username="exampleUsername" />} />
+            <Route path="/documents" element={<Documents />} />
             {/* Add other routes as needed */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
@@ -42,7 +44,7 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registrationForm" element={<RegistrationForm />} />
-          <Route path="/resetPassword" element={<ResetPwdPage />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       )}

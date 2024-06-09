@@ -21,8 +21,8 @@ const Header = () => {
       navigate('/chat');
     } else if (componentName === 'Stories') {
       navigate('/stories');
-    } else if (componentName === 'Contact') {
-      navigate('/contact');
+    } else if (componentName === 'Documents') {
+      navigate('/documents');
     }
   };
 
@@ -58,7 +58,7 @@ const Header = () => {
         <button className="nav-btn" onClick={() => handleComponentClick('Chat')}>צ'אט</button>
         <button className="nav-btn" onClick={() => handleComponentClick('Stories')}>סיפורים</button>
         <button className="nav-btn" onClick={() => handleComponentClick('Calendar')}>אירועים</button>
-        <button className="nav-btn" onClick={() => handleComponentClick('Contact')}>צור קשר</button>
+        <button className="nav-btn" onClick={() => handleComponentClick('Documents')}>מסמכים</button>
         <button className="nav-btn" onClick={() => handleComponentClick('PersonalArea')}>האזור האישי</button>
       </div>
 
