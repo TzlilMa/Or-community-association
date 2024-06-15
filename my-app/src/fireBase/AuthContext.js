@@ -1,7 +1,7 @@
-// fireBase/AuthContext.js
+// src/fireBase/AuthContext.js
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase';
+import { auth, getDoc, doc, db } from './firebase'; // Ensure correct imports
 
 const AuthContext = createContext();
 
@@ -12,8 +12,17 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+          setCurrentUser({ ...user, isAdmin: userDoc.data().isAdmin });
+        } else {
+          setCurrentUser({ ...user, isAdmin: false });
+        }
+      } else {
+        setCurrentUser(null);
+      }
       setLoading(false);
     });
 

@@ -1,6 +1,6 @@
 // src/components/Header.js
 import React from 'react';
-import logo from '../assets/logo.jpeg';
+import logo from '../assets/logo.jpg';
 import InstagramLogo from '../assets/brand-instagram.png';
 import FacebookLogo from '../assets/brand-facebook.png';
 import { useNavigate } from 'react-router-dom';

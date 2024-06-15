@@ -17,6 +17,7 @@ body, html, #root, .App {
   max-width: 90%;
   margin: 2% auto;
   font-family: Arial, sans-serif;
+  position: relative; /* Added for positioning the add-link-button */
 }
 
 .documents-container h1 {
@@ -57,4 +58,76 @@ body, html, #root, .App {
   color: #777;
   margin-top: 5%;
   font-size: 90%;
+}
+
+.add-link-button,
+.remove-link-button {
+  position: absolute;
+  width: 15%; /* Make both buttons wider */
+  padding: 1%;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5%;
+  cursor: pointer;
+  text-align: center;
+}
+
+.add-link-button:hover,
+.remove-link-button:hover {
+  background-color: #0056b3;
+}
+
+.add-link-button {
+  top: 10%;
+  right: 2%;
+}
+
+.remove-link-button {
+  top: 18%; /* Adjust position for remove button */
+  right: 2%;
+}
+
+/* New styles for the modal */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2%;
+  border-radius: 10%;
+  box-shadow: 0 2% 10% rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal label {
+  display: block;
+  margin: 1% 0 0.5%;
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  padding: 0.5%;
+  margin-bottom: 1%;
+}
+
+.modal button {
+  margin-right: 1%;
+}
+
+/* Background overlay for modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }

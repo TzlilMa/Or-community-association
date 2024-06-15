@@ -11,6 +11,7 @@ import ResetPassword from './pages/resetPwdPage';
 import Documents from './components/Documents';
 import { auth } from './fireBase/firebase';
 import './App.css'; // Global CSS if any
+import PrivateRoute from './PrivateRoute'; // Add this import
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -35,7 +36,14 @@ const App = () => {
             <Route path="/" element={<Homepage />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/personal-area" element={<PersonalArea username="exampleUsername" />} />
-            <Route path="/documents" element={<Documents />} />
+            <Route 
+              path="/documents" 
+              element={
+                <PrivateRoute adminOnly={true}>
+                  <Documents />
+                </PrivateRoute>
+              } 
+            />
             {/* Add other routes as needed */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
