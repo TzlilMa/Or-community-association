@@ -40,31 +40,38 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-container">
-        <h2>Login</h2>
-        <form className="login-form" onSubmit={handleLogin}>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          {error && <p className="error-message">{error}</p>}
-          <button type="submit">Login</button>
-        </form>
-        <div className="additional-options">
-          <button onClick={handleForgetPwd}>?שכחת את הסיסמא</button>
-          <p>Don't have an account? <button onClick={handleSignup}>Sign Up</button></p>
+    <div className="App">
+      <div className="empty-space"></div>
+      <div className="login-page">
+        <div className="login-container">
+          <h2>Login</h2>
+          <form className="login-form" onSubmit={handleLogin}>
+            <label>Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <label>Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            {error && <p className="error-message">{error}</p>}
+            <button type="submit">Login</button>
+          </form>
+          <div className="additional-options">
+            <button onClick={handleForgetPwd}>?שכחת את הסיסמא</button>
+            <p>Don't have an account? <button onClick={handleSignup}>Sign Up</button></p>
+          </div>
         </div>
+      </div>
+      <div className="footer-container">
+        <div className="above-footer">Above Footer Content</div>
+        <div className="main-footer">Main Footer Content</div>
       </div>
     </div>
   );

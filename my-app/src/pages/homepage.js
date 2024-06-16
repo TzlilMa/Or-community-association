@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { db, doc, getDoc } from '../fireBase/firebase';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import '../styles/Homepage.css';
 
 const Homepage = () => {
@@ -33,9 +35,15 @@ const Homepage = () => {
   }, [email]);
 
   return (
-    <div className="homepage">
-      <h1>Homepage Component</h1>
-      <p>Welcome, {firstName || email}</p>
+    <div className="App">
+      <Header />
+      <div className="content">
+        <div className="homepage">
+          <h1>Homepage Component</h1>
+          <p>Welcome, {firstName || email}</p>
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 };

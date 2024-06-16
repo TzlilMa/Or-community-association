@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Calendar from './components/Calendar/Calendar';
 import PersonalArea from './components/PeronalArea';
 import LoginPage from './pages/loginPage';
@@ -29,9 +30,9 @@ const App = () => {
 
   return (
     <div className="App">
-      {isAuthenticated ? (
-        <>
-          <Header />
+      <Header />
+      <div className="content">
+        {isAuthenticated ? (
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/calendar" element={<Calendar />} />
@@ -47,15 +48,16 @@ const App = () => {
             {/* Add other routes as needed */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
-        </>
-      ) : (
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/registrationForm" element={<RegistrationForm />} />
-          <Route path="/resetPassword" element={<ResetPassword />} />
-          <Route path="*" element={<Navigate to="/login" />} />
-        </Routes>
-      )}
+        ) : (
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/registrationForm" element={<RegistrationForm />} />
+            <Route path="/resetPassword" element={<ResetPassword />} />
+            <Route path="*" element={<Navigate to="/login" />} />
+          </Routes>
+        )}
+      </div>
+      <Footer />
     </div>
   );
 };

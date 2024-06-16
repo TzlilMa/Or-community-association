@@ -1,0 +1,26 @@
+/* Footer.css */
+.footer-wrapper {
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+  }
+  
+  .above-footer {
+    background: linear-gradient(90deg, #66AB44 0%, #026735 100%);
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    color: white;
+    box-sizing: border-box;
+  }
+  
+  .main-footer {
+    background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    color: white;
+    box-sizing: border-box;
+  }
+  

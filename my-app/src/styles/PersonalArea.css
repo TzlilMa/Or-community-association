@@ -1,3 +1,4 @@
+/* PersonalArea.css */
 body, html, #root, .App {
   height: 100%;
   width: 100%;
@@ -7,14 +8,21 @@ body, html, #root, .App {
   align-items: flex-start; /* Align items to the start of the flex container */
 }
 
+/* Empty space at the top */
+.empty-space {
+  height: 10%; /* Take up 10% of the height */
+  width: 100%;
+}
+
+/* Style for the personal area container */
 .personal-area {
+  height: 85%; /* Take up 85% of the height */
   padding: 2%;
+  top: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90%; /* Height is 80% of the viewport height */
-  margin-top: 10%; /* Add margin-top to push it lower */
-  width: 60%; /* Width is 60% of the viewport width */
+  width: 60%;
   background-color: #ba3e3e;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
   border-radius: 8px; /* Rounded corners */
@@ -22,6 +30,7 @@ body, html, #root, .App {
   overflow-y: auto; /* Enable vertical scrolling if content overflows */
 }
 
+/* User form styling */
 .user-form {
   padding: 2%; /* Padding inside the container */
   display: flex; /* Use flexbox for layout */
@@ -91,4 +100,30 @@ button[type="submit"] {
 /* Submit button on hover */
 button[type="submit"]:hover {
   background-color: #45a049; /* Darker background color on hover */
+}
+
+/* Common styles for footers */
+.footer-container {
+  height: 5%; /* Take up 5% of the height */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.above-footer {
+  background: linear-gradient(90deg, #66AB44 0%, #026735 100%);
+  width: 100%;
+  padding: 0.5% 0; /* Smaller height for the above footer */
+  text-align: center;
+  color: white;
+}
+
+.main-footer {
+  background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
+  width: 100%;
+  padding: 1% 0; /* Larger height for the main footer */
+  text-align: center;
+  color: white;
 }
