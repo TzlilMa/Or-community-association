@@ -4,6 +4,8 @@ import { db, doc, getDoc } from '../fireBase/firebase';
 import logo from '../assets/logo.jpg';
 import InstagramLogo from '../assets/brand-instagram.png';
 import FacebookLogo from '../assets/brand-facebook.png';
+import userLogo from '../assets/user.png';
+import logoutLogo from '../assets/logout.png';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../fireBase/firebase';
 import '../styles/Header.css';
@@ -57,6 +59,8 @@ const Header = () => {
       navigate('/stories'); // Ensure it navigates to the correct route
     } else if (componentName === 'Documents') {
       navigate('/documents');
+    } else if(componentName === 'personalArea'){
+      navigate('/personal-area');
     }
   };
   
@@ -93,14 +97,18 @@ const Header = () => {
           <div className="left-section">
             <div className="social-icons">
               <a href="https://www.facebook.com/share/46HcXMT56FM73K8j/?mibextid=K35XfP" target="_blank" rel="noopener noreferrer">
-                <img src={FacebookLogo} alt="Facebook" className="social-logo" />
+                <img src={FacebookLogo} alt="Facebook" className="header-icon" />
               </a>
               <a href="https://www.instagram.com/kheilator?igsh=N2U5bThhYXJ5aHhs" target="_blank" rel="noopener noreferrer">
-                <img src={InstagramLogo} alt="Instagram" className="social-logo" />
+                <img src={InstagramLogo} alt="Instagram" className="header-icon" />
               </a>
             </div>
-            <p className="greeting">שלום {firstName}</p>
-            <button className="nav-btn sign-out-btn" onClick={handleSignOut}>התנתק</button>
+            <div className="greeting">
+              <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')}/>
+              <p>שלום {firstName}</p>
+            </div> 
+              
+              <img src={logoutLogo} alt="exit" className="header-icon" onClick={handleSignOut}/>
           </div>
         </>
       )}
