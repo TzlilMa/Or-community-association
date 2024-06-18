@@ -56,7 +56,6 @@ const PersonalArea = ({ username }) => {
   }
 
   return (
-      <div className="personal-area">
         <form className="user-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="firstName">First Name:</label>
@@ -81,30 +80,6 @@ const PersonalArea = ({ username }) => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="age">Age:</label>
-            <input
-              type="number"
-              id="age"
-              name="age"
-              value={userData.age}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="sex">Gender:</label>
-            <select
-              id="sex"
-              name="sex"
-              value={userData.sex}
-              onChange={handleChange}
-            >
-              <option value="">Select...</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div className="form-group">
             <label htmlFor="personalStory">Personal Story:</label>
             <textarea
               id="personalStory"
@@ -115,7 +90,6 @@ const PersonalArea = ({ username }) => {
           </div>
           <button type="submit">Update Information</button>
         </form>
-      </div>
   );
 };
 
