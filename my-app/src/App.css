@@ -77,3 +77,34 @@ body, html, #root, .App {
   }
 }
 
+/* Common styles for footers */
+.footer-container {
+  position: fixed;
+  bottom: 8%;
+  height: 5%; /* Take up 5% of the height */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.above-footer {
+  background: linear-gradient(90deg, #66AB44 0%, #026735 100%);
+  width: 100%;
+  padding: 0.5% 0; /* Smaller height for the above footer */
+  text-align: center;
+  color: #ffffff;
+}
+
+.main-footer {
+  background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
+  width: 100%;
+  padding: 1% 0; /* Larger height for the main footer */
+  text-align: center;
+  color: white;
+}
+
+
+
+

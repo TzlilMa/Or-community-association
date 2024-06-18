@@ -7,7 +7,7 @@ html, body {
 }
 
 .login-background {
-  background-image: url("../assets/login_backround.png");
+  background-image: url("../assets/login_backround_cut.png");
   background-size: 100% 100%; /* This stretches the background image to fill the entire viewport */
   background-repeat: no-repeat; /* Prevents the image from repeating */
   background-color: #f0f0f0; /* Sets a background color to fill any space around the image */
@@ -65,16 +65,17 @@ html, body {
   margin: 2% 0; /* Margin above and below the button */
   border: none; /* No border */
   border-radius: 4px; /* Rounded corners */
-  background-color: #007bff; /* Background color of the button */
+  background: linear-gradient(90deg, #05A3BA 0%, #254790 100%); /* Gradient background color */
   color: white; /* Text color */
   font-size: 1em; /* Font size */
   cursor: pointer; /* Pointer cursor on hover */
   width: 100%; /* Full width to match the input fields */
 }
 
+
 /* Style for the login button on hover */
 .login-form button:hover {
-  background-color: #0056b3; /* Darker background color on hover */
+  background: linear-gradient(90deg, #0267c0 0%, #002d62 100%); /* Gradient background color on hover */
 }
 
 /* Style for error messages */
@@ -93,7 +94,7 @@ html, body {
 
 /* Style for the additional options buttons */
 .additional-options button {
-  background-color: #4CAF50; /* Background color */
+  background: linear-gradient(90deg, #66AB44 0%, #026735 100%); /* Gradient background color */
   color: white; /* Text color */
   border: none; /* No border */
   border-radius: 4px; /* Rounded corners */
@@ -106,7 +107,7 @@ html, body {
 
 /* Style for the additional options buttons on hover */
 .additional-options button:hover {
-  background-color: #45a049; /* Darker background color on hover */
+  background: linear-gradient(90deg, #4A8B32 0%, #014522 100%); /* Gradient background color on hover */
 }
 
 /* Style for the paragraph inside additional options (Sign Up) */
@@ -116,7 +117,7 @@ html, body {
 
 /* Style for the Sign Up button inside the paragraph */
 .additional-options p button {
-  background-color: #4CAF50; /* Background color */
+  background: linear-gradient(90deg, #66AB44 0%, #026735 100%); /* Gradient background color */
   color: white; /* Text color */
   border: none; /* No border */
   border-radius: 4px; /* Rounded corners */
@@ -128,7 +129,5 @@ html, body {
 
 /* Style for the Sign Up button on hover inside the paragraph */
 .additional-options p button:hover {
-  background-color: #45a049; /* Darker background color on hover */
+  background: linear-gradient(90deg, #4A8B32 0%, #014522 100%); /* Gradient background color on hover */
 }
-
-
