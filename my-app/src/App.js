@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
@@ -8,15 +9,13 @@ import Homepage from './pages/homepage';
 import RegistrationForm from './pages/registrationFormPage';
 import ResetPassword from './pages/resetPwdPage';
 import Documents from './components/Documents';
-import CardGrid from './components/CardGrid'; // Add this import
 import { auth } from './fireBase/firebase';
 import './App.css'; // Global CSS if any
 import PrivateRoute from './PrivateRoute'; // Add this import
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUserName] = useState(null);
-  const [showCardGrid, setShowCardGrid] = useState(false); // Add this state
+  const [username, setUserName]  = useState(null)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -31,34 +30,26 @@ const App = () => {
     return () => unsubscribe();
   }, []);
 
-  const toggleCardGrid = () => {
-    setShowCardGrid(!showCardGrid);
-  };
-
   return (
     <div className="App">
-      <Header userName={username} />
+      <Header userName={username}/>
       <div className="content">
         {isAuthenticated ? (
-          <>
-            <Routes>
-              <Route path="/" element={<Homepage />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/personal-area" element={<PersonalArea username="exampleUsername" />} />
-              <Route
-                path="/documents"
-                element={
-                  <PrivateRoute adminOnly={true}>
-                    <Documents />
-                  </PrivateRoute>
-                }
-              />
-              {/* Add other routes as needed */}
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-            <button onClick={toggleCardGrid}>Show Cards</button> {/* Add this button */}
-            {showCardGrid && <CardGrid />} {/* Conditionally render CardGrid */}
-          </>
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/personal-area" element={<PersonalArea username="exampleUsername" />} />
+            <Route 
+              path="/documents" 
+              element={
+                <PrivateRoute adminOnly={true}>
+                  <Documents />
+                </PrivateRoute>
+              } 
+            />
+            {/* Add other routes as needed */}
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
         ) : (
           <Routes>
             <Route path="/login" element={<LoginPage />} />
