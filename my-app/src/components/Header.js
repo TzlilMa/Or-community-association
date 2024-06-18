@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../fireBase/firebase';
 import '../styles/Header.css';
 
+
 const Header = () => {
   const [user, setUser] = useState(null);
   const [firstName, setFirstName] = useState(null);
@@ -53,11 +54,12 @@ const Header = () => {
     } else if (componentName === 'Chat') {
       navigate('/chat');
     } else if (componentName === 'Stories') {
-      navigate('/stories');
+      navigate('/stories'); // Ensure it navigates to the correct route
     } else if (componentName === 'Documents') {
       navigate('/documents');
     }
   };
+  
 
   const handleSignOut = () => {
     auth.signOut().then(() => {
