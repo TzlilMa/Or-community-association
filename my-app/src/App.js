@@ -60,6 +60,10 @@ const App = () => {
           </Routes>
         )}
       </div>
+      <div className="footer-container">
+        <div className="above-footer">This is the above footer text</div>
+        <div className="main-footer">This is the main footer text</div>
+        </div>
     </div>
   );
 };

@@ -66,7 +66,7 @@ const LoginPage = () => {
             <p>Don't have an account? <button onClick={handleSignup}>Sign Up</button></p>
           </div>
         </div>
-    </div>
+      </div>
   );
 };
 
