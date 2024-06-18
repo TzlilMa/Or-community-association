@@ -16,11 +16,14 @@ import PrivateRoute from './PrivateRoute'; // Add this import
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUserName]  = useState(null)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setIsAuthenticated(true);
+        console.log(user);
+        setUserName(user.displayName);
       } else {
         setIsAuthenticated(false);
       }
@@ -30,6 +33,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <Header userName={username}/>
       <div className="content">
         {isAuthenticated ? (
           <Routes>

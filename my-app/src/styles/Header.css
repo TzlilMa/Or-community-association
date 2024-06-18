@@ -1,5 +1,3 @@
-/* Existing styles remain the same */
-
 .header {
   position: fixed; /* Fixed position to keep the header at the top */
   top: 0; /* Align the header to the top of the viewport */
@@ -12,6 +10,7 @@
   justify-content: space-between; /* Space elements evenly horizontally */
   align-items: center; /* Center elements vertically */
   padding: 10px 20px; /* Add padding to the header */
+  flex-direction: row-reverse;
 }
 
 .left-section,
@@ -19,6 +18,7 @@
 .right-section {
   display: flex; /* Use flexbox for layout */
   align-items: center; /* Center elements vertically */
+  flex-direction: row-reverse; /* Reverse the order of the flex items */
 }
 
 .social-icons {
@@ -76,43 +76,15 @@
 
 .logo-image {
   width: 100px; /* Adjust size as needed */
-  height: auto; /* Maintain aspect ratio */
   cursor: pointer; /* Set cursor to pointer when hovering over the logo */
 }
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.dropdown-item {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  background: #fff;
-  border: none;
-  text-align: left;
-  cursor: pointer;
-}
-
 .dropdown-item:hover {
   background-color: #f1f1f1;
 }
 
 @media (max-width: 768px) {
   .header {
-    flex-direction: column; /* Stack header items vertically on smaller screens */
+    flex-direction: column-reverse; /* Stack header items vertically on smaller screens */
     padding: 10px; /* Reduce padding for smaller screens */
   }
 
@@ -128,9 +100,5 @@
   .center-section {
     width: 100%; /* Make center section full width on smaller screens */
     order: 3; /* Move center section to bottom on smaller screens */
-  }
-
-  .nav-btn {
-    margin-bottom: 5px; /* Reduce margin between buttons on smaller screens */
   }
 }
