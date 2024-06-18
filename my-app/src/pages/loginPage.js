@@ -69,10 +69,6 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      <div className="footer-container">
-        <div className="above-footer">Above Footer Content</div>
-        <div className="main-footer">Main Footer Content</div>
-      </div>
     </div>
   );
 };

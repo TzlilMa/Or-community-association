@@ -7,15 +7,9 @@ body, html, #root, .App {
   flex-direction: column;
 }
 
-/* Empty space at the top */
-.empty-space {
-  height: 10%; /* Take up 10% of the height */
-  width: 100%;
-}
-
 /* Style for the homepage container */
 .homepage {
-  height: 85%; /* Take up 85% of the height */
+  height: 100%; /* Take up 85% of the height */
   display: flex;
   justify-content: center;
   align-items: center;

@@ -30,7 +30,6 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
       <div className="content">
         {isAuthenticated ? (
           <Routes>
@@ -57,7 +56,6 @@ const App = () => {
           </Routes>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

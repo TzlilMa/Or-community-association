@@ -37,12 +37,10 @@ const Homepage = () => {
   return (
     <div className="App">
       <Header />
-      <div className="content">
         <div className="homepage">
           <h1>Homepage Component</h1>
           <p>Welcome, {firstName || email}</p>
         </div>
-      </div>
       <Footer />
     </div>
   );
