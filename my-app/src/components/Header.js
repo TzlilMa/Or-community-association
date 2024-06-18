@@ -99,8 +99,10 @@ const Header = () => {
                 <img src={InstagramLogo} alt="Instagram" className="social-logo" />
               </a>
             </div>
-            <p className="greeting">שלום {firstName}</p>
-            <button className="nav-btn sign-out-btn" onClick={handleSignOut}>התנתק</button>
+            <div className="greeting">
+              <p>שלום {firstName}</p>
+              <span onClick={() => handleComponentClick('personalArea')}>לאזור האישי</span>
+            </div>            <button className="nav-btn sign-out-btn" onClick={handleSignOut}>התנתק</button>
           </div>
         </>
       )}
