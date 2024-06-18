@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { db, doc, getDoc } from '../fireBase/firebase';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import '../styles/Homepage.css';
 
 const Homepage = () => {

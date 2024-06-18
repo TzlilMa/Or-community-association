@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
-import Footer from './components/Footer';
 import Calendar from './components/Calendar/Calendar';
 import PersonalArea from './components/PeronalArea';
 import LoginPage from './pages/loginPage';
