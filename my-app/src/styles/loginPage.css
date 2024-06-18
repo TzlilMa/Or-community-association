@@ -21,7 +21,7 @@ html, body {
 
 /* Style for the login form container */
 .login-container {
-  width: 40%; /* Width set to 40% of the parent container */
+  width: 35%; /* Width set to 40% of the parent container */
   padding: 2%; /* Padding inside the container */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
   border-radius: 8px; /* Rounded corners */
