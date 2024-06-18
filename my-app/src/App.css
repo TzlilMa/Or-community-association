@@ -70,13 +70,12 @@ body, html, #root, .App {
 /* Style for the footer */
 .footer {
   width: 100%;
-  position: fixed;
-  bottom: 0;
-  height: 8%; /* Footer takes up the bottom 5% of the page */
+  height: 8%; /* Footer takes up the bottom 8% of the page */
   background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   text-align: center;
+  margin-top: auto;
 }
