@@ -5,6 +5,7 @@ body, html, #root, .App {
   margin: 0;
   display: flex;
   flex-direction: column;
+  font-family: 'Rubik', sans-serif;
 }
 
 .header {

@@ -1,5 +1,6 @@
 // src/components/Header.js
 import React, { useState, useEffect } from 'react';
+import { db, doc, getDoc } from '../fireBase/firebase';
 import logo from '../assets/logo.jpg';
 import InstagramLogo from '../assets/brand-instagram.png';
 import FacebookLogo from '../assets/brand-facebook.png';
@@ -9,6 +10,7 @@ import '../styles/Header.css';
 
 const Header = () => {
   const [user, setUser] = useState(null);
+  const [firstName, setFirstName] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +21,29 @@ const Header = () => {
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (!user || !user.email) {
+          console.error('User or email is not provided.');
+          return;
+        }
+
+        const userDoc = await getDoc(doc(db, 'users', user.email));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setFirstName(userData.firstName);
+        } else {
+          console.error('User document does not exist.');
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
 
   const handleComponentClick = (componentName) => {
     if (componentName === 'Calendar') {
@@ -72,7 +97,7 @@ const Header = () => {
                 <img src={InstagramLogo} alt="Instagram" className="social-logo" />
               </a>
             </div>
-            <p className="greeting">שלום {user.email}</p>
+            <p className="greeting">שלום {firstName}</p>
             <button className="nav-btn sign-out-btn" onClick={handleSignOut}>התנתק</button>
           </div>
         </>
