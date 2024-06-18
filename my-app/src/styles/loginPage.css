@@ -1,10 +1,5 @@
 /* loginPage.css */
-/* Set the height of the body, html, root, and App elements to 100% and remove any default margins */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+
 
 .login-background {
   background-image: url("../assets/login_backround_cut.png");
@@ -21,7 +16,7 @@ html, body {
 
 /* Style for the login form container */
 .login-container {
-  width: 35%; /* Width set to 40% of the parent container */
+  width: 30%; /* Width set to 40% of the parent container */
   padding: 2%; /* Padding inside the container */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
   border-radius: 8px; /* Rounded corners */
