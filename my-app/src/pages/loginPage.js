@@ -40,9 +40,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="App">
-      <div className="empty-space"></div>
-      <div className="login-page">
+    <div className="login-background">
         <div className="login-container">
           <h2>Login</h2>
           <form className="login-form" onSubmit={handleLogin}>
@@ -68,7 +66,6 @@ const LoginPage = () => {
             <p>Don't have an account? <button onClick={handleSignup}>Sign Up</button></p>
           </div>
         </div>
-      </div>
     </div>
   );
 };

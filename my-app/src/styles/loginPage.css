@@ -1,37 +1,32 @@
 /* loginPage.css */
 /* Set the height of the body, html, root, and App elements to 100% and remove any default margins */
-body, html, #root, .App {
+html, body {
   height: 100%;
-  width: 100%;
   margin: 0;
-  display: flex;
-  flex-direction: column;
+  padding: 0;
 }
 
-/* Empty space at the top */
-.empty-space {
-  height: 10%; /* Take up 10% of the height */
+.login-background {
+  background-image: url("../assets/login_backround.png");
+  background-size: 100% 100%; /* This stretches the background image to fill the entire viewport */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-color: #f0f0f0; /* Sets a background color to fill any space around the image */
+  min-height: 100vh; /* Minimum height of 100% of the viewport height */
   width: 100%;
-}
-
-/* Style for the login page container */
-.login-page {
-  height: 85%; /* Take up 85% of the height */
-  background-color: #fafaf9; /* Example background color for login page */
-  width: 100%; /* Full width */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end; /* Aligns children along the end of the horizontal line */
+  align-items: center; /* Keeps children centered vertically */
+  padding-right: 10%; /* Optional: Adds some padding on the right so the form isn't directly against the edge of the screen */
 }
 
 /* Style for the login form container */
 .login-container {
   width: 40%; /* Width set to 40% of the parent container */
   padding: 2%; /* Padding inside the container */
-  background-color: #d7d5d5; /* Background color of the container */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
   border-radius: 8px; /* Rounded corners */
   text-align: center; /* Center the text */
+  background-size: cover; /* This makes the background image responsive */
 }
 
 .login-container h2 {
@@ -136,28 +131,4 @@ body, html, #root, .App {
   background-color: #45a049; /* Darker background color on hover */
 }
 
-/* Common styles for footers */
-.footer-container {
-  height: 5%; /* Take up 5% of the height */
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
 
-.above-footer {
-  background: linear-gradient(90deg, #66AB44 0%, #026735 100%);
-  width: 100%;
-  padding: 0.5% 0; /* Smaller height for the above footer */
-  text-align: center;
-  color: white;
-}
-
-.main-footer {
-  background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
-  width: 100%;
-  padding: 1% 0; /* Larger height for the main footer */
-  text-align: center;
-  color: white;
-}
