@@ -40,6 +40,7 @@ const CardGrid = () => {
           )}
         </div>
       ))}
+      {expandedCardIndex !== null && <div className="backdrop" onClick={() => setExpandedCardIndex(null)}></div>}
     </div>
   );
 };

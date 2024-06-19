@@ -3,7 +3,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   padding: 2%;
-  margin-top: 7%; /* Added margin from the top */
+  margin-top: 8%;
 }
 
 .card {
@@ -50,17 +50,18 @@
 
 .card.expanded {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 50%;
+  left: 50%;
+  width: 60%; /* Adjust width as needed */
+  height: auto;
+  max-height: 80%; /* Adjust max-height as needed */
   padding: 20px;
   background-color: #fff;
   z-index: 1000;
   overflow-y: auto;
-  transform: none;
-  margin-top: 7%; /* Added margin from the top */
-
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card-full-view {
@@ -86,4 +87,15 @@
 .card-full-view button {
   display: block;
   margin: 20px auto;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dim background */
+  backdrop-filter: blur(5px); /* Blur background */
+  z-index: 999; /* Below the expanded card */
 }
