@@ -17,7 +17,7 @@ const ResetPassword = () => {
 
     try {
       await sendPasswordResetEmail(auth, email);
-      setMessage('Password reset email sent. Please check your inbox.');
+      setMessage('מייל עם קישור לאיפוס סיסמא נשלח אלייך. הינך מועבר לעמוד ההתחברות');
       setTimeout(() => {
         navigate('/login');
       }, 5000);
@@ -28,22 +28,25 @@ const ResetPassword = () => {
 
   return (
     <div className="reset-container">
-      <h1>Reset Password</h1>
-      {message && <p className="message">{message}</p>}
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Send Reset Email</button>
-      </form>
+      <div className="box-shadow">
+      <h1>?שכחת את הסיסמא</h1>
+      <h4>לא קרה כלום! אנחנו נשלח אלייך קישור לאיפוס סיסמא ובעוד כמה רגעים תוכל להתחבר</h4>
+        {message && <p className="message">{message}</p>}
+        {error && <p className="error">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="email">:כתובת מייל</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit">אפס סיסמא</button>
+        </form>
+      </div>
     </div>
   );
 };

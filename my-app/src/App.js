@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Calendar from './components/Calendar/Calendar';
-import PersonalArea from './components/PeronalArea';
+import PersonalArea from './components/PersonalArea/PeronalArea';
 import LoginPage from './pages/loginPage';
 import Homepage from './pages/homepage';
 import RegistrationForm from './pages/registrationFormPage';
@@ -15,14 +15,10 @@ import PrivateRoute from './PrivateRoute';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUserName] = useState(null);
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setIsAuthenticated(true);
-        console.log(user);
-        setUserName(user.displayName);
       } else {
         setIsAuthenticated(false);
       }
@@ -32,14 +28,14 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header userName={username} />
+      <Header/>
       <div className="content">
         {isAuthenticated ? (
           <>
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/calendar" element={<Calendar />} />
-              <Route path="/personal-area" element={<PersonalArea username="exampleUsername" />} />
+              <Route path="/profile" element={<PersonalArea/>} />
               <Route
                 path="/documents"
                 element={

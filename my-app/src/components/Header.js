@@ -56,11 +56,11 @@ const Header = () => {
     } else if (componentName === 'Chat') {
       navigate('/chat');
     } else if (componentName === 'Stories') {
-      navigate('/stories'); // Ensure it navigates to the correct route
+      navigate('/stories');
     } else if (componentName === 'Documents') {
       navigate('/documents');
     } else if(componentName === 'personalArea'){
-      navigate('/personal-area');
+      navigate('/profile');
     }
   };
   

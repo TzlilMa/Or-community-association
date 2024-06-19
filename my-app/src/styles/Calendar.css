@@ -1,9 +1,9 @@
 /* Calendar.css */
 /* Container Styling */
 .calendar-container {
-  width: 100%;
-  max-width: 700px;
-  margin-top: 5%;
+  width: 80%;
+  height: 50%;
+  margin: 20% 0 30% 0;
   text-align: center;
 }
 

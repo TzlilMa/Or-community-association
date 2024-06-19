@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, setDoc, doc, db, signOut } from '../fireBase/firebase';
+import { auth, setDoc, doc, db } from '../fireBase/firebase';
 import '../styles/registrationForm.css';
-import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -36,13 +34,18 @@ const RegistrationForm = () => {
       const currentDate = new Date();
       const birthDate = new Date(dateOfBirth);
       if (birthDate >= currentDate) {
-        setError("Date of birth must be in the past.");
+        setError("אופס... תאריך הלידה לא תקין");
         return;
       }
-
+  
+      // Register user with email and password
       await createUserWithEmailAndPassword(auth, email, password);
-      await addUserToFirestore(email, { email, firstName, lastName, dateOfBirth, age, personalStory, isStoryPublic, gender, isAdmin });
-
+  
+      // Add user details to Firestore
+      const userData = { email, firstName, lastName, dateOfBirth, age, personalStory, isStoryPublic, gender, isAdmin };
+      await setDoc(doc(db, 'users', email), userData);
+  
+      // Clear form fields and state
       setEmail('');
       setPassword('');
       setFirstName('');
@@ -54,47 +57,37 @@ const RegistrationForm = () => {
       setGender('');
       setIsAdmin(false);
       setError(null);
-
-      await signOut(auth);
-
-      navigate('/login');
+  
     } catch (error) {
-      setError(error.message);
+      setError('אופס... משהו השתבש, אנא נסה שוב');
     }
   };
-
-  const addUserToFirestore = async (email, userData) => {
-    try {
-      await setDoc(doc(db, 'users', email), userData);
-    } catch (error) {
-      console.error('Error adding user to Firestore:', error);
-      throw error;
-    }
-  };
+  
 
   return (
     <div className="registration-page">
+      <div className="gradient-background"></div>
       <div className="registration-container">
-        <h2>Registration Form</h2>
+        <h2>טופס הרשמה</h2>
         {error && <p className="error-message">{error}</p>}
         <form className="registration-form" onSubmit={handleRegistration}>
-          <label>Email:</label>
+          <label>:כתובת מייל</label>
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          <label>Password:</label>
+          <label>:סיסמא</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          <label>First Name:</label>
+          <label>:שם פרטי</label>
           <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-          <label>Last Name:</label>
+          <label>:שם משפחה</label>
           <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
-          <label>Date of Birth:</label>
+          <label>:תאריך לידה</label>
           <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required />
-          <label>Gender:</label>
+          <label>:מגדר</label>
           <select value={gender} onChange={(e) => setGender(e.target.value)}>
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="">בחר</option>
+            <option value="male">זכר</option>
+            <option value="female">נקבה</option>
           </select>
-          <button type="submit">Register</button>
+          <button type="submit">הרשם עכשיו</button>
         </form>
       </div>
     </div>
