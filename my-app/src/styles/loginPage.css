@@ -6,7 +6,7 @@
   background-size: 100% 100%; /* This stretches the background image to fill the entire viewport */
   background-repeat: no-repeat; /* Prevents the image from repeating */
   background-color: #f0f0f0; /* Sets a background color to fill any space around the image */
-  min-height: 100vh; /* Minimum height of 100% of the viewport height */
+  min-height: 92vh; /* Minimum height of 100% of the viewport height */
   width: 100%;
   display: flex;
   justify-content: flex-end; /* Aligns children along the end of the horizontal line */
@@ -59,12 +59,12 @@
   padding: 2%; /* Padding inside the button */
   margin: 2% 0; /* Margin above and below the button */
   border: none; /* No border */
-  border-radius: 4px; /* Rounded corners */
+  border-radius: 8px; /* Rounded corners */
   background: linear-gradient(90deg, #05A3BA 0%, #254790 100%); /* Gradient background color */
   color: white; /* Text color */
   font-size: 1em; /* Font size */
   cursor: pointer; /* Pointer cursor on hover */
-  width: 100%; /* Full width to match the input fields */
+  width: 50%; /* Full width to match the input fields */
 }
 
 
@@ -92,12 +92,12 @@
   background: linear-gradient(90deg, #66AB44 0%, #026735 100%); /* Gradient background color */
   color: white; /* Text color */
   border: none; /* No border */
-  border-radius: 4px; /* Rounded corners */
+  border-radius: 8px; /* Rounded corners */
   cursor: pointer; /* Pointer cursor on hover */
   padding: 2%; /* Padding inside the button */
   font-size: 1em; /* Font size */
   margin-top: 2%; /* Margin above the button */
-  width: 100%; /* Full width to match the input fields */
+  width: 50%; /* Full width to match the input fields */
 }
 
 /* Style for the additional options buttons on hover */

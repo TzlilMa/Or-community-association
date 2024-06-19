@@ -1,33 +1,48 @@
-import React from 'react';
+// src/components/CardGrid.js
+import React, { useState, useEffect } from 'react';
+import { db, collection, query, where, getDocs } from '../fireBase/firebase'; // Updated path
 import '../styles/CardGrid.css';
 
 const CardGrid = () => {
-  const cards = [
-    { title: "Winnie the Pooh: Blood and Honey 2", subtitle: "WEB-DL - 720p" },
-    { title: "IF", subtitle: "WEB-DL - 1080p" },
-    { title: "Wedding Season", subtitle: "WEB-DL - 1080p" },
-    { title: "Back to Black", subtitle: "WEB-DL - 720p" },
-    { title: "The Miracle Club", subtitle: "BluRay - 720p" },
-    { title: "Godzilla X Kong: The New Empire", subtitle: "BluRay - 4K" },
-    { title: "Hit Man", subtitle: "WEB-DL - 4K" },
-    { title: "Inside Out 2", subtitle: "TS - 720p" },
-    { title: "The Monk and the Gun", subtitle: "WEB-DL - 720p" },
-    { title: "Kung Fu Panda 4", subtitle: "BluRay - 720p" }
-  ];
+  const [expandedCardIndex, setExpandedCardIndex] = useState(null);
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const q = query(collection(db, "users"), where("isStoryPublic", "==", true));
+      const querySnapshot = await getDocs(q);
+      const cardData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        name: `${doc.data().firstName} ${doc.data().lastName}`,
+        story: doc.data().personalStory
+      }));
+      setCards(cardData);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="card-grid">
       {cards.map((card, index) => (
-        <div className="card" key={index}>
+        <div 
+          className={`card ${expandedCardIndex === index ? 'expanded' : ''}`} 
+          key={card.id}
+          style={{ display: expandedCardIndex !== null && expandedCardIndex !== index ? 'none' : 'block' }}
+        >
           <div className="card-content">
-            <h3>{card.title}</h3>
-            <p>{card.subtitle}</p>
+            <h3>{card.name}</h3>
+            <button onClick={() => setExpandedCardIndex(index)}>Read More</button>
           </div>
-          <div className="card-hover-content">
-            <p>Additional information about {card.title}</p>
-          </div>
+          {expandedCardIndex === index && (
+            <div className="card-full-view">
+              <p>{card.story}</p>
+              <button onClick={() => setExpandedCardIndex(null)}>Close</button>
+            </div>
+          )}
         </div>
       ))}
+      {expandedCardIndex !== null && <div className="backdrop" onClick={() => setExpandedCardIndex(null)}></div>}
     </div>
   );
 };
