@@ -23,14 +23,11 @@ const CardGrid = () => {
         <div 
           className={`card ${expandedCardIndex === index ? 'expanded' : ''}`} 
           key={index}
-          style={{ display: expandedCardIndex !== null && expandedCardIndex !== index ? 'none' : 'block' }}
         >
           <div className="card-content">
             <h3>{card.title}</h3>
             <p>{card.subtitle}</p>
-            {expandedCardIndex !== index && (
-              <button onClick={() => setExpandedCardIndex(index)}>Read More</button>
-            )}
+            <button onClick={() => setExpandedCardIndex(index)}>Read More</button>
           </div>
           {expandedCardIndex === index && (
             <div className="card-full-view">
