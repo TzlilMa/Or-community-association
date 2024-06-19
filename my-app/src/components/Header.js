@@ -53,8 +53,6 @@ const Header = () => {
       navigate('/calendar');
     } else if (componentName === 'NoticeBoard') {
       navigate('/notice-board');
-    } else if (componentName === 'Chat') {
-      navigate('/chat');
     } else if (componentName === 'Stories') {
       navigate('/stories');
     } else if (componentName === 'Documents') {
@@ -88,7 +86,6 @@ const Header = () => {
         <>
         <div className="center-section">
             <button className="nav-btn" onClick={() => handleComponentClick('NoticeBoard')}>לוח מודעות</button>
-            <button className="nav-btn" onClick={() => handleComponentClick('Chat')}>צ'אט</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Stories')}>סיפורים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Calendar')}>אירועים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Documents')}>מסמכים</button>
