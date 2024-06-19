@@ -21,6 +21,7 @@ const PersonalArea = () => {
     email: '',
     personalStory: '',
     isStoryPublic: false,
+    gender: '',
   });
   const [loading, setLoading] = useState(true);
   const [storyLength, setStoryLength] = useState(0);
@@ -128,7 +129,7 @@ const PersonalArea = () => {
 
   return (
     <div className="personal-area">
-      <h1>!{userData.firstName}, איזה כיף שאתה פה</h1>
+      <h1>!{userData.firstName}, איזה כיף {userData.gender === 'male' ? 'שאתה פה' : 'שאת פה'}</h1>
       <h3>הינה הפרטים שלך כפי שהם מעודכנים במערכת</h3>
       <form onSubmit={handleFormSubmit} className="personal-area-form">
         <label className="form-label">
