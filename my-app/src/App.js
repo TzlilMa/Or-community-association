@@ -13,7 +13,6 @@ import chatIcon from './assets/chat-icon.png';
 import CardGrid from './components/CardGrid'; // Ensure this import is correct
 import { auth } from './fireBase/firebase';
 import './App.css'; // Global CSS if any
-import PrivateRoute from './PrivateRoute';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -45,14 +44,7 @@ const App = () => {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/profile" element={<PersonalArea/>} />
               <Route path="/chat" element={<Chat/>} />
-              <Route
-                path="/documents"
-                element={
-                  <PrivateRoute adminOnly={true}>
-                    <Documents />
-                  </PrivateRoute>
-                }
-              />
+              <Route path="/documents" element={<Documents />} />
               <Route path="/stories" element={<CardGrid />} /> {/* Ensure this route is added */}
               {/* Add other routes as needed */}
               <Route path="*" element={<Navigate to="/" />} />

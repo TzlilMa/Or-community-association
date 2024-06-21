@@ -1,31 +1,10 @@
-// src/components/Documents.js
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../fireBase/firebase';
-import { query, collection, where, getDocs } from 'firebase/firestore';
+import { auth, db, collection, getDocs, addDoc, deleteDoc, query, where } from '../fireBase/firebase';
 import '../styles/Documents.css';
-
-const initialData = {
-  'מיצוי זכויות': [
-    { text: 'שיקום לאנשים עם מוגבלות לפי חוק נכות כללית', url: 'https://www.btl.gov.il/benefits/Vocational_Rehabilitation/Vocational_Rehabilitation_disabeld/Pages/default.aspx' },
-    { text: 'הנחה בעמלות הבנקים לנכים', url: 'https://www.kolzchut.org.il/he/%D7%94%D7%A0%D7%97%D7%94_%D7%91%D7%A2%D7%9E%D7%9C%D7%95%D7%AA_%D7%94%D7%91%D7%A0%D7%A7%D7%99%D7%9D_%D7%9C%D7%A0%D7%9B%D7%99%D7%9D' },
-    { text: 'נקודות זיכוי ממס הכנסה למי שמפרנסים את בני זוגם', url: 'https://www.kolzchut.org.il/he/%D7%A0%D7%A7%D7%95%D7%93%D7%95%D7%AA_%D7%96%D7%99%D7%9B%D7%95%D7%99_%D7%9E%D7%9E%D7%A1_%D7%94%D7%9B%D7%A0%D7%A1%D7%94_%D7%9C%D7%9E%D7%99_%D7%A9%D7%9E%D7%A4%D7%A8%D7%A0%D7%A1%D7%99%D7%9D_%D7%90%D7%AA_%D7%91%D7%A0%D7%99_%D7%96%D7%95%D7%92%D7%9D' },
-    { text: 'הנחה בארנונה לנכים', url: 'https://www.kolzchut.org.il/he/%D7%94%D7%A0%D7%97%D7%94_%D7%91%D7%90%D7%A8%D7%A0%D7%95%D7%A0%D7%94_%D7%9C%D7%A0%D7%9B%D7%99%D7%9D' },
-    { text: 'הנחה בתחבורה הציבורית לאנשים עם נכות', url: 'https://www.kolzchut.org.il/he/%D7%94%D7%A0%D7%97%D7%94_%D7%91%D7%AA%D7%97%D7%91%D7%95%D7%A8%D7%94_%D7%94%D7%A6%D7%99%D7%91%D7%95%D7%A8%D7%99%D7%AA_%D7%9C%D7%90%D7%A0%D7%A9%D7%99%D7%9D_%D7%A2%D7%9D_%D7%A0%D7%9B%D7%95%D7%AA' },
-  ],
-  'רפואי': [
-    { text: 'מידע על שיקום לאחר פגיעה מוחית', url: 'https://meroshu.com/' },
-  ],
-  'תעסוקה': [
-    { text: 'תעסוקה שווה - משרד העבודה', url: 'https://taasukashava.org.il/' },
-  ],
-  'אקדמיה': [
-    { text: 'שיקום מקצועי וסיוע בלימודים לאנשים עם נכות', url: 'https://www.kolzchut.org.il/he/%D7%A9%D7%99%D7%A7%D7%95%D7%9D_%D7%9E%D7%A7%D7%A6%D7%95%D7%A2%D7%99_%D7%95%D7%A1%D7%99%D7%95%D7%A2_%D7%91%D7%9C%D7%99%D7%9E%D7%95%D7%93%D7%99%D7%9D_%D7%9C%D7%90%D7%A0%D7%A9%D7%99%D7%9D_%D7%A2%D7%9D_%D7%A0%D7%9B%D7%95%D7%AA' },
-  ],
-};
 
 const Documents = () => {
   const [isAdmin, setIsAdmin] = useState(false);
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [newSubject, setNewSubject] = useState('');
   const [newLinkText, setNewLinkText] = useState('');
@@ -36,67 +15,97 @@ const Documents = () => {
   const [linkToRemove, setLinkToRemove] = useState({ subject: '', link: '' });
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const fetchUserAndLinks = async () => {
+      const user = auth.currentUser;
       if (user) {
         const userQuerySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', user.email)));
         if (!userQuerySnapshot.empty) {
           const userData = userQuerySnapshot.docs[0].data();
           setIsAdmin(userData.isAdmin || false);
-        } else {
-          setIsAdmin(false);
         }
-      } else {
-        setIsAdmin(false);
+      }
+      fetchLinks();
+    };
+
+    fetchUserAndLinks();
+
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        fetchLinks(); // Fetch links whenever the auth state changes
       }
     });
 
     return () => unsubscribe();
   }, []);
 
-  const handleAddLink = () => {
+  const fetchLinks = async () => {
+    try {
+      const linksSnapshot = await getDocs(collection(db, 'links'));
+      const linksData = {};
+      linksSnapshot.forEach(doc => {
+        const { name, link, subject } = doc.data();
+        if (!linksData[subject]) {
+          linksData[subject] = [];
+        }
+        linksData[subject].push({ text: name, url: link });
+      });
+      setData(linksData);
+    } catch (error) {
+      console.error("Error fetching links: ", error);
+    }
+  };
+
+  const handleAddLink = async () => {
+    console.log("handleAddLink called");
+    console.log("newLinkUrl:", newLinkUrl);
+    console.log("newLinkText:", newLinkText);
+    console.log("selectedSubject:", selectedSubject);
+    console.log("newSubject:", newSubject);
+
     if (!newLinkUrl || !newLinkText || (!selectedSubject && !newSubject)) {
       alert("All fields are required.");
       return;
     }
 
-    if (Object.values(data).flat().some(link => link.url === newLinkUrl)) {
-      alert("Link already exists!");
-      return;
-    }
-
     const subject = selectedSubject || newSubject;
-    const updatedData = { ...data };
-
-    if (!updatedData[subject]) {
-      updatedData[subject] = [];
+    try {
+      await addDoc(collection(db, 'links'), {
+        name: newLinkText,
+        link: newLinkUrl,
+        subject: subject
+      });
+      console.log("Link added successfully");
+      fetchLinks();
+      setShowModal(false);
+      setNewSubject('');
+      setNewLinkText('');
+      setNewLinkUrl('');
+      setSelectedSubject('');
+    } catch (error) {
+      console.error("Error adding link: ", error);
     }
-
-    updatedData[subject].push({ text: newLinkText, url: newLinkUrl });
-    setData(updatedData);
-    setShowModal(false);
-    setNewSubject('');
-    setNewLinkText('');
-    setNewLinkUrl('');
-    setSelectedSubject('');
   };
 
-  const handleRemoveLink = () => {
+  const handleRemoveLink = async () => {
     const { subject, link } = linkToRemove;
     if (!subject || !link) {
       alert("All fields are required.");
       return;
     }
 
-    const updatedData = { ...data };
-    const filteredLinks = updatedData[subject].filter(item => item.url !== link);
-    if (filteredLinks.length === 0) {
-      delete updatedData[subject];
-    } else {
-      updatedData[subject] = filteredLinks;
+    try {
+      const linksQuery = query(collection(db, 'links'), where('link', '==', link), where('subject', '==', subject));
+      const linksSnapshot = await getDocs(linksQuery);
+      linksSnapshot.forEach(async (doc) => {
+        await deleteDoc(doc.ref);
+      });
+
+      fetchLinks();
+      setShowRemoveModal(false);
+      setLinkToRemove({ subject: '', link: '' });
+    } catch (error) {
+      console.error("Error removing link: ", error);
     }
-    setData(updatedData);
-    setShowRemoveModal(false);
-    setLinkToRemove({ subject: '', link: '' });
   };
 
   return (
@@ -154,8 +163,14 @@ const Documents = () => {
                   URL קישור:
                   <input type="text" value={newLinkUrl} onChange={(e) => setNewLinkUrl(e.target.value)} />
                 </label>
-                <button onClick={handleAddLink}>שלח</button>
-                <button onClick={() => setShowModal(false)}>ביטול</button>
+                <button onClick={handleAddLink}>אישור</button>
+                <button onClick={() => {
+                  setShowModal(false);
+                  setNewSubject('');
+                  setNewLinkText('');
+                  setNewLinkUrl('');
+                  setSelectedSubject('');
+                }}>ביטול</button>
               </div>
             </>
           )}
