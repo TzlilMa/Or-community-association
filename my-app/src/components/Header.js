@@ -51,16 +51,16 @@ const Header = () => {
     if (componentName === 'Calendar') {
       navigate('/calendar');
     } else if (componentName === 'NoticeBoard') {
-      navigate('/notice-board');
+      navigate('/inquiry'); // Updated navigation to inquiry page
     } else if (componentName === 'Stories') {
       navigate('/stories');
     } else if (componentName === 'Documents') {
       navigate('/documents');
-    } else if(componentName === 'personalArea'){
+    } else if (componentName === 'personalArea') {
       navigate('/profile');
     }
   };
-  
+
   const handleSignOut = () => {
     auth.signOut().then(() => {
       navigate('/login'); // Redirect to the login page after signing out
@@ -82,13 +82,12 @@ const Header = () => {
       </div>
       {user && (
         <>
-        <div className="center-section">
-            <button className="nav-btn" onClick={() => handleComponentClick('NoticeBoard')}>לוח מודעות</button>
+          <div className="center-section">
+            <button className="nav-btn" onClick={() => handleComponentClick('NoticeBoard')}>מערכת פניות</button> {/* Updated text and click handler */}
             <button className="nav-btn" onClick={() => handleComponentClick('Stories')}>סיפורים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Calendar')}>אירועים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Documents')}>מסמכים</button>
           </div>
-          
           <div className="left-section">
             <div className="social-icons">
               <a href="https://www.facebook.com/share/46HcXMT56FM73K8j/?mibextid=K35XfP" target="_blank" rel="noopener noreferrer">
@@ -99,11 +98,10 @@ const Header = () => {
               </a>
             </div>
             <div className="greeting">
-              <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')}/>
+              <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')} />
               <p>שלום {firstName}</p>
-            </div> 
-              
-              <img src={logoutLogo} alt="exit" className="header-icon" onClick={handleSignOut}/>
+            </div>
+            <img src={logoutLogo} alt="exit" className="header-icon" onClick={handleSignOut} />
           </div>
         </>
       )}
