@@ -14,8 +14,6 @@ const BulletinBoard = () => {
           <li>הודעה 5</li>
           <li>הודעה 6</li>
           <li>הודעה 7</li>
-        
-
         </ul>
       </div>
     </div>

@@ -3,9 +3,10 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    width: 20%;
-    background-color: #ffffff;
-    padding: 2%;
+    margin-top: 10%;
+    width: 25%;
+    background-color: #fafafa;
+    padding: 5%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
     border-radius: 8%;
 }
