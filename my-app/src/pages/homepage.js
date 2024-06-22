@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { db, doc, getDoc } from '../fireBase/firebase';
+import BulletinBoard from '../components/BulletinBoard';
 import '../styles/Homepage.css';
 
 const Homepage = () => {
@@ -34,10 +35,12 @@ const Homepage = () => {
 
   return (
     <div className="App">
-        <div className="homepage">
-          <h1>Homepage Component</h1>
-          <p>Welcome, {firstName || email}</p>
+      <div className="homepage">
+        <div className="main-content">
+        <h1>"לעיתים צריכים רק אור קטן בשביל לעשות שינוי גדול"</h1>
         </div>
+        <BulletinBoard />
+      </div>
     </div>
   );
 };

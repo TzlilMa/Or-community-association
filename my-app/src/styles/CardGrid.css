@@ -1,17 +1,31 @@
+/* CardGrid.css */
+
+.card-grid-container {
+  background-image: url('../assets/back_ground_stories.png'); /* Path to your background image */
+  background-size: cover; /* Ensure the image covers the entire area */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  min-height: 50vh; /* Ensure it covers the full height of the viewport */
+  margin-top: 5%;
+  padding: 5%;
+  width: 500%;
+  height:70%;
+}
+
 .card-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center; /* Center the cards */
   gap: 10px;
-  padding: 2%;
   margin-top: 20px;
 }
 
+/* The rest of your CSS remains the same */
 .card {
   position: relative;
   width: 300px; /* Increase width */
   height: 200px; /* Increase height */
-  border: 1px solid #ccc;
+  border: 1px solid #c2c2c2;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;

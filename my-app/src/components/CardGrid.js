@@ -1,7 +1,7 @@
 // src/components/CardGrid.js
 import React, { useState, useEffect } from 'react';
-import { db, collection, query, where, getDocs } from '../fireBase/firebase'; // Updated path
 import '../styles/CardGrid.css';
+import { db, collection, query, where, getDocs } from '../fireBase/firebase'; // Updated path
 
 const CardGrid = () => {
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
@@ -23,26 +23,28 @@ const CardGrid = () => {
   }, []);
 
   return (
-    <div className="card-grid">
-      {cards.map((card, index) => (
-        <div 
-          className={`card ${expandedCardIndex === index ? 'expanded' : ''}`} 
-          key={card.id}
-          style={{ display: expandedCardIndex !== null && expandedCardIndex !== index ? 'none' : 'block' }}
-        >
-          <div className="card-content">
-            <h3>{card.name}</h3>
-            <button onClick={() => setExpandedCardIndex(index)}>Read More</button>
-          </div>
-          {expandedCardIndex === index && (
-            <div className="card-full-view">
-              <p>{card.story}</p>
-              <button onClick={() => setExpandedCardIndex(null)}>Close</button>
+    <div className="card-grid-container">
+      <div className="card-grid">
+        {cards.map((card, index) => (
+          <div 
+            className={`card ${expandedCardIndex === index ? 'expanded' : ''}`} 
+            key={card.id}
+            style={{ display: expandedCardIndex !== null && expandedCardIndex !== index ? 'none' : 'block' }}
+          >
+            <div className="card-content">
+              <h3>{card.name}</h3>
+              <button onClick={() => setExpandedCardIndex(index)}>Read More</button>
             </div>
-          )}
-        </div>
-      ))}
-      {expandedCardIndex !== null && <div className="backdrop" onClick={() => setExpandedCardIndex(null)}></div>}
+            {expandedCardIndex === index && (
+              <div className="card-full-view">
+                <p>{card.story}</p>
+                <button onClick={() => setExpandedCardIndex(null)}>Close</button>
+              </div>
+            )}
+          </div>
+        ))}
+        {expandedCardIndex !== null && <div className="backdrop" onClick={() => setExpandedCardIndex(null)}></div>}
+      </div>
     </div>
   );
 };

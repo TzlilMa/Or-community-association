@@ -11,36 +11,20 @@ body, html, #root, .App {
 .homepage {
   height: 100%; /* Take up 85% of the height */
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background-color: #58d1e1; /* Example background color for homepage */
-  width: 100%;
-  padding: 2%;
-}
-
-/* Common styles for footers */
-.footer-container {
-  height: 5%; /* Take up 5% of the height */
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: flex-start;
+  align-items: center;
+  background: linear-gradient(to bottom, #c1e7ee, rgb(76, 186, 244)); /* Linear gradient from turquoise to darker blue */
+  width:100%;
+  padding:2%;
 }
 
-.above-footer {
-  background: linear-gradient(90deg, #66AB44 0%, #026735 100%);
-  width: 100%;
-  padding: 0.5% 0; /* Smaller height for the above footer */
+.main-content {
+  flex-grow: 1;
   text-align: center;
-  color: #ffffff;
+  padding: 2%;
+  margin-right: 2%; /* Adjusted for the fixed BulletinBoard */
+  margin-bottom: 20%;
 }
 
-.main-footer {
-  background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
-  width: 100%;
-  padding: 1% 0; /* Larger height for the main footer */
-  text-align: center;
-  color: white;
-}
+
+
