@@ -13,18 +13,51 @@ body, html, #root, .App {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background: linear-gradient(to bottom, #c1e7ee, rgb(76, 186, 244)); /* Linear gradient from turquoise to darker blue */
-  width:100%;
-  padding:2%;
+  background: linear-gradient(to bottom, #c1e7ee, rgb(4, 74, 112)); /* Linear gradient from turquoise to darker blue */
+  width: 100%;
+  padding: 2%;
 }
 
 .main-content {
+  color: white;
   flex-grow: 1;
   text-align: center;
   padding: 2%;
+  font-family: 'Rubik';
+  font-size: 20px;
   margin-right: 2%; /* Adjusted for the fixed BulletinBoard */
   margin-bottom: 20%;
+  margin-top: 25%;
+
 }
 
+/* Keyframe animation for the text appearance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+h1 {
+  animation: fadeIn 2s ease-in-out; /* Apply the fadeIn animation */
+  font-family: 'Rubik', sans-serif; /* Apply the Rubik font */
+}
 
+.photos-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Gap between the two images */
+  margin-top: 20px; /* Space above the images */
+}
+
+.photo {
+  width: 450px; /* Adjust the width as needed */
+  height: auto; /* Maintain the aspect ratio */
+  border-radius: 10px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}

@@ -4,6 +4,9 @@ import { useLocation } from 'react-router-dom';
 import { db, doc, getDoc } from '../fireBase/firebase';
 import BulletinBoard from '../components/BulletinBoard';
 import '../styles/Homepage.css';
+import photo1 from '../assets/image-hpmepage2.jpeg';
+import photo2 from '../assets/images-homepage.jpeg'; 
+
 
 const Homepage = () => {
   const location = useLocation();
@@ -37,7 +40,11 @@ const Homepage = () => {
     <div className="App">
       <div className="homepage">
         <div className="main-content">
-        <h1>"לעיתים צריכים רק אור קטן בשביל לעשות שינוי גדול"</h1>
+          <h1>"לעיתים צריכים רק אור קטן בשביל לעשות שינוי גדול"</h1>
+          <div className="photos-container">
+            <img src={photo1} alt="Description of photo 1" className="photo" />
+            <img src={photo2} alt="Description of photo 2" className="photo" />
+          </div>
         </div>
         <BulletinBoard />
       </div>

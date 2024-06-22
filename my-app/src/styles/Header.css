@@ -21,6 +21,10 @@
   flex-direction: row-reverse; /* Reverse the order of the flex items */
 }
 
+.center-section{
+  gap: 40px;
+}
+
 .social-icons {
   display: flex;
   align-items: center;
@@ -57,19 +61,28 @@
 }
 
 .nav-btn {
-  color: #333; /* Change text color to black */
+  color: black; /* Change text color to black */
   background-color: transparent; /* Keep background transparent */
-  border: 2px solid #333; /* Add border */
+  border: 2px solid #ffffff; /* Add border */
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
+  font-family: 'Rubik';
   padding: 8px 16px; /* Add padding for better spacing */
   margin-bottom: 10px; /* Add margin between buttons */
+  margin-left: 10px; /* Add margin between buttons */
   transition: all 0.3s ease; /* Add transition for smooth hover effect */
+  border-radius: 8px;
+  background-color: white;
+}
+
+.nav-btn:first-child {
+  margin-left: 0; /* Remove margin from the first button */
 }
 
 .nav-btn:hover {
-  background-color: #333; /* Change background color on hover */
-  color: #fff; /* Change text color on hover */
+  background: linear-gradient(90deg, #0267c0 0%, #034b9c 100%); /* Gradient background color on hover */
+  color:white; /* Change text color on hover */
+  border-radius: 20px;
 }
 
 .logo-container {
@@ -82,6 +95,7 @@
   width: 100px; /* Adjust size as needed */
   cursor: pointer; /* Set cursor to pointer when hovering over the logo */
 }
+
 .dropdown-item:hover {
   background-color: #f1f1f1;
 }
