@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../fireBase/firebase';
 import '../styles/Header.css';
 
-
 const Header = () => {
   const [user, setUser] = useState(null);
   const [firstName, setFirstName] = useState(null);
@@ -62,7 +61,6 @@ const Header = () => {
     }
   };
   
-
   const handleSignOut = () => {
     auth.signOut().then(() => {
       navigate('/login'); // Redirect to the login page after signing out
