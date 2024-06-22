@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
@@ -9,21 +10,28 @@ import RegistrationForm from './pages/registrationFormPage';
 import ResetPassword from './pages/resetPwdPage';
 import Documents from './components/Documents';
 import Chat from './components/Chat';
+import InquiryForm from './components/Inquiry/InquiryForm'; // Corrected path
+import AdminInquiryList from './components/Inquiry/AdminInquiryList'; // Corrected path
 import chatIcon from './assets/chat-icon.png';
 import CardGrid from './components/CardGrid'; // Ensure this import is correct
-import { auth } from './fireBase/firebase';
+import { auth, db } from './fireBase/firebase'; // Ensure db is imported
+import { getDoc, doc } from 'firebase/firestore'; // Ensure getDoc and doc are imported
 import './App.css'; // Global CSS if any
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); // Add state to check if user is admin
   const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setIsAuthenticated(true);
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        setIsAdmin(userDoc.exists() && userDoc.data().isAdmin);
       } else {
         setIsAuthenticated(false);
+        setIsAdmin(false);
       }
     });
     return () => unsubscribe();
@@ -32,20 +40,22 @@ const App = () => {
   const toggleChat = () => {
     setShowChat(!showChat);
   };
-  
+
   return (
     <div className="App">
-      <Header/>
+      <Header />
       <div className="content">
         {isAuthenticated ? (
           <>
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/calendar" element={<Calendar />} />
-              <Route path="/profile" element={<PersonalArea/>} />
-              <Route path="/chat" element={<Chat/>} />
+              <Route path="/profile" element={<PersonalArea />} />
+              <Route path="/chat" element={<Chat />} />
               <Route path="/documents" element={<Documents />} />
               <Route path="/stories" element={<CardGrid />} /> {/* Ensure this route is added */}
+              <Route path="/inquiry" element={<InquiryForm />} /> {/* Normal user */}
+              {isAdmin && <Route path="/admin-inquiries" element={<AdminInquiryList />} />} {/* Admin user */}
               {/* Add other routes as needed */}
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>

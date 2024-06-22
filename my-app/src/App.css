@@ -21,15 +21,20 @@ body, html, #root, .App {
 
 .content {
   flex: 1;
-  overflow-y: auto;
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  padding-top: 10%; /* Adjusted to account for the fixed header */
+  overflow-y: auto;
 }
 
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ensure it takes full viewport height */
 }
 
 .App-logo {
@@ -77,8 +82,7 @@ body, html, #root, .App {
   justify-content: center;
   color: white;
   text-align: center;
-  margin-top: auto;
-  position: relative;
+  flex-shrink: 0; /* Ensure the footer doesn't shrink */
 }
 
 .chat-icon {
@@ -111,8 +115,6 @@ body, html, #root, .App {
     transform: rotateZ(0deg); /* End position: return to no rotation */
   }
 }
-
-
 
 .footer-content {
   margin-left: 40px;
