@@ -6,7 +6,7 @@
   background-size: 100% 100%; /* This stretches the background image to fill the entire viewport */
   background-repeat: no-repeat; /* Prevents the image from repeating */
   background-color: #f0f0f0; /* Sets a background color to fill any space around the image */
-  min-height: 92vh; /* Minimum height of 100% of the viewport height */
+  min-height: 100vh; /* Minimum height of 100% of the viewport height */
   width: 100%;
   display: flex;
   justify-content: flex-end; /* Aligns children along the end of the horizontal line */
