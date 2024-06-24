@@ -24,6 +24,7 @@ const Chat = () => {
   const [ipAddress, setIpAddress] = useState("");
   const conversationEndRef = useRef(null); // Reference to the end of the conversation
   const userCache = useRef({}); // Cache for user info
+  const initialLoad = useRef(true); // Ref to track initial load
 
   useEffect(() => {
     const fetchIpAddress = async () => {
@@ -43,14 +44,10 @@ const Chat = () => {
       setLoading(true);
 
       try {
-        // Calculate the timestamp for 24 hours ago
         const now = new Date();
-        const twentyFourHoursAgo = new Date(now.setDate(now.getDate() - 1));
-
-        // Convert to Firebase Timestamp
+        const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
         const timestamp24HoursAgo = Timestamp.fromDate(twentyFourHoursAgo);
 
-        // Query for messages in the last 24 hours
         const q = query(
           collection(db, "messages"),
           where("timestamp", ">", timestamp24HoursAgo),
@@ -59,26 +56,21 @@ const Chat = () => {
 
         const querySnapshot = await getDocs(q);
 
-        const fetchedMessages = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const fetchedMessages = await Promise.all(
+          querySnapshot.docs.map(async (doc) => {
+            const message = { id: doc.id, ...doc.data() };
+            const senderInfo = await getCachedUserInfo(message.sender);
+            return {
+              ...message,
+              senderFirstName: senderInfo.firstName,
+              senderLastName: senderInfo.lastName,
+            };
+          })
+        );
 
-        // Fetch sender information for each message
-        const messagePromises = fetchedMessages.map(async (message) => {
-          const senderInfo = await getCachedUserInfo(message.sender);
-          return {
-            ...message,
-            senderFirstName: senderInfo.firstName,
-            senderLastName: senderInfo.lastName,
-          };
-        });
-
-        Promise.all(messagePromises).then((processedMessages) => {
-          setMessages(processedMessages);
-          setLoading(false);
-          scrollToBottom(); // Scroll to the latest message
-        });
+        setMessages(fetchedMessages);
+        setLoading(false);
+        scrollToBottom(true); // Scroll to the latest message on initial load
       } catch (error) {
         console.error("Error fetching messages:", error);
         setLoading(false);
@@ -87,15 +79,15 @@ const Chat = () => {
 
     fetchMessages();
 
-    // Listen for new messages in real-time
     const now = new Date();
-    const twentyFourHoursAgo = new Date(now.setDate(now.getDate() - 1));
+    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
     const timestamp24HoursAgo = Timestamp.fromDate(twentyFourHoursAgo);
     const q = query(
       collection(db, "messages"),
       where("timestamp", ">", timestamp24HoursAgo),
       orderBy("timestamp")
     );
+
     const unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach(async (change) => {
         if (change.type === "added") {
@@ -111,14 +103,19 @@ const Chat = () => {
             senderLastName: senderInfo.lastName,
           };
 
-          setMessages((prevMessages) => [...prevMessages, processedMessage]);
-          scrollToBottom(); // Scroll to the latest message
+          setMessages((prevMessages) => {
+            const updatedMessages = prevMessages.filter(
+              (msg) => !(msg.content === processedMessage.content && msg.sender === processedMessage.sender)
+            );
+            return [...updatedMessages, processedMessage];
+          });
+          scrollToBottom(false); // Do not scroll automatically when new message is added
         }
       });
     });
 
     return () => unsubscribe();
-  }, []); // Add dependencies if needed
+  }, []); // Fetch only once on component mount
 
   const getCachedUserInfo = async (email) => {
     if (userCache.current[email]) {
@@ -135,11 +132,11 @@ const Chat = () => {
         return userInfo;
       } else {
         console.log("User document not found for email:", email);
-        return { firstName: "Unknown", lastName: "" }; // Return default values or handle as needed
+        return { firstName: "Unknown", lastName: "" };
       }
     } catch (error) {
       console.error("Error fetching user info:", error);
-      return { firstName: "Unknown", lastName: "" }; // Return default values or handle as needed
+      return { firstName: "Unknown", lastName: "" };
     }
   };
 
@@ -147,24 +144,23 @@ const Chat = () => {
     e.preventDefault();
     if (!user || newMessage.trim() === "") return;
 
-    // Get or create a display name
+    const tempId = `temp-${Date.now()}`;
     const displayName = user.displayName || "Unknown User";
-    const [firstName, lastName] = displayName.split(" ").length > 1 
+    const [firstName, lastName] = displayName.split(" ").length > 1
       ? displayName.split(" ")
       : [displayName, ""];
 
-    // Optimistically update the UI
     const optimisticMessage = {
-      id: `temp-${Date.now()}`,
+      id: tempId,
       sender: user.email,
       content: newMessage,
-      timestamp: new Date(), // Use local time for optimistic update
+      timestamp: new Date(),
       senderFirstName: firstName,
       senderLastName: lastName,
     };
 
     setMessages((prevMessages) => [...prevMessages, optimisticMessage]);
-    scrollToBottom();
+    scrollToBottom(false);
 
     try {
       await addDoc(collection(db, "messages"), {
@@ -173,15 +169,23 @@ const Chat = () => {
         timestamp: serverTimestamp(),
         ipAddress: ipAddress,
       });
-      setNewMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
+    } finally {
+      setNewMessage("");
     }
   };
 
-  const scrollToBottom = () => {
+  const scrollToBottom = (initial) => {
     if (conversationEndRef.current) {
-      conversationEndRef.current.scrollIntoView({ behavior: "smooth" });
+      if (initial) {
+        // Scroll to the bottom on initial load
+        conversationEndRef.current.scrollIntoView({ behavior: "auto" });
+        initialLoad.current = false;
+      } else if (!initialLoad.current) {
+        // For new messages, make sure to only scroll if not initial load
+        conversationEndRef.current.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
@@ -194,7 +198,7 @@ const Chat = () => {
   return (
     <div className="chat-container">
       {loading ? (
-        <p>Loading messages...</p>
+        <p>...טוען הודעות</p>
       ) : (
         <>
           <div className="conversation">
@@ -219,9 +223,9 @@ const Chat = () => {
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Write a message..."
+              placeholder="הקלד הודעה חדשה..."
             />
-            <button type="submit">Send</button>
+            <button type="submit">שלח</button>
           </form>
         </>
       )}
