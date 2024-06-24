@@ -4,7 +4,7 @@ import { db } from '../../fireBase/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useAuth } from '../../fireBase/AuthContext';
 import AdminInquiryDetail from './AdminInquiryDetail';
-import '../../styles/InquiryForm.css'; // Corrected path
+import '../../styles/InquiryForm.css'; 
 
 const AdminInquiryList = () => {
   const { currentUser } = useAuth();

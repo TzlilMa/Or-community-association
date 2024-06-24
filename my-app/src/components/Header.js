@@ -10,11 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../fireBase/firebase';
 import '../styles/Header.css';
 
-const Header = () => {
+const Header = ({isAdmin}) => {
   const [user, setUser] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const navigate = useNavigate();
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
@@ -51,7 +50,11 @@ const Header = () => {
     if (componentName === 'Calendar') {
       navigate('/calendar');
     } else if (componentName === 'NoticeBoard') {
-      navigate('/inquiry'); // Updated navigation to inquiry page
+        if (isAdmin) {
+          navigate('/admin-inquiries');
+        } else {
+          navigate('/inquiry'); // Updated navigation to inquiry page
+        }
     } else if (componentName === 'Stories') {
       navigate('/stories');
     } else if (componentName === 'Documents') {

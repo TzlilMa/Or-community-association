@@ -27,7 +27,7 @@ const App = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setIsAuthenticated(true);
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        const userDoc = await getDoc(doc(db, 'users', user.email));
         setIsAdmin(userDoc.exists() && userDoc.data().isAdmin);
       } else {
         setIsAuthenticated(false);
@@ -43,7 +43,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
+      <Header isAdmin={isAdmin} />
       <div className="content">
         {isAuthenticated ? (
           <>
@@ -53,10 +53,13 @@ const App = () => {
               <Route path="/profile" element={<PersonalArea />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/documents" element={<Documents />} />
-              <Route path="/stories" element={<CardGrid />} /> {/* Ensure this route is added */}
-              <Route path="/inquiry" element={<InquiryForm />} /> {/* Normal user */}
-              {isAdmin && <Route path="/admin-inquiries" element={<AdminInquiryList />} />} {/* Admin user */}
-              {/* Add other routes as needed */}
+              <Route path="/stories" element={<CardGrid />} /> 
+              {isAdmin ?
+               <Route path="/admin-inquiries" element={<AdminInquiryList />} />
+                :
+                <Route path="/inquiry" element={<InquiryForm />} />
+              }
+              
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </>
@@ -80,7 +83,7 @@ const App = () => {
         )}
         קהילת אור, לאנשים עם פגיעה מוחית
       </footer>
-      {showChat && <Chat />} {/* Render Chat component if showChat is true */}
+      {showChat && <Chat />}
     </div>
   );
 };
