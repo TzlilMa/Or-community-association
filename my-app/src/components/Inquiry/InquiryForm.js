@@ -1,32 +1,33 @@
 // src/components/inquiry/InquiryForm.js
-import React, { useState } from 'react';
-import { db } from '../../fireBase/firebase';
-import { addDoc, collection } from 'firebase/firestore';
-import { useAuth } from '../../fireBase/AuthContext';
-import AdminInquiryList from './AdminInquiryList';
-import '../../styles/InquiryForm.css'; // Corrected path
+import React, { useState } from "react";
+import { db } from "../../fireBase/firebase";
+import { addDoc, collection } from "firebase/firestore";
+import { useAuth } from "../../fireBase/AuthContext";
+import AdminInquiryList from "./AdminInquiryList";
+import "../../styles/InquiryForm.css"; // Corrected path
 
 const InquiryForm = () => {
   const { currentUser } = useAuth();
-  const [subject, setSubject] = useState('');
-  const [content, setContent] = useState('');
+  const [subject, setSubject] = useState("");
+  const [content, setContent] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await addDoc(collection(db, 'inquiry'), { // Corrected collection name
+      await addDoc(collection(db, "inquiry"), {
+        // Corrected collection name
         email: currentUser.email,
         subject: subject,
         content: content,
-        response: ''
+        response: "",
       });
-      setSubject('');
-      setContent('');
-      alert('Inquiry submitted successfully!');
+      setSubject("");
+      setContent("");
+      alert("Inquiry submitted successfully!");
     } catch (error) {
-      console.error('Error submitting inquiry: ', error);
-      alert('Error submitting inquiry. Please try again.');
+      console.error("Error submitting inquiry: ", error);
+      alert("Error submitting inquiry. Please try again.");
     }
   };
 
@@ -39,12 +40,25 @@ const InquiryForm = () => {
           <h2>Submit an Inquiry</h2>
           <form onSubmit={handleSubmit}>
             <div>
-              <label>Subject:</label>
-              <input type="text" value={subject} onChange={(e) => setSubject(e.target.value)} required />
+              <label className="label1">Subject:</label>
+              <input
+                className="input1"
+                type="text"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                required
+                placeholder="please Enter Your Subject"
+              />
             </div>
             <div>
-              <label>Content:</label>
-              <textarea value={content} onChange={(e) => setContent(e.target.value)} required></textarea>
+              <label className="label1">Content:</label>
+              <textarea
+                className="input1"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                required
+                placeholder="please Enter Your Content"
+              ></textarea>
             </div>
             <button type="submit">Submit Inquiry</button>
           </form>
