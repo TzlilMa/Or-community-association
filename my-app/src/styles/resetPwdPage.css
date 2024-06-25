@@ -1,47 +1,46 @@
 /* resetPwdPage.css */
 
-/* Gradient background at the top */
+/* Gradient strip in the middle of the page */
 .reset-container {
-  position: relative;
-  width: 100%;
-  height: 30%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Align items at the top */
-  background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
-}
-
-/* Box shadow centered in the middle */
-.box-shadow {
-  position: absolute;
-  top: 50%; /* Position it vertically in the middle of the viewport */
-  left: 50%; /* Position it horizontally in the middle of the viewport */
-  transform: translate(-50%, -50%);
-  width: 80%; /* Adjust the width as needed */
-  height: 50vh; /* Adjust the height as needed */
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Box shadow effect */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.reset-container form {
-  max-width: 400px;
-  width: 100%;
-  text-align: center;
-}
-
-.reset-container form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #254790;
-}
+    background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Adjust the width of the strip as needed */
+    height: 20%; /* Adjust the height of the strip as needed */
+    display: flex;
+    justify-content: center; /* Center children horizontally */
+    align-items: center; /* Center children vertically */
+  }
+  
+  /* Square shadow box centered in the middle of the gradient strip */
+  .box-shadow {
+    width: 50%; /* Fixed width for the square box */
+    height: 200%; /* Fixed height to make it square */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Box shadow effect */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .reset-container form {
+    max-width: 90%; /* Adjust based on the size of the box-shadow */
+    width: 100%;
+    text-align: center;
+  }
+  
+  .reset-container form label {
+    display: block;
+    margin-bottom: 2%;
+    color: #254790;
+  }
 
 .reset-container form input {
-  width: 100%;
+  width: 30%;
   padding: 0.5rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
@@ -50,7 +49,6 @@
 }
 
 .reset-container form button {
-  width: 100%;
   padding: 0.5rem;
   background-color: #05A3BA;
   color: white;
@@ -58,7 +56,7 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  width: 30%;
+  width: 20%;
 }
 
 .reset-container form button:hover {
