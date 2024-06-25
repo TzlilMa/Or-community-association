@@ -1,38 +1,32 @@
-/* src/styles/documents.css */
-
-body, html, #root, .App {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Align items to the start of the flex container */
+/* Documents.css */
+html, body {
+  overflow: auto;
 }
 
 .documents-container {
-  padding: 5%;
-  background-color: #f9f9f9;
-  border-radius: 2%;
-  box-shadow: 0 0 2% rgba(0, 0, 0, 0.1);
-  max-width: 90%;
-  margin: 2% auto;
-  font-family: Arial, sans-serif;
-  position: relative; /* Added for positioning the add-link-button */
+  width: 80%;
+  margin: 8% auto;
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: right; /* Align content to the right */
 }
 
 .documents-container h1 {
   text-align: center;
-  color: #333;
-  margin-bottom: 5%;
+  color: #254790;
+  margin-bottom: 1.5rem;
 }
 
 .documents-container section {
-  margin-bottom: 5%;
+  margin-bottom: 2rem;
 }
 
 .documents-container h2 {
-  color: #444;
-  margin-bottom: 2.5%;
+  color: #05A3BA;
+  border-bottom: 2px solid #254790;
+  padding-bottom: 0.5rem;
 }
 
 .documents-container ul {
@@ -40,88 +34,43 @@ body, html, #root, .App {
   padding: 0;
 }
 
-.documents-container ul li {
-  margin-bottom: 2.5%;
+.documents-container li {
+  margin: 0.5rem 0;
 }
 
-.documents-container ul li a {
-  color: #007BFF;
+.documents-container li a {
+  color: #254790;
   text-decoration: none;
 }
 
-.documents-container ul li a:hover {
+.documents-container li a:hover {
   text-decoration: underline;
 }
 
-.disclaimer {
-  text-align: center;
-  color: #777;
-  margin-top: 5%;
-  font-size: 90%;
-}
-
-.add-link-button,
-.remove-link-button {
-  position: absolute;
-  width: 15%; /* Make both buttons wider */
-  padding: 1%;
-  background-color: #007BFF;
+.add-link-button, .remove-link-button {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.75rem 1.5rem;
+  background-color: #05A3BA;
   color: white;
   border: none;
-  border-radius: 5%;
+  border-radius: 4px;
   cursor: pointer;
+  font-size: 1rem;
+}
+
+.add-link-button:hover, .remove-link-button:hover {
+  background-color: #254790;
+}
+
+.disclaimer {
+  font-size: 0.875rem;
   text-align: center;
+  margin-top: 2rem;
+  color: #666;
 }
 
-.add-link-button:hover,
-.remove-link-button:hover {
-  background-color: #0056b3;
-}
-
-.add-link-button {
-  top: 10%;
-  right: 2%;
-}
-
-.remove-link-button {
-  top: 18%; /* Adjust position for remove button */
-  right: 2%;
-}
-
-/* New styles for the modal */
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 2%;
-  border-radius: 10%;
-  box-shadow: 0 2% 10% rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.modal h2 {
-  margin-top: 0;
-}
-
-.modal label {
-  display: block;
-  margin: 1% 0 0.5%;
-}
-
-.modal input,
-.modal select {
-  width: 100%;
-  padding: 0.5%;
-  margin-bottom: 1%;
-}
-
-.modal button {
-  margin-right: 1%;
-}
-
-/* Background overlay for modal */
+/* Modal Styles */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -130,4 +79,54 @@ body, html, #root, .App {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 80%;
+  max-width: 500px;
+  text-align: right; /* Align modal content to the right */
+}
+
+.modal h2 {
+  color: #05A3BA;
+  margin-bottom: 1rem;
+}
+
+.modal label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.modal input[type="text"],
+.modal input[type="url"],
+.modal select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal button {
+  padding: 0.75rem;
+  background-color: #05A3BA;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 0.5rem; /* Change to margin-left for RTL */
+  font-size: 1rem;
+}
+
+.modal button:hover {
+  background-color: #254790;
 }
