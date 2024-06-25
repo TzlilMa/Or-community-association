@@ -1,28 +1,25 @@
-.header {
-  position: fixed; /* Fixed position to keep the header at the top */
-  top: 0; /* Align the header to the top of the viewport */
-  left: 0; /* Align the header to the left of the viewport */
+header {
   width: 100%; /* Ensure the header spans the full width of the viewport */
   z-index: 9999; /* Set a high z-index to ensure the header is on top of other content */
   background-color: #ffffff; /* Add background color as needed */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for visual separation */
-  display: flex; /* Use flexbox for layout */
-  justify-content: space-between; /* Space elements evenly horizontally */
-  align-items: center; /* Center elements vertically */
-  padding: 10px 20px; /* Add padding to the header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px; /* Add padding to the header */
   flex-direction: row-reverse;
 }
 
-.left-section,
-.center-section,
 .right-section {
-  display: flex; /* Use flexbox for layout */
-  align-items: center; /* Center elements vertically */
-  flex-direction: row-reverse; /* Reverse the order of the flex items */
+  display: flex;
+  align-items: center;
+  padding-right: 3%;
 }
 
-.center-section{
-  gap: 40px;
+.left-section{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
 }
 
 .social-icons {
@@ -101,7 +98,7 @@
 }
 
 @media (max-width: 768px) {
-  .header {
+  .Header {
     flex-direction: column-reverse; /* Stack header items vertically on smaller screens */
     padding: 10px; /* Reduce padding for smaller screens */
   }

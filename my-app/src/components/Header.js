@@ -77,7 +77,7 @@ const Header = ({isAdmin}) => {
   };
 
   return (
-    <header className="header">
+    <header>
       <div className="right-section">
         <div className="logo-container" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
           <img src={logo} alt="Logo" className="logo-image" />
