@@ -10,17 +10,17 @@ import RegistrationForm from './pages/registrationFormPage';
 import ResetPassword from './pages/resetPwdPage';
 import Documents from './components/Documents';
 import Chat from './components/Chat';
-import InquiryForm from './components/Inquiry/InquiryForm'; // Corrected path
-import AdminInquiryList from './components/Inquiry/AdminInquiryList'; // Corrected path
+import InquiryForm from './components/Inquiry/InquiryForm';
+import AdminInquiryList from './components/Inquiry/AdminInquiryList';
 import chatIcon from './assets/chat-icon.png';
-import CardGrid from './components/CardGrid'; // Ensure this import is correct
-import { auth, db } from './fireBase/firebase'; // Ensure db is imported
-import { getDoc, doc } from 'firebase/firestore'; // Ensure getDoc and doc are imported
-import './App.css'; // Global CSS if any
+import CardGrid from './components/CardGrid';
+import { auth, db } from './fireBase/firebase';
+import { getDoc, doc } from 'firebase/firestore';
+import './App.css';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false); // Add state to check if user is admin
+  const [isAdmin, setIsAdmin] = useState(false);
   const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
@@ -44,35 +44,34 @@ const App = () => {
   return (
     <div className="App">
       <Header isAdmin={isAdmin} />
-      <div className="content">
-        {isAuthenticated ? (
-          <>
-            <Routes>
+      <main>
+        <Routes>
+          {isAuthenticated ? (
+            <>
               <Route path="/" element={<Homepage />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/profile" element={<PersonalArea />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/documents" element={<Documents />} />
-              <Route path="/stories" element={<CardGrid />} /> 
-              {isAdmin ?
-               <Route path="/admin-inquiries" element={<AdminInquiryList />} />
-                :
+              <Route path="/stories" element={<CardGrid />} />
+              {isAdmin ? (
+                <Route path="/admin-inquiries" element={<AdminInquiryList />} />
+              ) : (
                 <Route path="/inquiry" element={<InquiryForm />} />
-              }
-              
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </>
-        ) : (
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/registrationForm" element={<RegistrationForm />} />
-            <Route path="/resetPassword" element={<ResetPassword />} />
-            <Route path="*" element={<Navigate to="/login" />} />
-          </Routes>
-        )}
-      </div>
-      <footer className="footer">
+              )}
+            </>
+          ) : (
+            <>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/registrationForm" element={<RegistrationForm />} />
+              <Route path="/resetPassword" element={<ResetPassword />} />
+              <Route path="*" element={<Navigate to="/login" />} />
+            </>
+          )}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </main>
+      <footer>
         {isAuthenticated && (
           <img
             src={chatIcon}
