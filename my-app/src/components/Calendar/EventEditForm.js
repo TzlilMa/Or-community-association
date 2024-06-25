@@ -36,10 +36,10 @@ const EventEditForm = ({ event, onSubmit, onCancel }) => {
   return (
     <div className="event-edit-form-overlay">
       <div className="event-edit-form-modal">
-        <h3>Edit Event</h3>
+        <h3>עריכת אירוע</h3>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name">Event Name:</label>
+            <label htmlFor="name">:שם האירוע</label>
             <input
               type="text"
               id="name"
@@ -48,7 +48,7 @@ const EventEditForm = ({ event, onSubmit, onCancel }) => {
             />
           </div>
           <div>
-            <label htmlFor="location">Location:</label>
+            <label htmlFor="location">:מיקום</label>
             <input
               type="text"
               id="location"
@@ -57,7 +57,9 @@ const EventEditForm = ({ event, onSubmit, onCancel }) => {
             />
           </div>
           <div>
-            <label htmlFor="description">Description:</label>
+            <label htmlFor="description">
+              :תיאור
+            </label>
             <textarea
               id="description"
               value={description}
@@ -65,7 +67,7 @@ const EventEditForm = ({ event, onSubmit, onCancel }) => {
             />
           </div>
           <div>
-            <label htmlFor="date">Date:</label>
+            <label htmlFor="date">:תאריך</label>
             <input
               type="date"
               id="date"
@@ -74,7 +76,7 @@ const EventEditForm = ({ event, onSubmit, onCancel }) => {
             />
           </div>
           <div>
-            <label htmlFor="time">Time:</label>
+            <label htmlFor="time">:שעה</label>
             <input
               type="time"
               id="time"

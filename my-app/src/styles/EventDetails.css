@@ -1,23 +1,107 @@
-.admin-actions-event-detail{
-    display: flex;    
-    margin-bottom: 5%;
-}
-
-.admin-event-detail-btn, .admin-delete-detail-btn {
-    padding: 5px 10px;
-    font-size: 14px;
-    cursor: pointer;
-    background-color: green;
-    color: white;
+.event-details {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    position: relative;
+  }
+  
+  .event-details h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+  
+  .event-details p {
+    margin: 10px 0;
+  }
+  
+  .event-details button {
+    padding: 8px 16px;
+    margin-top: 10px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
     border: none;
-    border-radius: 5px;
-    margin: 3%;
-}
-
-.admin-delete-detail-btn {
-    background-color: rgb(138, 10, 10);
-}
-
-.admin-delete-detail-btn:hover {
-    background-color: brown;
-}
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .event-details button:hover {
+    background-color: #0056b3;
+  }
+  
+  .admin-actions-event-detail {
+    margin-top: 20px;
+  }
+  
+  .admin-delete-detail-btn {
+    background-color: #dc3545;
+  }
+  
+  .admin-event-detail-btn {
+    margin-right: 10px;
+  }
+  
+  .admin-event-detail-btn:last-of-type {
+    margin-right: 0;
+  }
+  
+  /* "Line design" effect */
+  .event-details:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background-color: #007bff; /* Color can be adjusted */
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+  
+  /* Styles for ParticipantList component */
+  .participant-list {
+    margin-top: 10px;
+  }
+  
+  .participant-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .participant-list li {
+    margin-bottom: 5px;
+  }
+  
+  /* Styles for EventEditForm component */
+  .event-edit-form {
+    margin-top: 10px;
+  }
+  
+  .event-edit-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .event-edit-form input,
+  .event-edit-form textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .event-edit-form button {
+    background-color: #28a745;
+  }
+  
+  .event-edit-form button:hover {
+    background-color: #218838;
+  }
+  
