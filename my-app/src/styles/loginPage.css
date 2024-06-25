@@ -1,128 +1,99 @@
 /* loginPage.css */
-
-
 .login-background {
-  background-image: url("../assets/login_backround_cut.png");
-  background-size: 100% 100%; /* This stretches the background image to fill the entire viewport */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
-  background-color: #f0f0f0; /* Sets a background color to fill any space around the image */
-  min-height: 100vh; /* Minimum height of 100% of the viewport height */
-  width: 100%;
   display: flex;
-  justify-content: flex-end; /* Aligns children along the end of the horizontal line */
-  align-items: center; /* Keeps children centered vertically */
-  padding-right: 10%; /* Optional: Adds some padding on the right so the form isn't directly against the edge of the screen */
+  justify-content: flex-end; /* Align the form to the right */
+  align-items: center; /* Center vertically */
+  min-height: 100vh; /* Full viewport height */
+  background: url('../assets/login_backround_cut.png') no-repeat; /* Set background image */
+  background-size: 120%; /* Adjust the percentage to zoom out more */
+  background-position: left center; /* Keep the image on the left */
+  padding-right: 10%; /* Space from the right edge for the form */
+  box-sizing: border-box; /* Include padding in the width/height */
 }
 
-/* Style for the login form container */
 .login-container {
-  width: 30%; /* Width set to 40% of the parent container */
-  padding: 2%; /* Padding inside the container */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
-  border-radius: 8px; /* Rounded corners */
-  text-align: center; /* Center the text */
-  background-size: cover; /* This makes the background image responsive */
+  width: 30%; /* Adjust width as needed */
+  background-color: rgba(255, 255, 255, 0.9); /* White background with some transparency */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Include padding in the width */
+  text-align: center; /* Center the header text */
 }
 
 .login-container h2 {
-  margin-bottom: 5%; /* Margin below the title */
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
   color: #333;
-  width: 100%; /* Full width */
 }
 
-/* Style for the login form */
 .login-form {
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack the children vertically */
-  align-items: center; /* Center the elements horizontally */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between form elements */
+  align-items: center;
 }
 
-/* Style for the form labels */
 .login-form label {
-  margin-bottom: 2%; /* Margin below the label */
-  font-weight: bold; /* Bold text */
-  text-align: center; /* Center the text */
-  width: 100%; /* Full width */
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333;
 }
 
-/* Style for the input fields */
 .login-form input {
-  width: 100%; /* Full width to match the button */
-  padding: 2%; /* Padding inside the input field */
-  margin-bottom: 2%; /* Margin below the input field */
-  border: 1px solid #ccc; /* Border color and style */
-  border-radius: 4px; /* Rounded corners */
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-/* Style for the login button */
 .login-form button {
-  padding: 2%; /* Padding inside the button */
-  margin: 2% 0; /* Margin above and below the button */
-  border: none; /* No border */
-  border-radius: 8px; /* Rounded corners */
-  background: linear-gradient(90deg, #05A3BA 0%, #254790 100%); /* Gradient background color */
-  color: white; /* Text color */
-  font-size: 1em; /* Font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  width: 50%; /* Full width to match the input fields */
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: #05A3BA; /* Button color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 25%;
 }
 
-
-/* Style for the login button on hover */
 .login-form button:hover {
-  background: linear-gradient(90deg, #0267c0 0%, #002d62 100%); /* Gradient background color on hover */
+  background-color: #007A91; /* Darker shade on hover */
 }
 
-/* Style for error messages */
-.error-message {
-  color: red; /* Red text color */
-  margin-bottom: 2%; /* Margin below the error message */
-}
-
-/* Style for the additional options container (Forgot password, Sign Up) */
 .additional-options {
-  margin-top: 2%; /* Margin above the container */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack the children vertically */
-  align-items: center; /* Center the elements horizontally */
+  margin-top: 1rem;
+  text-align: center; /* Center additional options */
 }
 
-/* Style for the additional options buttons */
 .additional-options button {
-  background: linear-gradient(90deg, #66AB44 0%, #026735 100%); /* Gradient background color */
-  color: white; /* Text color */
-  border: none; /* No border */
-  border-radius: 8px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  padding: 2%; /* Padding inside the button */
-  font-size: 1em; /* Font size */
-  margin-top: 2%; /* Margin above the button */
-  width: 50%; /* Full width to match the input fields */
+  background: none;
+  border: none;
+  color: #05A3BA;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1rem;
 }
 
-/* Style for the additional options buttons on hover */
-.additional-options button:hover {
-  background: linear-gradient(90deg, #4A8B32 0%, #014522 100%); /* Gradient background color on hover */
-}
-
-/* Style for the paragraph inside additional options (Sign Up) */
 .additional-options p {
-  margin-top: 2%; /* Margin above the paragraph */
+  margin-top: 1rem;
+  color: #333;
 }
 
-/* Style for the Sign Up button inside the paragraph */
 .additional-options p button {
-  background: linear-gradient(90deg, #66AB44 0%, #026735 100%); /* Gradient background color */
-  color: white; /* Text color */
-  border: none; /* No border */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  padding: 2%; /* Padding inside the button */
-  font-size: 1em; /* Font size */
-  width: auto; /* Auto width */
+  font-size: 1rem;
+  color: #05A3BA;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
 }
 
-/* Style for the Sign Up button on hover inside the paragraph */
-.additional-options p button:hover {
-  background: linear-gradient(90deg, #4A8B32 0%, #014522 100%); /* Gradient background color on hover */
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
 }
