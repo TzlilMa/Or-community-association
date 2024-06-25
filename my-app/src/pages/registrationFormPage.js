@@ -68,7 +68,7 @@ const RegistrationForm = () => {
     <div className="registration-page">
       <div className="gradient-background"></div>
       <div className="registration-container">
-        <h2>טופס הרשמה</h2>
+        <h2>טופס הרשמה לקהילת אור</h2>
         {error && <p className="error-message">{error}</p>}
         <form className="registration-form" onSubmit={handleRegistration}>
           <label>:כתובת מייל</label>
