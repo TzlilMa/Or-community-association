@@ -1,126 +1,150 @@
 /* src/components/inquiry/InquiryForm.css */
-.inquiry-form {
-  background-image: url("../assets/inquiry-backGroundImg.jpg"); /* Path to your background image */
-  background-size: cover; /* Ensure the image covers the entire area */
-  background-position: center; /* Center the background image */
-  background-repeat: no-repeat; /* Prevent the image from repeating */
-  min-height: 50vh; /* Ensure it covers the full height of the viewport */
-  width: 100%;
-  max-width: 800px;
-  margin: 200px auto 0 auto; /* Increased margin-top to 200px */
-  padding: 50px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+.inquiry-container {
+    text-align: center;
 }
 
-.inquiry-form:hover {
-  border-radius: 50px;
-  border: 1px solid #6c6c6c;
+.selection-cubes {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.cube {
+    width: 150px;
+    height: 150px;
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+}
+
+.cube:hover {
+    background-color: #e0e0e0;
+}
+
+.my-inquiries {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.my-inquiries h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.inquiry-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.inquiry-item:last-child {
+    border-bottom: none;
+}
+
+.inquiry-item p {
+    margin: 5px 0;
+}
+
+/* Existing styles */
+.inquiry-form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .inquiry-form h2 {
-  text-align: center;
-  font-size: 30px;
-  margin-bottom: 50px;
-  color: black;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .inquiry-form label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  transition: color 0.3s; /* Add transition for smooth color change */
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
 .inquiry-form input[type="text"],
 .inquiry-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .inquiry-form button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .inquiry-form button:hover {
-  background-color: #0056b3;
-  border-radius: 8px;
+    background-color: #0056b3;
 }
 
 .admin-inquiry-list,
 .admin-inquiry-detail {
-  width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s,
-    border-radius 0.3s; /* Add transition for smooth scaling, shadow change, background color change, and border radius change */
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .admin-inquiry-list h2,
 .admin-inquiry-detail h3 {
-  text-align: center;
-  margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .admin-inquiry-list label,
 .admin-inquiry-detail label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  transition: color 0.3s, background-color 0.3s; /* Add transition for smooth color and background color change */
-}
-
-.admin-inquiry-list label:hover,
-.admin-inquiry-detail label:hover {
-  color: #1e76d4; /* Change color on hover */
-  background-color: red; /* Change background color on hover */
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
 .admin-inquiry-list input[type="text"],
 .admin-inquiry-detail textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .admin-inquiry-detail button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #28a745;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .admin-inquiry-detail button:hover {
-  background-color: #218838;
-}
-
-.input1:hover {
-  background-color: rgb(233, 245, 255);
-  border: #007bff;
-}
-
-.label1 {
-  font-size: 25px;
-  color: black;
+    background-color: #218838;
 }
