@@ -83,51 +83,51 @@ const InquiryForm = () => {
       )}
       {view === "newInquiry" && (
         <div className="inquiry-form">
-          <h2>Submit an Inquiry</h2>
+          <h2>הגשת פנייה</h2>
           <form onSubmit={handleSubmit}>
             <div>
-              <label className="label1">Subject:</label>
+              <label className="label1">:נושא</label>
               <select
                 className="input1"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 required
               >
-                <option value="" disabled>Select a subject</option>
+                <option value="" disabled>בחר נושא</option>
                 {subjects.map((subj, index) => (
                   <option key={index} value={subj}>{subj}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="label1">Content:</label>
+              <label className="label1">:תוכן הפנייה</label>
               <textarea
                 className="input1"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 required
-                placeholder="Please enter your content"
+                placeholder="אנא כתוב את תוכן הפנייה כאן"
               ></textarea>
             </div>
-            <button type="submit">Submit Inquiry</button>
+            <button type="submit">הגשת פנייה</button>
           </form>
         </div>
       )}
       {view === "myInquiries" && (
         <div className="my-inquiries">
-          <h2>My Inquiries</h2>
+          <h2>הפניות שלי</h2>
           {myInquiries.length > 0 ? (
             myInquiries.map((inquiry) => (
               <div key={inquiry.id} className="inquiry-item">
-                <p><strong>Subject:</strong> {inquiry.subject}</p>
-                <p><strong>Content:</strong> {inquiry.content}</p>
+                <p><strong>נושא:</strong> {inquiry.subject}</p>
+                <p><strong>תוכן הפנייה:</strong> {inquiry.content}</p>
                 <p>
-                  <strong>Admin Response:</strong> {inquiry.response ? inquiry.response : "There is no response"}
+                  <strong>תגובה:</strong> {inquiry.response ? inquiry.response : "אין תגובה כרגע במערכת"}
                 </p>
               </div>
             ))
           ) : (
-            <p>No inquiries found.</p>
+            <p>.לא נמצאו פניות</p>
           )}
         </div>
       )}

@@ -1,15 +1,15 @@
 /* src/components/inquiry/InquiryForm.css */
 .inquiry-container {
     text-align: center;
-}
-
-.selection-cubes {
+  }
+  
+  .selection-cubes {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-}
-
-.cube {
+  }
+  
+  .cube {
     width: 150px;
     height: 150px;
     margin: 0 20px;
@@ -22,41 +22,41 @@
     background-color: #f0f0f0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     font-size: 18px;
-}
-
-.cube:hover {
+  }
+  
+  .cube:hover {
     background-color: #e0e0e0;
-}
-
-.my-inquiries {
+  }
+  
+  .my-inquiries {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.my-inquiries h2 {
+  }
+  
+  .my-inquiries h2 {
     text-align: center;
     margin-bottom: 20px;
-}
-
-.inquiry-item {
+  }
+  
+  .inquiry-item {
     padding: 10px;
     border-bottom: 1px solid #ccc;
-}
-
-.inquiry-item:last-child {
+  }
+  
+  .inquiry-item:last-child {
     border-bottom: none;
-}
-
-.inquiry-item p {
+  }
+  
+  .inquiry-item p {
     margin: 5px 0;
-}
-
-/* Existing styles */
-.inquiry-form {
+  }
+  
+  /* Existing styles */
+  .inquiry-form {
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
@@ -64,30 +64,49 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.inquiry-form h2 {
+  }
+  
+  .inquiry-form h2 {
     text-align: center;
     margin-bottom: 20px;
-}
-
-.inquiry-form label {
+  }
+  
+  .inquiry-form label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-}
-
-.inquiry-form input[type="text"],
-.inquiry-form textarea {
+  }
+  
+  .inquiry-form input[type="text"],
+  .inquiry-form textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-.inquiry-form button {
-    width: 100%;
+  }
+  
+  .inquiry-form select {
+    width: 30%; /* Adjust as needed */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .inquiry-form textarea {
+    width: 95%;
+    height: 15%; /* Adjust as needed */
+    min-height: 50px; /* Ensure a minimum height */
+    direction: rtl; /* Make text direction RTL */
+    text-align: right; /* Align text to the right */
+    margin: 0 auto; /* Center the textarea */
+  }
+  
+  .inquiry-form button {
+    width: 20%; /* Adjust as needed */
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -95,14 +114,20 @@
     color: white;
     font-size: 16px;
     cursor: pointer;
-}
-
-.inquiry-form button:hover {
+  }
+  
+  .inquiry-form button:hover {
     background-color: #0056b3;
-}
-
-.admin-inquiry-list,
-.admin-inquiry-detail {
+  }
+  
+  /* Right-to-left styling for specific elements */
+  .inquiry-form textarea::placeholder {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .admin-inquiry-list,
+  .admin-inquiry-detail {
     width: 100%;
     max-width: 800px;
     margin: 20px auto;
@@ -110,31 +135,31 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.admin-inquiry-list h2,
-.admin-inquiry-detail h3 {
+  }
+  
+  .admin-inquiry-list h2,
+  .admin-inquiry-detail h3 {
     text-align: center;
     margin-bottom: 20px;
-}
-
-.admin-inquiry-list label,
-.admin-inquiry-detail label {
+  }
+  
+  .admin-inquiry-list label,
+  .admin-inquiry-detail label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-}
-
-.admin-inquiry-list input[type="text"],
-.admin-inquiry-detail textarea {
+  }
+  
+  .admin-inquiry-list input[type="text"],
+  .admin-inquiry-detail textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-.admin-inquiry-detail button {
+  }
+  
+  .admin-inquiry-detail button {
     width: 100%;
     padding: 10px;
     border: none;
@@ -143,8 +168,9 @@
     color: white;
     font-size: 16px;
     cursor: pointer;
-}
-
-.admin-inquiry-detail button:hover {
+  }
+  
+  .admin-inquiry-detail button:hover {
     background-color: #218838;
-}
+  }
+  
