@@ -4,7 +4,7 @@
   justify-content: flex-end; /* Align the form to the right */
   align-items: center; /* Center vertically */
   min-height: 100vh; /* Full viewport height */
-  background: url('../assets/login_backround_cut.png') no-repeat; /* Set background image */
+  background: url("../assets/login_backround_cut.png") no-repeat; /* Set background image */
   background-size: 120%; /* Adjust the percentage to zoom out more */
   background-position: left center; /* Keep the image on the left */
   padding-right: 10%; /* Space from the right edge for the form */
@@ -13,7 +13,12 @@
 
 .login-container {
   width: 30%; /* Adjust width as needed */
-  background-color: rgba(255, 255, 255, 0.9); /* White background with some transparency */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* White background with some transparency */
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -50,7 +55,7 @@
 .login-form button {
   padding: 0.75rem;
   font-size: 1rem;
-  background-color: #05A3BA; /* Button color */
+  background-color: #05a3ba; /* Button color */
   color: white;
   border: none;
   border-radius: 4px;
@@ -60,7 +65,7 @@
 }
 
 .login-form button:hover {
-  background-color: #007A91; /* Darker shade on hover */
+  background-color: #007a91; /* Darker shade on hover */
 }
 
 .additional-options {
@@ -71,7 +76,7 @@
 .additional-options button {
   background: none;
   border: none;
-  color: #05A3BA;
+  color: #05a3ba;
   cursor: pointer;
   padding: 0;
   font-size: 1rem;
@@ -84,7 +89,7 @@
 
 .additional-options p button {
   font-size: 1rem;
-  color: #05A3BA;
+  color: #05a3ba;
   background: none;
   border: none;
   cursor: pointer;

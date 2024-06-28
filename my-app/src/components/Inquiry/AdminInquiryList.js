@@ -1,23 +1,29 @@
 // src/components/inquiry/AdminInquiryList.js
-import React, { useState, useEffect } from 'react';
-import { db } from '../../fireBase/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
-import { useAuth } from '../../fireBase/AuthContext';
-import AdminInquiryDetail from './AdminInquiryDetail';
-import '../../styles/InquiryForm.css'; 
+import React, { useState, useEffect } from "react";
+import { db } from "../../fireBase/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { useAuth } from "../../fireBase/AuthContext";
+import AdminInquiryDetail from "./AdminInquiryDetail";
+import "../../styles/InquiryForm.css";
 
 const AdminInquiryList = () => {
   const { currentUser } = useAuth();
-  const [subject, setSubject] = useState('');
+  const [subject, setSubject] = useState("");
   const [inquiries, setInquiries] = useState([]);
   const [selectedInquiry, setSelectedInquiry] = useState(null);
 
   useEffect(() => {
     if (subject) {
       const fetchInquiries = async () => {
-        const q = query(collection(db, 'inquiries'), where('subject', '==', subject), where('response', '==', ''));
+        const q = query(
+          collection(db, "inquiries"),
+          where("subject", "==", subject),
+          where("response", "==", "")
+        );
         const querySnapshot = await getDocs(q);
-        setInquiries(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+        setInquiries(
+          querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
       };
 
       fetchInquiries();
@@ -29,7 +35,12 @@ const AdminInquiryList = () => {
       <h2>Admin Inquiry List</h2>
       <div>
         <label>Select Subject:</label>
-        <input type="text" value={subject} onChange={(e) => setSubject(e.target.value)} required />
+        <input
+          type="text"
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+          required
+        />
       </div>
       <div>
         {inquiries.map((inquiry) => (
