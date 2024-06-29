@@ -17,12 +17,11 @@
   color: white;
   flex-grow: 1;
   text-align: center;
-  padding: 2%;
   font-family: "Rubik";
   font-size: 20px;
   margin-right: 2%; /* Adjusted for the fixed BulletinBoard */
-  margin-bottom: 20%;
-  margin-top: 25%;
+  margin-bottom: 2%;
+  margin-top: 2%;
 }
 
 /* Keyframe animation for the text appearance */
