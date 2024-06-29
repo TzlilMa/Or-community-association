@@ -83,3 +83,62 @@ html {
   color: red;
   margin-bottom: 1rem;
 }
+
+/* Media Queries for Responsiveness */
+
+/* For small devices (phones, less than 600px) */
+@media only screen and (max-width: 600px) {
+  .registration-container {
+    width: 90%;
+    height: auto;
+    margin-right: 1rem;
+  }
+
+  .registration-form input,
+  .registration-form button {
+    width: 80%;
+  }
+
+  .registration-form button {
+    height: auto;
+    font-size: medium;
+  }
+}
+
+/* For medium devices (tablets, 600px to 900px) */
+@media only screen and (min-width: 600px) and (max-width: 900px) {
+  .registration-container {
+    width: 80%;
+    height: auto;
+    margin-right: 1.5rem;
+  }
+
+  .registration-form input,
+  .registration-form button {
+    width: 70%;
+  }
+
+  .registration-form button {
+    height: auto;
+    font-size: large;
+  }
+}
+
+/* For large devices (desktops, 900px and up) */
+@media only screen and (min-width: 900px) {
+  .registration-container {
+    width: 30%;
+    height: 80%;
+    margin-right: 2rem;
+  }
+
+  .registration-form input,
+  .registration-form button {
+    width: 50%;
+  }
+
+  .registration-form button {
+    height: 50px;
+    font-size: large;
+  }
+}

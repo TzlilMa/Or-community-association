@@ -4,7 +4,11 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background: linear-gradient(to bottom, #c1e7ee, rgb(4, 74, 112)); /* Linear gradient from turquoise to darker blue */
+  background: linear-gradient(
+    to bottom,
+    #c1e7ee,
+    rgb(4, 74, 112)
+  ); /* Linear gradient from turquoise to darker blue */
   width: 100%;
   padding: 2%;
 }
@@ -14,12 +18,11 @@
   flex-grow: 1;
   text-align: center;
   padding: 2%;
-  font-family: 'Rubik';
+  font-family: "Rubik";
   font-size: 20px;
   margin-right: 2%; /* Adjusted for the fixed BulletinBoard */
   margin-bottom: 20%;
   margin-top: 25%;
-
 }
 
 /* Keyframe animation for the text appearance */
@@ -36,7 +39,7 @@
 
 h1 {
   animation: fadeIn 2s ease-in-out; /* Apply the fadeIn animation */
-  font-family: 'Rubik', sans-serif; /* Apply the Rubik font */
+  font-family: "Rubik", sans-serif; /* Apply the Rubik font */
 }
 
 .photos-container {
