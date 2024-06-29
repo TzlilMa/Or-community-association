@@ -1,7 +1,9 @@
 /* src/App.css */
 
-body, html {
-  font-family: 'Rubik', sans-serif;
+body,
+html {
+  font-family: "Rubik", sans-serif;
+  height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -9,52 +11,20 @@ body, html {
 .App {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 main {
-  flex: 1;
+  flex: 1; /* Allow the main content to grow and take up available space */
   padding: 1rem;
 }
 
 footer {
-  background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
+  background: linear-gradient(90deg, #05a3ba 0%, #254790 100%);
   align-items: center;
   justify-content: center;
   color: white;
   text-align: center;
-  height: 100px; /* Adjust this value as per your design */
-}
-
-
-.chat-icon {
-  position: fixed;
-  width: 3%;
-  left: 10px;
-  bottom: 10px;
-  cursor: pointer;
-  transition: width 0.3s ease-out;
-}
-
-.chat-icon:hover {
-  width: 3.5%;
-  animation: chat-icon-hover 0.8s ease-in-out;
-}
-
-@keyframes chat-icon-hover {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  25% {
-    transform: rotateZ(-5deg);
-  }
-  50% {
-    transform: rotateZ(5deg);
-  }
-  75% {
-    transform: rotateZ(-5deg);
-  }
-  100% {
-    transform: rotateZ(0deg);
-  }
+  height: 90px;
+  display: flex;
+  flex-shrink: 0; /* Prevent the footer from shrinking */
 }

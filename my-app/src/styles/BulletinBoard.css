@@ -1,50 +1,71 @@
 /* src/styles/BulletinBoard.css */
 .bulletin-board {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-top: 10%;
-    width: 25%;
-    background-color: #fafafa;
-    padding: 5%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
-    border-radius: 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width: 30%;
+  background-color: #fafafa;
+  padding: 5%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  border-radius: 8%;
+  margin-right: 5%;
 }
 
 .ads {
-    padding: 0;
-    width: 90%;
-    text-align: center; /* Align text to the center */
-    overflow: hidden; /* Hide overflowing text */
-    position: relative; /* Set position to relative to use absolute positioning inside */
-    height: 200px; /* Set a fixed height for the container */
+  padding: 0;
+  width: 90%;
+  text-align: center; /* Align text to the center */
+  overflow: hidden; /* Hide overflowing text */
+  position: relative; /* Set position to relative to use absolute positioning inside */
+  height: 350px; /* Set a fixed height for the container */
 }
 
 .ads ul {
-    padding: 0; /* Remove padding */
-    list-style-type: none;
-    position: absolute; /* Set position to absolute to animate */
-    top: -100%; /* Start from above the container */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
-    animation: moveText 15s linear infinite; /* Apply the animation */
+  padding: 0; /* Remove padding */
+  list-style-type: none;
+  position: absolute; /* Set position to absolute to animate */
+  top: -100%; /* Start from above the container */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center horizontally */
+  animation: moveText 15s linear infinite; /* Apply the animation */
 }
 
 .ads li {
-    margin-bottom: 10px;
-    font-family: monospace;
-    font-size: xx-large;
-    display: flex;
-    justify-content: center; /* Center text horizontally */
-    align-items: center; /* Center text vertically */
-    height: 50px; /* Set a fixed height for each item */
+  margin-bottom: 10px;
+  font-family: monospace;
+  font-size: xx-large;
+  display: flex;
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  height: 50px; /* Set a fixed height for each item */
+  position: relative;
+}
+
+.ads li button {
+  margin-left: 10px; /* Space between the message and the button */
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.ads li button:hover {
+  background-color: #0056b3;
+}
+
+.ads li button:active {
+  background-color: #004085;
 }
 
 @keyframes moveText {
-    0% {
-        top: -100%; /* Start above the container */
-    }
-    100% {
-        top: 100%; /* End below the container */
-    }
+  0% {
+    top: -100%; /* Start above the container */
+  }
+  100% {
+    top: 100%; /* End below the container */
+  }
 }

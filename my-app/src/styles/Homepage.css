@@ -1,16 +1,11 @@
 /* Homepage.css */
 .homepage {
-  height: 100%; /* Take up 85% of the height */
+  height: 101%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background: linear-gradient(
-    to bottom,
-    #c1e7ee,
-    rgb(4, 74, 112)
-  ); /* Linear gradient from turquoise to darker blue */
-  width: 100%;
-  padding: 2%;
+  background: linear-gradient(to bottom, #c1e7ee, rgb(4, 74, 112));
+  width: 101%;
 }
 
 .main-content {
@@ -19,9 +14,9 @@
   text-align: center;
   font-family: "Rubik";
   font-size: 20px;
-  margin-right: 2%; /* Adjusted for the fixed BulletinBoard */
+  margin-right: 2%;
   margin-bottom: 2%;
-  margin-top: 2%;
+  margin-top: 8%;
 }
 
 /* Keyframe animation for the text appearance */
@@ -45,7 +40,8 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 20px; /* Gap between the two images */
-  margin-top: 20px; /* Space above the images */
+  margin-bottom: 10%; /* Space above the images */
+  margin-left: 5%;
 }
 
 .photo {

@@ -1,5 +1,5 @@
 header {
-  width: 100%; /* Ensure the header spans the full width of the viewport */
+  width: 99%; /* Ensure the header spans the full width of the viewport */
   z-index: 9999; /* Set a high z-index to ensure the header is on top of other content */
   background-color: #ffffff; /* Add background color as needed */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for visual separation */
