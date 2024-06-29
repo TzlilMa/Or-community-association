@@ -80,7 +80,7 @@ const App = () => {
             onClick={toggleChat}
           />
         )}
-        קהילת אור, לאנשים עם פגיעה מוחית
+        <div>קהילת אור, לאנשים עם פגיעה מוחית</div>
       </footer>
       {showChat && <Chat />}
     </div>

@@ -1,7 +1,8 @@
+/* src/Chat.css */
 .chat-container {
   position: fixed;
   bottom: 100px; /* Adjust this value to position the chat container above the footer */
-  right: 65%;
+  right: 5%; /* Adjusted to fit the page */
   width: 350px;
   height: 500px;
   background: #fff;
@@ -59,7 +60,7 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-left: 10px; /* Changed from margin-right */
+  margin-left: 10px;
   outline: none;
   text-align: right; /* Align text to the left */
   direction: rtl; /* Set text direction to right-to-left */
@@ -83,34 +84,4 @@
   background-color: #004085;
 }
 
-.chat-icon {
-  position: fixed;
-  width: 3%;
-  left: 10px;
-  bottom: 10px;
-  cursor: pointer;
-  transition: width 0.3s ease-out;
-}
-
-.chat-icon:hover {
-  width: 3.5%;
-  animation: chat-icon-hover 0.8s ease-in-out;
-}
-
-@keyframes chat-icon-hover {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  25% {
-    transform: rotateZ(-5deg);
-  }
-  50% {
-    transform: rotateZ(5deg);
-  }
-  75% {
-    transform: rotateZ(-5deg);
-  }
-  100% {
-    transform: rotateZ(0deg);
-  }
-}
+/* Ensure the chat icon in App.css takes precedence */

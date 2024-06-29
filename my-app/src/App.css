@@ -20,13 +20,31 @@ main {
 
 footer {
   background: linear-gradient(90deg, #05a3ba 0%, #254790 100%);
+  display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   text-align: center;
   height: 90px;
-  flex-shrink: 0; /* Prevent the footer from shrinking */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-shrink: 0;
+  position: fixed; /* Make it fixed */
+  bottom: 0; /* Position it at the bottom */
+  left: 0; /* Ensure it spans the entire width */
+  width: 100%; /* Full width */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.chat-icon {
+  position: absolute; /* Position the icon inside the footer */
+  right: 10px; /* Adjust as needed */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for vertical centering */
+  width: 40px; /* Adjust size */
+  height: 40px; /* Adjust size */
+  cursor: pointer;
+  transition: transform 0.3s ease-out, width 0.3s ease-out; /* Add transform to transition */
+}
+
+.chat-icon:hover {
+  transform: scale(1.2); /* Scale instead of changing width */
 }
