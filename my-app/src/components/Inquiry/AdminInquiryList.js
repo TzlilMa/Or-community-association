@@ -16,7 +16,7 @@ const AdminInquiryList = () => {
       if (currentUser) {
         const q = query(
           collection(db, "inquiry"),
-          where("response", "==", null)
+          where("response", "==", "")
         );
         const querySnapshot = await getDocs(q);
         const inquiriesBySubject = {};
@@ -47,7 +47,7 @@ const AdminInquiryList = () => {
       // Refresh inquiries after response submission
       const q = query(
         collection(db, "inquiry"),
-        where("response", "==", null)
+        where("response", "==", "")
       );
       const querySnapshot = await getDocs(q);
       const inquiriesBySubject = {};
@@ -68,7 +68,7 @@ const AdminInquiryList = () => {
   return (
     <div className="admin-inquiry-system">
       <div className="admin-inquiry-list">
-        <h2>Admin Inquiry List</h2>
+        <h2>רשימת פניות</h2>
         {Object.keys(inquiries).map((subject) => (
           <div key={subject}>
             <h3>{subject}</h3>
@@ -82,23 +82,23 @@ const AdminInquiryList = () => {
       </div>
       {selectedInquiry && (
         <div className="admin-inquiry-detail">
-          <h3>Inquiry Detail</h3>
+          <h3>פרטי הפנייה:</h3>
           <p>
-            <strong>Subject:</strong> {selectedInquiry.subject}
+            <strong>נושא:</strong> {selectedInquiry.subject}
           </p>
           <p>
-            <strong>Content:</strong> {selectedInquiry.content}
+            <strong>תוכן הפנייה:</strong> {selectedInquiry.content}
           </p>
           <form onSubmit={handleResponseSubmit}>
             <div>
-              <label>Response:</label>
+              <label>כתיבת תגובה:</label>
               <textarea
                 value={response}
                 onChange={(e) => setResponse(e.target.value)}
                 required
               ></textarea>
             </div>
-            <button type="submit">Submit Response</button>
+            <button type="submit">שליחת תגובה</button>
           </form>
         </div>
       )}

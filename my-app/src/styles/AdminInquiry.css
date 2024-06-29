@@ -1,66 +1,87 @@
-/* src/styles/AdminInquiry.css */
+/* Updated AdminInquiry.css */
+html,
+body {
+  overflow: auto;
+}
+
 .admin-inquiry-system {
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .admin-inquiry-list,
-  .admin-inquiry-detail {
-    margin-bottom: 20px;
-  }
-  
-  .admin-inquiry-list h2,
-  .admin-inquiry-list h3,
-  .admin-inquiry-detail h3 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .admin-inquiry-list label,
-  .admin-inquiry-detail label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-  
-  .admin-inquiry-list input[type="text"],
-  .admin-inquiry-detail textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .admin-inquiry-list .inquiry-item {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    cursor: pointer;
-  }
-  
-  .admin-inquiry-list .inquiry-item:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .admin-inquiry-detail button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #28a745;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .admin-inquiry-detail button:hover {
-    background-color: #218838;
-  }
-  
+  width: 80%;
+  padding: 2%;
+  background: #f1f0f0;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  text-align: right;
+  margin-left: 8%;
+}
+
+.admin-inquiry-list h2 {
+  text-align: center;
+  color: #254790;
+  margin-bottom: 1.5rem;
+}
+
+.admin-inquiry-list h3 {
+  color: #05a3ba;
+  border-bottom: 2px solid #254790;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.admin-inquiry-list .inquiry-item {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  direction: rtl;
+}
+
+.admin-inquiry-list .inquiry-item:hover {
+  background-color: #f9f9f9;
+}
+
+.admin-inquiry-detail {
+  margin-top: 2rem;
+  direction: rtl;
+}
+
+.admin-inquiry-detail h3 {
+  color: #05a3ba;
+  margin-bottom: 1rem;
+}
+
+.admin-inquiry-detail p {
+  margin-bottom: 0.5rem;
+}
+
+.admin-inquiry-detail form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.admin-inquiry-detail form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.admin-inquiry-detail form button {
+  width: 20%;
+  padding: 0.75rem;
+  background: linear-gradient(90deg, #66AB44 0%, #026735 100%);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+}
+
+.admin-inquiry-detail form button:hover {
+  background: linear-gradient(90deg, #5A9A3C 0%, #025F31 100%);
+}
