@@ -20,27 +20,27 @@ html {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: url("../assets/login_backround_cut.png") no-repeat center center; /* Center the image */
-  background-size: cover; /* Cover the entire screen */
-  z-index: -1; /* Ensure it's behind the form */
+  height: 60%;
+  background: url("../assets/login_backround_cut.png") no-repeat center center;
+  background-size: cover;
+  z-index: -1;
 }
 
 .registration-container {
   background-color: white;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 20px 100px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
   max-width: 30%;
   width: 25%;
-  height: 80%;
-  margin-right: 2rem; /* Add margin to move the form slightly left */
-  z-index: 1; /* Ensure it's above the gradient */
+  height: 40%;
+  margin-right: 2rem;
+  z-index: 1;
 }
 
 .registration-container h2 {
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
   color: #333;
   text-align: center;
 }
@@ -52,27 +52,29 @@ html {
 }
 
 .registration-form label {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.1%;
 }
 
 .registration-form input,
 .registration-form select {
-  margin-bottom: 1rem;
-  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.4rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 0.8rem;
+  width: 90%; /* Adjust width to make input fields smaller */
 }
 
 .registration-form button {
-  padding: 0.5rem;
+  padding: 0.4rem 0.8rem;
   background-color: #05a3ba;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   width: 50%;
-  height: 50px;
-  font-size: large;
+  height: 30px;
+  font-size: 0.9rem;
 }
 
 .registration-form button:hover {
@@ -81,7 +83,7 @@ html {
 
 .error-message {
   color: red;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Media Queries for Responsiveness */
@@ -89,56 +91,74 @@ html {
 /* For small devices (phones, less than 600px) */
 @media only screen and (max-width: 600px) {
   .registration-container {
+    max-width: 90%;
     width: 90%;
     height: auto;
+    padding: 0.8rem;
     margin-right: 1rem;
   }
 
+  .registration-container h2 {
+    font-size: 1rem;
+  }
+
   .registration-form input,
-  .registration-form button {
-    width: 80%;
+  .registration-form select {
+    width: 85%;
+    font-size: 0.75rem;
   }
 
   .registration-form button {
+    width: 70%;
     height: auto;
-    font-size: medium;
+    font-size: 0.8rem;
   }
 }
 
 /* For medium devices (tablets, 600px to 900px) */
 @media only screen and (min-width: 600px) and (max-width: 900px) {
   .registration-container {
+    max-width: 80%;
     width: 80%;
     height: auto;
-    margin-right: 1.5rem;
+    padding: 1rem;
+    margin-right: 1rem;
+  }
+
+  .registration-container h2 {
+    font-size: 1.1rem;
   }
 
   .registration-form input,
-  .registration-form button {
-    width: 70%;
+  .registration-form select {
+    width: 75%;
+    font-size: 0.85rem;
   }
 
   .registration-form button {
-    height: auto;
-    font-size: large;
+    width: 60%;
+    font-size: 0.9rem;
   }
 }
 
 /* For large devices (desktops, 900px and up) */
 @media only screen and (min-width: 900px) {
   .registration-container {
+    max-width: 30%;
     width: 30%;
-    height: 80%;
-    margin-right: 2rem;
+    height: 40%;
+    padding: 1.2rem;
+    margin-right: 1.5rem;
   }
 
   .registration-form input,
-  .registration-form button {
-    width: 50%;
+  .registration-form select {
+    width: 55%;
+    font-size: 0.85rem;
   }
 
   .registration-form button {
-    height: 50px;
-    font-size: large;
+    width: 45%;
+    font-size: 0.9rem;
   }
 }
