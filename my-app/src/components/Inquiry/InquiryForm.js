@@ -77,11 +77,12 @@ const InquiryForm = () => {
           </div>
         </div>
       )}
-      {(view === "newInquiry" || view === "myInquiries") && (
-        <button className="back-button" onClick={() => setView(null)}>חזור</button>
+      {view === null && (
+        <img src={brainAndFamily} alt="Brain and Family" className="brain-and-family-image" />
       )}
       {view === "newInquiry" && (
-        <div className="inquiry-form">
+        <div className="inquiry-form" style={{ position: 'relative' }}>
+          <button className="button back-button" onClick={() => setView(null)}>חזור</button>
           <h2>הגשת פנייה</h2>
           <form onSubmit={handleSubmit}>
             <div>
@@ -108,12 +109,13 @@ const InquiryForm = () => {
                 placeholder="אנא כתוב את תוכן הפנייה כאן"
               ></textarea>
             </div>
-            <button type="submit">הגשת פנייה</button>
+            <button type="submit" className="button submit-button">הגשת פנייה</button>
           </form>
         </div>
       )}
       {view === "myInquiries" && (
-        <div className="my-inquiries">
+        <div className="my-inquiries" style={{ position: 'relative' }}>
+          <button className="button back-button" onClick={() => setView(null)}>חזור</button>
           <h2>הפניות שלי</h2>
           {myInquiries.length > 0 ? (
             myInquiries.map((inquiry) => (
@@ -130,7 +132,6 @@ const InquiryForm = () => {
           )}
         </div>
       )}
-      <img src={brainAndFamily} alt="Brain and Family" className="brain-and-family-image" />
     </div>
   );
 };
