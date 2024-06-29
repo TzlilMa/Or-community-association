@@ -1,16 +1,17 @@
 /* Documents.css */
-html, body {
+html,
+body {
   overflow: auto;
 }
 
 .documents-container {
   width: 80%;
-  margin: 8% auto;
-  padding: 2rem;
-  background: #f9f9f9;
+  padding: 2%;
+  background: #f1f0f0;
   border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  text-align: right; /* Align content to the right */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  text-align: right;
+  margin-left: 8%;
 }
 
 .documents-container h1 {
@@ -24,7 +25,7 @@ html, body {
 }
 
 .documents-container h2 {
-  color: #05A3BA;
+  color: #05a3ba;
   border-bottom: 2px solid #254790;
   padding-bottom: 0.5rem;
 }
@@ -47,11 +48,12 @@ html, body {
   text-decoration: underline;
 }
 
-.add-link-button, .remove-link-button {
+.add-link-button,
+.remove-link-button {
   display: block;
   margin: 1rem auto;
   padding: 0.75rem 1.5rem;
-  background-color: #05A3BA;
+  background-color: #05a3ba;
   color: white;
   border: none;
   border-radius: 4px;
@@ -59,7 +61,8 @@ html, body {
   font-size: 1rem;
 }
 
-.add-link-button:hover, .remove-link-button:hover {
+.add-link-button:hover,
+.remove-link-button:hover {
   background-color: #254790;
 }
 
@@ -97,7 +100,7 @@ html, body {
 }
 
 .modal h2 {
-  color: #05A3BA;
+  color: #05a3ba;
   margin-bottom: 1rem;
 }
 
@@ -118,7 +121,7 @@ html, body {
 
 .modal button {
   padding: 0.75rem;
-  background-color: #05A3BA;
+  background-color: #05a3ba;
   color: white;
   border: none;
   border-radius: 4px;
