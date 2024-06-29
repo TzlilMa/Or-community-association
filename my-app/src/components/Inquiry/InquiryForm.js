@@ -65,10 +65,6 @@ const InquiryForm = () => {
     return <div>Loading...</div>;
   }
 
-  if (currentUser?.isAdmin) {
-    return <AdminInquiryList />;
-  }
-
   return (
     <div className="inquiry-container">
       {view === null && (

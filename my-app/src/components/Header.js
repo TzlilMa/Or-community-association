@@ -49,7 +49,7 @@ const Header = ({isAdmin}) => {
   const handleComponentClick = (componentName) => {
     if (componentName === 'Calendar') {
       navigate('/calendar');
-    } else if (componentName === 'NoticeBoard') {
+    } else if (componentName === 'Inquiry') {
         if (isAdmin) {
           navigate('/admin-inquiries');
         } else {
@@ -86,7 +86,7 @@ const Header = ({isAdmin}) => {
       {user && (
         <>
           <div className="center-section">
-            <button className="nav-btn" onClick={() => handleComponentClick('NoticeBoard')}>מערכת פניות</button> {/* Updated text and click handler */}
+            <button className="nav-btn" onClick={() => handleComponentClick('Inquiry')}>מערכת פניות</button> {/* Updated text and click handler */}
             <button className="nav-btn" onClick={() => handleComponentClick('Stories')}>סיפורים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Calendar')}>אירועים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Documents')}>מסמכים</button>
