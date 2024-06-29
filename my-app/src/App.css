@@ -6,11 +6,14 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .App {
   display: flex;
   flex-direction: column;
+  min-height: 100vh; /* Ensure App takes at least the full viewport height */
 }
 
 footer {
@@ -20,6 +23,12 @@ footer {
   color: white;
   text-align: center;
   height: 90px;
-  display: flex;
   flex-shrink: 0; /* Prevent the footer from shrinking */
+  position: sticky;
+  bottom: 0;
+}
+
+header {
+  position: sticky;
+  top: 0;
 }
