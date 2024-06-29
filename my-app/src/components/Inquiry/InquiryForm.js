@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../fireBase/firebase";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { useAuth } from "../../fireBase/AuthContext";
-import AdminInquiryList from "./AdminInquiryList";
 import "../../styles/InquiryForm.css";
 
 const InquiryForm = () => {
@@ -76,6 +75,9 @@ const InquiryForm = () => {
             הפניות שלי
           </div>
         </div>
+      )}
+      {(view === "newInquiry" || view === "myInquiries") && (
+        <button className="back-button" onClick={() => setView(null)}>חזור</button>
       )}
       {view === "newInquiry" && (
         <div className="inquiry-form">
