@@ -13,11 +13,6 @@ html {
   flex-direction: column;
 }
 
-main {
-  flex: 1; /* Allow the main content to grow and take up available space */
-  padding: 1rem;
-}
-
 footer {
   background: linear-gradient(90deg, #05a3ba 0%, #254790 100%);
   align-items: center;
