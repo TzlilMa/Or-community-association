@@ -5,9 +5,9 @@
   align-items: center; /* Center vertically */
   min-height: 100vh; /* Full viewport height */
   background: url("../assets/login_backround_cut.png") no-repeat; /* Set background image */
-  background-size: 120%; /* Adjust the percentage to zoom out more */
+  background-size: cover; /* Ensure background covers entire container */
   background-position: left center; /* Keep the image on the left */
-  padding-right: 10%; /* Space from the right edge for the form */
+  padding-right: 50px; /* Fixed padding from the right edge */
   box-sizing: border-box; /* Include padding in the width/height */
 }
 

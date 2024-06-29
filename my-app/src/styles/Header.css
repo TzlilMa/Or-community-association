@@ -6,7 +6,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px; /* Add padding to the header */
+  padding: 10px; /* Add padding to the header */
   flex-direction: row-reverse;
 }
 
@@ -16,7 +16,7 @@ header {
   padding-right: 3%;
 }
 
-.left-section{
+.left-section {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -63,7 +63,7 @@ header {
   border: 2px solid #ffffff; /* Add border */
   cursor: pointer;
   font-size: 20px;
-  font-family: 'Rubik';
+  font-family: "Rubik";
   padding: 8px 16px; /* Add padding for better spacing */
   margin-bottom: 10px; /* Add margin between buttons */
   margin-left: 10px; /* Add margin between buttons */
@@ -77,8 +77,12 @@ header {
 }
 
 .nav-btn:hover {
-  background: linear-gradient(90deg, #0267c0 0%, #034b9c 100%); /* Gradient background color on hover */
-  color:white; /* Change text color on hover */
+  background: linear-gradient(
+    90deg,
+    #0267c0 0%,
+    #034b9c 100%
+  ); /* Gradient background color on hover */
+  color: white; /* Change text color on hover */
   border-radius: 20px;
 }
 

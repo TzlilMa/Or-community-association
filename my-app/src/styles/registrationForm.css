@@ -1,23 +1,29 @@
-.gradient-background {
-  position: absolute;
-  top: 0;
-  left: 0;
+body,
+html {
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height: 120%;
-  background: url("../assets/login_backround_cut.png") no-repeat left center; /* Set background image */
-  background-size: cover; /* Cover the entire screen */
-  z-index: -1; /* Ensure it's behind the form */
-  display: flex;
-  justify-content: flex-end; /* Align the form to the right */
-  align-items: center; /* Center vertically */
+  height: 100%;
 }
 
 .registration-page {
+  position: relative;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   width: 100%;
   height: 100vh;
+}
+
+.gradient-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("../assets/login_backround_cut.png") no-repeat center center; /* Center the image */
+  background-size: cover; /* Cover the entire screen */
+  z-index: -1; /* Ensure it's behind the form */
 }
 
 .registration-container {
@@ -26,9 +32,10 @@
   border-radius: 8px;
   box-shadow: 0 20px 100px rgba(0, 0, 0, 0.1);
   max-width: 30%;
-  width: 100%;
+  width: 25%;
+  height: 80%;
+  margin-right: 2rem; /* Add margin to move the form slightly left */
   z-index: 1; /* Ensure it's above the gradient */
-  margin-left: 5%; /* Increase the space from the right edge for the form */
 }
 
 .registration-container h2 {
