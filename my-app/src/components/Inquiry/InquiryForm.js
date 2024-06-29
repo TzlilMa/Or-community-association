@@ -3,6 +3,7 @@ import { db } from "../../fireBase/firebase";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { useAuth } from "../../fireBase/AuthContext";
 import "../../styles/InquiryForm.css";
+import brainAndFamily from '../../assets/brain_and_family.jpg'; // Import the image
 
 const InquiryForm = () => {
   const { currentUser } = useAuth();
@@ -129,6 +130,7 @@ const InquiryForm = () => {
           )}
         </div>
       )}
+      <img src={brainAndFamily} alt="Brain and Family" className="brain-and-family-image" />
     </div>
   );
 };
