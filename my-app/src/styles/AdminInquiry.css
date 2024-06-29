@@ -15,6 +15,7 @@
   }
   
   .admin-inquiry-list h2,
+  .admin-inquiry-list h3,
   .admin-inquiry-detail h3 {
     text-align: center;
     margin-bottom: 20px;
@@ -36,13 +37,15 @@
     border-radius: 5px;
   }
   
-  .admin-inquiry-list div,
-  .admin-inquiry-detail div {
+  .admin-inquiry-list .inquiry-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     margin-bottom: 10px;
+    cursor: pointer;
   }
   
-  .admin-inquiry-list div:hover,
-  .admin-inquiry-detail div:hover {
+  .admin-inquiry-list .inquiry-item:hover {
     background-color: #f9f9f9;
   }
   

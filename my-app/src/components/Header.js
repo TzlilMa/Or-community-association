@@ -8,35 +8,31 @@ import userLogo from '../assets/user.png';
 import logoutLogo from '../assets/logout.png';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../fireBase/firebase';
+import { useAuth } from '../fireBase/AuthContext';
 import '../styles/Header.css';
 
-const Header = ({isAdmin}) => {
-  const [user, setUser] = useState(null);
+const Header = ({ isAdmin }) => {
   const [firstName, setFirstName] = useState(null);
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        if (!user || !user.email) {
+        if (!currentUser || !currentUser.email) {
           console.error('User or email is not provided.');
           return;
         }
 
-        const userDoc = await getDoc(doc(db, 'users', user.email));
+        console.log('Fetching user data for email:', currentUser.email); // Debug log
+
+        const userDoc = await getDoc(doc(db, 'users', currentUser.email));
         if (userDoc.exists()) {
           const userData = userDoc.data();
+          console.log('User data:', userData); // Debug log
           setFirstName(userData.firstName);
         } else {
-          console.error('User document does not exist.');
+          console.error('User document does not exist for email:', currentUser.email);
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -44,17 +40,17 @@ const Header = ({isAdmin}) => {
     };
 
     fetchUserData();
-  }, [user]);
+  }, [currentUser]);
 
   const handleComponentClick = (componentName) => {
     if (componentName === 'Calendar') {
       navigate('/calendar');
     } else if (componentName === 'Inquiry') {
-        if (isAdmin) {
-          navigate('/admin-inquiries');
-        } else {
-          navigate('/inquiry'); // Updated navigation to inquiry page
-        }
+      if (isAdmin) {
+        navigate('/admin-inquiries');
+      } else {
+        navigate('/inquiry');
+      }
     } else if (componentName === 'Stories') {
       navigate('/stories');
     } else if (componentName === 'Documents') {
@@ -66,7 +62,7 @@ const Header = ({isAdmin}) => {
 
   const handleSignOut = () => {
     auth.signOut().then(() => {
-      navigate('/login'); // Redirect to the login page after signing out
+      navigate('/login');
     }).catch((error) => {
       console.error('Error signing out:', error);
     });
@@ -83,13 +79,13 @@ const Header = ({isAdmin}) => {
           <img src={logo} alt="Logo" className="logo-image" />
         </div>
       </div>
-      {user && (
+      {currentUser && (
         <>
           <div className="center-section">
-            <button className="nav-btn" onClick={() => handleComponentClick('Inquiry')}>מערכת פניות</button> {/* Updated text and click handler */}
+            <button className="nav-btn" onClick={() => handleComponentClick('Inquiry')}>מערכת פניות</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Stories')}>סיפורים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Calendar')}>אירועים</button>
-            <button className="nav-btn" onClick={() => handleComponentClick('Documents')}>מסמכים</button>
+            <button className="nav-btn" onClick={() => handleComponentClick('Documents')}>טפסים ומידע</button>
           </div>
           <div className="left-section">
             <div className="social-icons">

@@ -1,32 +1,33 @@
 // src/pages/homepage.js
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { db, doc, getDoc } from '../fireBase/firebase';
 import BulletinBoard from '../components/BulletinBoard';
+import { useAuth } from '../fireBase/AuthContext';
 import '../styles/Homepage.css';
 import photo1 from '../assets/image-hpmepage2.jpeg';
-import photo2 from '../assets/images-homepage.jpeg'; 
-
+import photo2 from '../assets/images-homepage.jpeg';
 
 const Homepage = () => {
-  const location = useLocation();
-  const { email } = location.state || {};
+  const { currentUser } = useAuth();
   const [firstName, setFirstName] = useState('');
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        if (!email) {
+        if (!currentUser || !currentUser.email) {
           console.error('Email is not provided.');
           return;
         }
 
-        const userDoc = await getDoc(doc(db, 'users', email));
+        console.log('Fetching user data for email:', currentUser.email); // Debug log
+
+        const userDoc = await getDoc(doc(db, 'users', currentUser.email));
         if (userDoc.exists()) {
           const userData = userDoc.data();
+          console.log('User data:', userData); // Debug log
           setFirstName(userData.firstName);
         } else {
-          console.error('User document does not exist.');
+          console.error('User document does not exist for email:', currentUser.email);
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -34,7 +35,7 @@ const Homepage = () => {
     };
 
     fetchUserData();
-  }, [email]);
+  }, [currentUser]);
 
   return (
     <div className="App">
