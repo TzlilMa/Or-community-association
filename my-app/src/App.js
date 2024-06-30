@@ -12,7 +12,8 @@ import Documents from './components/Documents';
 import Chat from './components/Chat';
 import InquiryForm from './components/Inquiry/InquiryForm';
 import AdminInquiryList from './components/Inquiry/AdminInquiryList';
-import chatIcon from './assets/chat-icon.png';
+import openChatIcon from './assets/chat-icon.png';
+import closeChatIcon from './assets/close_chat.png';
 import CardGrid from './components/CardGrid';
 import { auth, db } from './fireBase/firebase';
 import { getDoc, doc } from 'firebase/firestore';
@@ -74,7 +75,7 @@ const App = () => {
       <footer>
         {isAuthenticated && (
           <img
-            src={chatIcon}
+            src={showChat? closeChatIcon : openChatIcon}
             alt="chat"
             className="chat-icon"
             onClick={toggleChat}

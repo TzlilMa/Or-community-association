@@ -36,8 +36,8 @@ footer {
 
 .chat-icon {
   position: absolute; /* Position the icon inside the footer */
-  right: 10px; /* Adjust as needed */
-  top: 50%; /* Center vertically */
+  left: 10%; /* Adjust as needed */
+  top: 45%; /* Center vertically */
   transform: translateY(-50%); /* Adjust for vertical centering */
   width: 40px; /* Adjust size */
   height: 40px; /* Adjust size */
