@@ -1,3 +1,5 @@
+// src/components/Calendar/Calendar.js
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../fireBase/AuthContext';
 import { db, collection, addDoc, getDocs, Timestamp, doc, updateDoc, arrayUnion, query, where, increment } from '../../fireBase/firebase';
@@ -12,13 +14,12 @@ const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [newEvent, setNewEvent] = useState({ name: '', location: '', description: '', numUsers: 0, time: '' });
   const [isAdmin, setIsAdmin] = useState(false);
+  const [firstName, setFirstName] = useState('');
   const [showEventForm, setShowEventForm] = useState(false);
-  const [showEvents, setShowEvents] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
 
   const daysOfWeek = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
-
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -33,6 +34,7 @@ const Calendar = () => {
         if (!userQuerySnapshot.empty) {          
           const userData = userQuerySnapshot.docs[0].data();
           setIsAdmin(userData.isAdmin || false);
+          setFirstName(userData.firstName || '');
         } else {
           setIsAdmin(false);
         }
@@ -46,7 +48,7 @@ const Calendar = () => {
     if (currentUser) {
       fetchUserData();
     }
-  }, [currentUser, isAdmin]);
+  }, [currentUser]);
 
   const handleAddEvent = async () => {
     if (!selectedDate || !newEvent.time) {
@@ -60,7 +62,6 @@ const Calendar = () => {
       return;
     }
 
-    console.log(selectedDate)
     const eventDateTime = new Date(selectedDate);
     eventDateTime.setHours(hours, minutes, 0, 0);
     const eventTimestamp = Timestamp.fromDate(eventDateTime);
@@ -108,10 +109,6 @@ const Calendar = () => {
       console.error('Error registering for event:', error);
       alert('An error occurred while registering for the event. Please try again later.');
     }
-  };
-
-  const handleShowEventsToggle = () => {
-    setShowEvents(prevState => !prevState);
   };
 
   const renderDaysOfWeek = () => (
@@ -170,7 +167,6 @@ const Calendar = () => {
                       const selectedDate = new Date(currentYear, currentMonth, day);
                       setSelectedDate(selectedDate);
                       setShowEventForm(false);
-                      setShowEvents(false);
                     }
                   }}
                 >
@@ -208,83 +204,101 @@ const Calendar = () => {
     });
   };
 
-
   const selectedDateString = selectedDate ? selectedDate.toDateString() : '';
-  const hasEventsOnSelectedDate = selectedDate && events.some(event => {
-    const eventDate = event.date?.toDate();
-    return eventDate &&
-      eventDate.getDate() === selectedDate.getDate() &&
-      eventDate.getMonth() === selectedDate.getMonth() &&
-      eventDate.getFullYear() === selectedDate.getFullYear();
-  });
+  const eventsOnSelectedDate = selectedDate
+    ? events.filter(event => {
+        const eventDate = event.date?.toDate();
+        return (
+          eventDate &&
+          eventDate.getDate() === selectedDate.getDate() &&
+          eventDate.getMonth() === selectedDate.getMonth() &&
+          eventDate.getFullYear() === selectedDate.getFullYear()
+        );
+      })
+    : [];
+
+  // Filter events for the current user
+  const userRegisteredEvents = events.filter(event =>
+    event.registeredUsers?.includes(currentUser?.email)
+  );
 
   return (
-    <div className="calendar-container">
-      <div className="calendar-header">
-  <button className="changeMonth-btn" onClick={handlePrevMonth}>&#8249;</button>
-  <h2>
-    {new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} {currentYear}
-  </h2>
-  <button className="changeMonth-btn" onClick={handleNextMonth}>&#8250;</button>
-</div>
-      <div className="calendar-content">
-        <div className="calendar-column">
-          {renderDaysOfWeek()}
-          {renderDaysInMonth()}
+    <>
+      <h2 className="calendar-title">לוח שנה</h2>
+      <div className="calendar-container">
+        <div className="calendar-header">
+          <button className="changeMonth-btn" onClick={handlePrevMonth}>&#8249;</button>
+          <h2>
+            {new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} {currentYear}
+          </h2>
+          <button className="changeMonth-btn" onClick={handleNextMonth}>&#8250;</button>
         </div>
-        <div className="details-column">
-          {selectedDate && (
-            <div className="event-details-container">
-              <h3>{selectedDateString}</h3>
-              <div className="actions">
-                {isAdmin && (
-                  <button
-                    className="action-button"
-                    onClick={() => { setShowEventForm(true); setShowEvents(false); }}
-                  >
-                    צור אירוע
-                  </button>
-                )}
-                <button
-                  className="action-button"
-                  onClick={handleShowEventsToggle}
-                  style={{ backgroundColor: hasEventsOnSelectedDate ? 'green' : 'grey' }}
-                >
-                  {showEvents ? "הסתר אירועים" : "הצג אירועים"}
-                </button>
-              </div>
-              {showEventForm && (
-                <div className="event-form">
-                  <EventForm
-                    selectedDate={selectedDate}
-                    handleAddEvent={handleAddEvent}
-                    newEvent={newEvent}
-                    setNewEvent={setNewEvent}
-                  />
+        <div className="calendar-content">
+          <div className="calendar-column">
+            {renderDaysOfWeek()}
+            {renderDaysInMonth()}
+          </div>
+          <div className="details-column">
+            {selectedDate && (
+              <div className="event-details-container">
+                <h3>{selectedDateString}</h3>
+                <div className="actions">
+                  {isAdmin && (
+                    <button
+                      className="action-button"
+                      onClick={() => { setShowEventForm(true); }}
+                    >
+                      צור אירוע
+                    </button>
+                  )}
                 </div>
-              )}
-              {showEvents && hasEventsOnSelectedDate && (
-                <div className="event-details">
-                  <CalendarDay
+                {showEventForm && (
+                  <div className="event-form">
+                    <EventForm
                       selectedDate={selectedDate}
-                      events={events.filter(eventItem => {
-                        const eventDate = eventItem.date?.toDate();
-                        return eventDate &&
-                          eventDate.getDate() === selectedDate.getDate() &&
-                          eventDate.getMonth() === selectedDate.getMonth() &&
-                          eventDate.getFullYear() === selectedDate.getFullYear();
-                      })}
+                      handleAddEvent={handleAddEvent}
+                      newEvent={newEvent}
+                      setNewEvent={setNewEvent}
+                    />
+                  </div>
+                )}
+                {eventsOnSelectedDate.length > 0 ? (
+                  <div className="event-details">
+                    <CalendarDay
+                      selectedDate={selectedDate}
+                      events={eventsOnSelectedDate}
                       handleRegisterForEvent={handleRegisterForEvent}
                       currentUser={currentUser}
                       updateEvents={updateEvents}
                     />
-                </div>
-              )}
-            </div>
-          )}
+                  </div>
+                ) : (
+                  <p>אין אירועים</p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
+
+        {/* Section for displaying user's registered events */}
+        {currentUser && (
+          <div className="registered-events">
+            <h3>:{firstName}, הינה האירועים שהינך רשום אליהם</h3>
+            {userRegisteredEvents.length > 0 ? (
+              <ul>
+                {userRegisteredEvents.map((event) => (
+                  <li key={event.id}>
+                    <strong>{event.name}</strong> - {event.date?.toDate().toLocaleDateString()}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>לא מצאנו אירועים שהינך רשום! זה הזמן לעבור על הלוח אירועים ולהרשם</p>
+            )}
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

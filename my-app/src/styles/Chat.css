@@ -2,7 +2,7 @@
 .chat-container {
   position: fixed;
   bottom: 100px; /* Adjust this value to position the chat container above the footer */
-  right: 5%; /* Adjusted to fit the page */
+  left: 5%; /* Adjusted to fit the page */
   width: 350px;
   height: 500px;
   background: #fff;
