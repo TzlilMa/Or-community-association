@@ -15,6 +15,7 @@ import AdminInquiryList from './components/Inquiry/AdminInquiryList';
 import openChatIcon from './assets/chat-icon.png';
 import closeChatIcon from './assets/close_chat.png';
 import CardGrid from './components/CardGrid';
+import Reports from './components/Reports';
 import { auth, db } from './fireBase/firebase';
 import { getDoc, doc } from 'firebase/firestore';
 import './App.css';
@@ -56,7 +57,10 @@ const App = () => {
               <Route path="/documents" element={<Documents />} />
               <Route path="/stories" element={<CardGrid />} />
               {isAdmin ? (
-                <Route path="/admin-inquiries" element={<AdminInquiryList />} />
+                <>
+                  <Route path="/admin-inquiries" element={<AdminInquiryList />} />
+                  <Route path="/reports" element={<Reports />} /> {/* Add route for Reports */}
+                </>
               ) : (
                 <Route path="/inquiry" element={<InquiryForm />} />
               )}

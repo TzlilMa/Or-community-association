@@ -110,7 +110,7 @@ const Documents = () => {
 
   return (
     <div className="documents-container">
-      <h1>מסמכים</h1>
+      <h1>טפסים ומידע</h1>
       {Object.entries(data).map(([subject, links]) => (
         <section key={subject}>
           <h2>{subject}</h2>

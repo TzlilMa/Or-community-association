@@ -53,6 +53,8 @@ const Header = ({ isAdmin }) => {
       }
     } else if (componentName === 'Stories') {
       navigate('/stories');
+    } else if (componentName === 'Reports') {
+      navigate('/reports');
     } else if (componentName === 'Documents') {
       navigate('/documents');
     } else if (componentName === 'personalArea') {
@@ -86,6 +88,9 @@ const Header = ({ isAdmin }) => {
             <button className="nav-btn" onClick={() => handleComponentClick('Stories')}>סיפורים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Calendar')}>אירועים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Documents')}>טפסים ומידע</button>
+            {isAdmin && (
+              <button className="nav-btn" onClick={() => handleComponentClick('Reports')}>דוחות</button>
+            )}
           </div>
           <div className="left-section">
             <div className="social-icons">
