@@ -1,4 +1,6 @@
 /* src/styles/BulletinBoard.css */
+
+/* Existing styles */
 .bulletin-board {
   display: flex;
   justify-content: space-between;

@@ -127,3 +127,22 @@
   backdrop-filter: blur(5px); /* Blur background */
   z-index: 999; /* Below the expanded card */
 }
+
+/* Media query for viewport width between 900px and 1200px */
+@media (min-width: 900px) and (max-width: 1200px) {
+  .card {
+    width: 250px; /* Adjust width for smaller screens */
+    height: 200px; /* Adjust height for smaller screens */
+    margin-top: 200px;
+  }
+
+  .card-content {
+    padding: 15px; /* Adjust padding for smaller screens */
+  }
+
+  .card-content button,
+  .card-full-view button {
+    padding: 4px 8px; /* Adjust button padding for smaller screens */
+    font-size: 12px; /* Smaller font size for smaller screens */
+  }
+}
