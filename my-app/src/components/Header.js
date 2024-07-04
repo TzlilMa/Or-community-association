@@ -1,7 +1,7 @@
 // src/components/Header.js
 import React, { useState, useEffect } from 'react';
 import { db, doc, getDoc } from '../fireBase/firebase';
-import logo from '../assets/logo.jpg';
+import logo from '../assets/logo_with_text.jpeg';
 import InstagramLogo from '../assets/brand-instagram.png';
 import FacebookLogo from '../assets/brand-facebook.png';
 import userLogo from '../assets/user.png';
