@@ -1,10 +1,10 @@
-/* Homepage.css */
+/* src/styles/Homepage.css */
 .homepage {
   height: 101%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background: linear-gradient(to bottom, #c1e7ee, rgb(4, 74, 112));
+  /* background: linear-gradient(to bottom, #c1e7ee, rgb(4, 74, 112)); */
   width: 101%;
 }
 
@@ -17,6 +17,25 @@
   margin-right: 2%;
   margin-bottom: 2%;
   margin-top: 8%;
+}
+
+.toggle-edit-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.toggle-edit-button:hover {
+  background-color: #0056b3;
+}
+
+.toggle-edit-button:active {
+  background-color: #004085;
 }
 
 /* Keyframe animation for the text appearance */
@@ -34,19 +53,12 @@
 h1 {
   animation: fadeIn 2s ease-in-out; /* Apply the fadeIn animation */
   font-family: "Rubik", sans-serif; /* Apply the Rubik font */
+  color: rgb(0, 0, 0);
 }
 
-.photos-container {
+.bulletin-board-container {
   display: flex;
   justify-content: center;
-  gap: 20px; /* Gap between the two images */
-  margin-bottom: 10%; /* Space above the images */
-  margin-left: 5%;
-}
-
-.photo {
-  width: 450px; /* Adjust the width as needed */
-  height: auto; /* Maintain the aspect ratio */
-  border-radius: 10px; /* Optional: Add rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  align-items: center;
+  margin-top: 20px; /* Space between the image slider and bulletin board */
 }

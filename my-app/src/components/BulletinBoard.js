@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { db, auth, getDoc, doc } from "../fireBase/firebase";
 import "../styles/BulletinBoard.css";
 
-const BulletinBoard = () => {
+const BulletinBoard = ({ showEditButtons }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [messages, setMessages] = useState([
     "הודעה 1",
@@ -49,7 +49,7 @@ const BulletinBoard = () => {
           {messages.map((message, index) => (
             <li key={index}>
               {message}
-              {isAdmin && (
+              {isAdmin && showEditButtons && (
                 <button onClick={() => handleEdit(index)}>Edit</button>
               )}
             </li>
