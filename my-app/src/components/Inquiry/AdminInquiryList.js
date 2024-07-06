@@ -125,17 +125,21 @@ const AdminInquiryList = () => {
                         <p><strong>שם פרטי:</strong> {selectedInquiry.firstName}</p>
                         <p><strong>שם משפחה:</strong> {selectedInquiry.lastName}</p>
                         <p><strong>אימייל:</strong> {selectedInquiry.email}</p>
-                        <form onSubmit={handleResponseSubmit}>
-                          <div>
-                            <label>כתיבת תגובה:</label>
-                            <textarea
-                              value={response}
-                              onChange={(e) => setResponse(e.target.value)}
-                              required
-                            ></textarea>
-                          </div>
-                          <button type="submit">שליחת תגובה</button>
-                        </form>
+                        {selectedInquiry.response ? (
+                          <p><strong>תגובה:</strong> {selectedInquiry.response}</p>
+                        ) : (
+                          <form onSubmit={handleResponseSubmit}>
+                            <div>
+                              <label>כתיבת תגובה:</label>
+                              <textarea
+                                value={response}
+                                onChange={(e) => setResponse(e.target.value)}
+                                required
+                              ></textarea>
+                            </div>
+                            <button type="submit">שליחת תגובה</button>
+                          </form>
+                        )}
                       </div>
                     )}
                   </div>
