@@ -50,9 +50,13 @@ const Homepage = () => {
       <div className="homepage">
         <div className="main-content">
           <h1>"לעיתים צריכים רק אור קטן בשביל לעשות שינוי גדול"</h1>
-          <ImageSlider /> {/* Add ImageSlider component at the top */}
-          <div className="bulletin-board-container">
-            <BulletinBoard showEditButtons={showEditButtons} />
+          <div className="content-container">
+            <div className="image-slider-container">
+              <ImageSlider /> {/* Add ImageSlider component */}
+            </div>
+            <div className="bulletin-board-container">
+              <BulletinBoard showEditButtons={showEditButtons} />
+            </div>
           </div>
         </div>
       </div>
