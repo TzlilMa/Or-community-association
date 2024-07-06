@@ -12,7 +12,10 @@ const AdminInquiryList = () => {
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [response, setResponse] = useState("");
   const [showWithoutResponse, setShowWithoutResponse] = useState(true);
+  const [showSubjectModal, setShowSubjectModal] = useState(false);
+  const [subjectAction, setSubjectAction] = useState("");
   const [newSubject, setNewSubject] = useState("");
+  const [editSubject, setEditSubject] = useState(null);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -29,7 +32,7 @@ const AdminInquiryList = () => {
 
   const fetchInquiries = async (subject) => {
     if (currentUser) {
-      const q = query(collection(db, "inquiry"), where("subject", "==", subject));
+      const q = query(collection(db, "inquiry"), where("subject", "==", subject.name));
       const querySnapshot = await getDocs(q);
       const inquiries = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       inquiries.sort((a, b) => (a.response ? 1 : -1)); // Sort with no response first
@@ -63,51 +66,43 @@ const AdminInquiryList = () => {
     }
   };
 
-  const handleAddSubject = async () => {
+  const handleSubjectManagement = async () => {
     try {
-      await addDoc(collection(db, "inquirySubject"), {
-        name: newSubject,
-      });
+      if (subjectAction === "add") {
+        await addDoc(collection(db, "inquirySubject"), { name: newSubject });
+      } else if (subjectAction === "edit") {
+        const subjectRef = doc(db, "inquirySubject", editSubject.id);
+        await updateDoc(subjectRef, { name: newSubject });
+      } else if (subjectAction === "remove") {
+        const subjectRef = doc(db, "inquirySubject", editSubject.id);
+        await deleteDoc(subjectRef);
+      }
+      alert("Subject management action completed successfully!");
+      setShowSubjectModal(false);
       setNewSubject("");
-      alert("Subject added successfully!");
+      setEditSubject(null);
       const q = query(collection(db, "inquirySubject"));
       const querySnapshot = await getDocs(q);
       const subjectsList = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setSubjects(subjectsList);
     } catch (error) {
-      console.error("Error adding subject: ", error);
-      alert("Error adding subject. Please try again.");
-    }
-  };
-
-  const handleRemoveSubject = async (id) => {
-    try {
-      await deleteDoc(doc(db, "inquirySubject", id));
-      alert("Subject removed successfully!");
-      const q = query(collection(db, "inquirySubject"));
-      const querySnapshot = await getDocs(q);
-      const subjectsList = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setSubjects(subjectsList);
-    } catch (error) {
-      console.error("Error removing subject: ", error);
-      alert("Error removing subject. Please try again.");
+      console.error("Error managing subject: ", error);
+      alert("Error managing subject. Please try again.");
     }
   };
 
   return (
     <div className="admin-inquiry-system">
       <div className="admin-inquiry-list">
-        <div className="top-bar">
-          <button onClick={() => document.getElementById("subject-modal").style.display = "block"}>
-            Manage Subjects
-          </button>
-        </div>
         <h2>רשימת פניות</h2>
         {subjects.map((subject) => (
-          <h3 key={subject.id} onClick={() => fetchInquiries(subject.name)} className="subject-name">
+          <h3 key={subject.id} onClick={() => fetchInquiries(subject)} className="subject-name">
             {subject.name}
           </h3>
         ))}
+        <button className="subject-management-button" onClick={() => setShowSubjectModal(true)}>
+          ניהול נושאים
+        </button>
         {selectedSubject && (
           <>
             <div className="response-toggle">
@@ -130,17 +125,21 @@ const AdminInquiryList = () => {
                         <p><strong>שם פרטי:</strong> {selectedInquiry.firstName}</p>
                         <p><strong>שם משפחה:</strong> {selectedInquiry.lastName}</p>
                         <p><strong>אימייל:</strong> {selectedInquiry.email}</p>
-                        <form onSubmit={handleResponseSubmit}>
-                          <div>
-                            <label>כתיבת תגובה:</label>
-                            <textarea
-                              value={response}
-                              onChange={(e) => setResponse(e.target.value)}
-                              required
-                            ></textarea>
-                          </div>
-                          <button type="submit">שליחת תגובה</button>
-                        </form>
+                        {selectedInquiry.response ? (
+                          <p><strong>תגובה:</strong> {selectedInquiry.response}</p>
+                        ) : (
+                          <form onSubmit={handleResponseSubmit}>
+                            <div>
+                              <label>כתיבת תגובה:</label>
+                              <textarea
+                                value={response}
+                                onChange={(e) => setResponse(e.target.value)}
+                                required
+                              ></textarea>
+                            </div>
+                            <button type="submit">שליחת תגובה</button>
+                          </form>
+                        )}
                       </div>
                     )}
                   </div>
@@ -149,31 +148,46 @@ const AdminInquiryList = () => {
           </>
         )}
       </div>
-      <div id="subject-modal" className="modal">
-        <div className="modal-content">
-          <span className="close" onClick={() => document.getElementById("subject-modal").style.display = "none"}>&times;</span>
-          <h3>Manage Subjects</h3>
-          <div>
-            <input
-              type="text"
-              value={newSubject}
-              onChange={(e) => setNewSubject(e.target.value)}
-              placeholder="Add new subject"
-            />
-            <button onClick={handleAddSubject}>Add Subject</button>
-          </div>
-          <div>
-            <ul>
-              {subjects.map((subject) => (
-                <li key={subject.id}>
-                  {subject.name}
-                  <button onClick={() => handleRemoveSubject(subject.id)}>Remove</button>
-                </li>
-              ))}
-            </ul>
+
+      {showSubjectModal && (
+        <div className="subject-modal">
+          <div className="subject-modal-content">
+            <h3>ניהול נושאים</h3>
+            <div className="subject-actions">
+              <button onClick={() => setSubjectAction("add")}>הוסף נושא</button>
+              <button onClick={() => setSubjectAction("edit")}>ערוך נושא</button>
+              <button onClick={() => setSubjectAction("remove")}>מחק נושא</button>
+            </div>
+            {subjectAction && (
+              <>
+                {subjectAction !== "add" && (
+                  <select
+                    value={editSubject ? editSubject.id : ""}
+                    onChange={(e) => setEditSubject(subjects.find((subject) => subject.id === e.target.value))}
+                  >
+                    <option value="" disabled>בחר נושא</option>
+                    {subjects.map((subject) => (
+                      <option key={subject.id} value={subject.id}>{subject.name}</option>
+                    ))}
+                  </select>
+                )}
+                {subjectAction === "add" || (subjectAction === "edit" && editSubject) ? (
+                  <input
+                    type="text"
+                    placeholder="שם נושא"
+                    value={newSubject}
+                    onChange={(e) => setNewSubject(e.target.value)}
+                  />
+                ) : null}
+                <div className="modal-buttons">
+                  <button onClick={handleSubjectManagement}>שמור</button>
+                  <button onClick={() => setShowSubjectModal(false)}>סגור</button>
+                </div>
+              </>
+            )}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

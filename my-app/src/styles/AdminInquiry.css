@@ -13,40 +13,23 @@ body {
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
   text-align: right;
-  margin-left: 8%;
-}
-
-.admin-inquiry-list .top-bar {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 1rem;
-}
-
-.admin-inquiry-list .top-bar button {
-  padding: 0.5rem 1rem;
-  background: #254790;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.admin-inquiry-list .top-bar button:hover {
-  background: #1e3b7a;
+  margin-left: 10%;
 }
 
 .admin-inquiry-list h2 {
   text-align: center;
   color: #254790;
-  margin-bottom: 1.5rem;
+  margin-bottom: 3%;
+  font-size: 2.5rem;
 }
 
 .admin-inquiry-list h3 {
   color: #05a3ba;
   border-bottom: 2px solid #254790;
   padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2%;
   cursor: pointer;
+  font-size: 1.5rem;
 }
 
 .subject-name:hover {
@@ -55,12 +38,13 @@ body {
 
 .response-toggle {
   text-align: center;
-  margin: 1rem 0;
+  margin: 2% 0;
+  font-size: 1.2rem;
 }
 
 .response-toggle span {
   cursor: pointer;
-  margin: 0 0.5rem;
+  margin: 0 1%;
   color: #254790;
 }
 
@@ -69,7 +53,7 @@ body {
 }
 
 .admin-inquiry-list .inquiry-section {
-  margin-bottom: 2rem;
+  margin-bottom: 4%;
 }
 
 .admin-inquiry-list .inquiry-item-container {
@@ -77,13 +61,12 @@ body {
 }
 
 .admin-inquiry-list .inquiry-item {
-  margin: 0.5rem 0;
-  padding: 0.5rem;
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
   direction: rtl;
+  font-size: 1.3rem;
 }
 
 .admin-inquiry-list .inquiry-item:hover {
@@ -95,41 +78,38 @@ body {
 }
 
 .admin-inquiry-detail {
-  margin-top: 1rem;
   direction: rtl;
   background: #f9f9f9;
-  padding: 1rem;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
 
 .admin-inquiry-detail h3 {
   color: #05a3ba;
-  margin-bottom: 1rem;
 }
 
 .admin-inquiry-detail p {
-  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
 }
 
 .admin-inquiry-detail form label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1%;
   font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .admin-inquiry-detail form textarea {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
+  width: 98%;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-family: 'Rubik', sans-serif; /* Apply Rubik font */
+  font-size: 1.3rem;
 }
 
 .admin-inquiry-detail form button {
   width: 30%;
-  padding: 0.75rem;
+  padding: 1.5%;
   background: linear-gradient(90deg, #66AB44 0%, #026735 100%);
   color: white;
   border: none;
@@ -144,61 +124,102 @@ body {
   background: linear-gradient(90deg, #5A9A3C 0%, #025F31 100%);
 }
 
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 40%;
-  text-align: center;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-ul li {
-  margin: 10px 0;
-}
-
-ul li button {
-  margin-left: 10px;
-  padding: 0.5rem 1rem;
-  background: #d9534f;
+.subject-management-button {
+  display: block;
+  margin: 2% auto;
+  padding: 1% 2%;
+  background-color: #254790;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 1.3rem;
 }
 
-ul li button:hover {
-  background: #c9302c;
+.subject-management-button:hover {
+  background-color: #1f3b72;
+}
+
+.subject-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subject-modal-content {
+  background: white;
+  padding: 2%;
+  border-radius: 8px;
+  width: 25%;
+  text-align: center;
+  font-family: 'Rubik', sans-serif; /* Apply Rubik font */
+  direction: rtl; /* Set text direction to right-to-left */
+  font-size: 1.5rem;
+}
+
+.subject-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 4%;
+}
+
+.subject-actions button {
+  padding: 2% 5%;
+  background-color: #05A3BA;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.5rem; /* Increase font size for the action buttons */
+}
+
+.subject-actions button:hover {
+  background-color: #254790;
+}
+
+.subject-modal select, .subject-modal input {
+  width: 100%;
+  padding: 1%;
+  margin-bottom: 4%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-buttons button {
+  padding: 2% 6%;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.modal-buttons button:first-child {
+  background-color: #28a745;
+  color: white;
+  border: none;
+}
+
+.modal-buttons button:first-child:hover {
+  background-color: #218838;
+}
+
+.modal-buttons button:last-child {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.modal-buttons button:last-child:hover {
+  background-color: #c82333;
 }
