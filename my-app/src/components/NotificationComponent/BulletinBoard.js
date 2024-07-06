@@ -1,7 +1,7 @@
 // src/components/BulletinBoard.js
 import React, { useState, useEffect } from "react";
-import { db, auth, getDoc, doc } from "../fireBase/firebase";
-import "../styles/BulletinBoard.css";
+import { db, auth, getDoc, doc } from "../../fireBase/firebase";
+import "../../styles/BulletinBoard.css";
 
 const BulletinBoard = ({ showEditButtons }) => {
   const [isAdmin, setIsAdmin] = useState(false);

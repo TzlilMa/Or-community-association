@@ -1,8 +1,8 @@
 // src/pages/Homepage.js
 import React, { useEffect, useState } from "react";
 import { db, doc, getDoc } from "../fireBase/firebase";
-import BulletinBoard from "../components/BulletinBoard";
-import ImageSlider from "../components/ImageSlider"; // Correct import statement
+import BulletinBoard from "../components/NotificationComponent/BulletinBoard";
+import ImageSlider from "../components/NotificationComponent/ImageSlider"; // Correct import statement
 import { useAuth } from "../fireBase/AuthContext";
 import "../styles/Homepage.css";
 import "../styles/ImageSlider.css"; // Import CSS for ImageSlider
