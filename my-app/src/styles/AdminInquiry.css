@@ -16,6 +16,25 @@ body {
   margin-left: 8%;
 }
 
+.admin-inquiry-list .top-bar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+.admin-inquiry-list .top-bar button {
+  padding: 0.5rem 1rem;
+  background: #254790;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin-inquiry-list .top-bar button:hover {
+  background: #1e3b7a;
+}
+
 .admin-inquiry-list h2 {
   text-align: center;
   color: #254790;
@@ -27,6 +46,34 @@ body {
   border-bottom: 2px solid #254790;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.subject-name:hover {
+  text-decoration: underline;
+}
+
+.response-toggle {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.response-toggle span {
+  cursor: pointer;
+  margin: 0 0.5rem;
+  color: #254790;
+}
+
+.response-toggle span:hover {
+  text-decoration: underline;
+}
+
+.admin-inquiry-list .inquiry-section {
+  margin-bottom: 2rem;
+}
+
+.admin-inquiry-list .inquiry-item-container {
+  position: relative;
 }
 
 .admin-inquiry-list .inquiry-item {
@@ -43,9 +90,17 @@ body {
   background-color: #f9f9f9;
 }
 
+.admin-inquiry-list .inquiry-item.selected {
+  border: 2px solid #254790;
+}
+
 .admin-inquiry-detail {
-  margin-top: 2rem;
+  margin-top: 1rem;
   direction: rtl;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .admin-inquiry-detail h3 {
@@ -87,4 +142,63 @@ body {
 
 .admin-inquiry-detail form button:hover {
   background: linear-gradient(90deg, #5A9A3C 0%, #025F31 100%);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  text-align: center;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  margin: 10px 0;
+}
+
+ul li button {
+  margin-left: 10px;
+  padding: 0.5rem 1rem;
+  background: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+ul li button:hover {
+  background: #c9302c;
 }
