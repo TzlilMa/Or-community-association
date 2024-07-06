@@ -1,4 +1,3 @@
-// src/components/BulletinBoard.js
 import React, { useState, useEffect } from "react";
 import { db, auth, getDoc, doc } from "../../fireBase/firebase";
 import "../../styles/BulletinBoard.css";
@@ -42,10 +41,21 @@ const BulletinBoard = ({ showEditButtons }) => {
     }
   };
 
+  const handleChangeMessages = () => {
+    const newMessages = prompt(
+      "Enter new messages separated by commas:",
+      messages.join(", ")
+    );
+    if (newMessages !== null) {
+      setMessages(newMessages.split(",").map((message) => message.trim()));
+    }
+  };
+
   return (
     <div className="bulletin-board">
+      <div className="bulletin-board-header">לוח הודעות</div>
       <div className="ads">
-        <ul>
+        <ul style={{ listStyleType: "disc" }}>
           {messages.map((message, index) => (
             <li key={index}>
               {message}
@@ -56,6 +66,14 @@ const BulletinBoard = ({ showEditButtons }) => {
           ))}
         </ul>
       </div>
+      {isAdmin && (
+        <button
+          className="change-messages-button"
+          onClick={handleChangeMessages}
+        >
+          Change Messages
+        </button>
+      )}
     </div>
   );
 };

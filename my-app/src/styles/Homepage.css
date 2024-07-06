@@ -1,11 +1,11 @@
 /* src/styles/Homepage.css */
 .homepage {
-  height: 101%;
+  height: 100%;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
-  /* background: linear-gradient(to bottom, #c1e7ee, rgb(4, 74, 112)); */
-  width: 101%;
+  align-items: flex-start; /* Align items to the start */
+  width: 100%;
+  padding-top: 0; /* Remove padding at the top */
 }
 
 .main-content {
@@ -16,7 +16,8 @@
   font-size: 20px;
   margin-right: 2%;
   margin-bottom: 2%;
-  margin-top: 8%;
+  margin-top: 0; /* Remove margin at the top */
+  padding-top: 0; /* Ensure no padding at the top */
 }
 
 .toggle-edit-button {
@@ -38,7 +39,6 @@
   background-color: #004085;
 }
 
-/* Keyframe animation for the text appearance */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -51,14 +51,29 @@
 }
 
 h1 {
-  animation: fadeIn 2s ease-in-out; /* Apply the fadeIn animation */
-  font-family: "Rubik", sans-serif; /* Apply the Rubik font */
+  animation: fadeIn 2s ease-in-out;
+  font-family: "Rubik", sans-serif;
   color: rgb(0, 0, 0);
+  margin-top: 0; /* Remove margin at the top */
+}
+
+.content-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 0;
+  width: 100%;
 }
 
 .bulletin-board-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px; /* Space between the image slider and bulletin board */
+  width: 50%; /* Adjust the width as necessary */
+  max-height: 500px; /* Set a max height for the bulletin board */
+  overflow-y: auto; /* Enable vertical scrolling */
+  margin-left: 20px; /* Add space between the image slider and bulletin board */
+  margin-top: 1.5%;
+}
+
+.image-slider-container {
+  width: 50%; /* Adjust the width as necessary */
+  margin-left: 2%; /* Move the image slider to the left */
 }

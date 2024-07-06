@@ -1,62 +1,68 @@
-/* src/styles/BulletinBoard.css */
-
 .bulletin-board {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  width: 50%; /* Increase width to take full space */
-  background-color: #f1f0f0;
-  padding: 5%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
-  border-radius: 2%;
-  margin-right: 5%;
+  width: 100%;
+  height: 500px; /* Set the height to match the ImageSlider */
+  text-align: center;
+  background: #f1f0f0;
+  overflow-y: auto; /* Ensure vertical scrolling */
 }
 
-.ads {
-  padding: 0;
-  width: 100%; /* Increase width to take full space */
-  text-align: center; /* Align text to the center */
-  overflow: hidden; /* Hide overflowing text */
-  position: relative; /* Set position to relative to use absolute positioning inside */
-  height: auto; /* Adjust to fit content */
+.bulletin-board-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px 0;
 }
 
 .ads ul {
-  padding: 0; /* Remove padding */
-  list-style-type: disc; /* Use bullets for list items */
-  position: relative; /* Set position to relative */
-  direction: rtl; /* Set text direction from right to left */
-  padding-right: 20px; /* Add padding for bullets */
+  list-style-type: disc;
+  padding: 0;
+  margin: 0;
+  direction: rtl; /* Set the direction to right-to-left */
+  text-align: right; /* Align text to the right */
 }
 
 .ads li {
-  margin-bottom: 10px;
-  font-family: monospace;
-  font-size: xx-large;
-  display: flex;
-  justify-content: space-between; /* Space between text and button */
-  align-items: center; /* Center text vertically */
-  height: auto; /* Adjust to fit content */
-  position: relative;
-  color: black; /* Set text color to black */
+  background-color: #f1f0f0;
+  color: black;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  list-style-position: inside; /* Ensure the disc is inside the padding */
 }
 
-.ads li button {
-  margin-left: 10px; /* Space between the message and the button */
+.ads button {
+  margin-left: 10px;
   padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
   background-color: #007bff;
   color: white;
-  cursor: pointer;
+  border: none;
+  border-radius: 5px;
 }
 
-.ads li button:hover {
+.ads button:hover {
   background-color: #0056b3;
 }
 
-.ads li button:active {
+.ads button:active {
   background-color: #004085;
+}
+
+.change-messages-button {
+  margin: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.change-messages-button:hover {
+  background-color: #218838;
+}
+
+.change-messages-button:active {
+  background-color: #1e7e34;
 }

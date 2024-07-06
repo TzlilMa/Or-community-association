@@ -11,24 +11,4 @@ html {
 .App {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Full viewport height */
-}
-
-main {
-  flex-grow: 1; /* Ensure the main section grows to fill the available space */
-}
-
-.chat-icon {
-  position: absolute; /* Position the icon inside the footer */
-  left: 10%; /* Adjust as needed */
-  top: 45%; /* Center vertically */
-  transform: translateY(-50%); /* Adjust for vertical centering */
-  width: 40px; /* Adjust size */
-  height: 40px; /* Adjust size */
-  cursor: pointer;
-  transition: transform 0.3s ease-out, width 0.3s ease-out; /* Add transform to transition */
-}
-
-.chat-icon:hover {
-  transform: scale(1.2); /* Scale instead of changing width */
 }
