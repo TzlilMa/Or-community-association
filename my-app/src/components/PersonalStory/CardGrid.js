@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
-import "../styles/CardGrid.css";
-import { db, collection, query, where, getDocs } from "../fireBase/firebase"; // Updated path
+import React, { useState, useEffect, useRef } from "react";
+import "../../styles/CardGrid.css"; // Adjusted to correct the path
+import { db, collection, query, where, getDocs } from "../../fireBase/firebase"; // Updated path
 
 const CardGrid = () => {
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
   const [cards, setCards] = useState([]);
+  const expandedCardRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +25,15 @@ const CardGrid = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (expandedCardRef.current) {
+      expandedCardRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [expandedCardIndex]);
+
   return (
     <div className="card-grid-container">
       <div className="card-grid">
@@ -31,6 +41,7 @@ const CardGrid = () => {
           <div
             className={`card ${expandedCardIndex === index ? "expanded" : ""}`}
             key={card.id}
+            ref={expandedCardIndex === index ? expandedCardRef : null}
             style={{
               display:
                 expandedCardIndex !== null && expandedCardIndex !== index
@@ -48,7 +59,7 @@ const CardGrid = () => {
             </div>
             {expandedCardIndex === index && (
               <div className="card-full-view">
-                <p>{card.story}</p>
+                <p className="story-text">{card.story}</p>
                 <button onClick={() => setExpandedCardIndex(null)}>
                   Close
                 </button>

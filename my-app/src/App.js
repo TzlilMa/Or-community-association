@@ -1,24 +1,24 @@
 // src/App.js
-import React, { useEffect, useState } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
-import Header from './components/Header';
-import Calendar from './components/Calendar/Calendar';
-import PersonalArea from './components/PersonalArea/PeronalArea';
-import LoginPage from './pages/loginPage';
-import Homepage from './pages/homepage';
-import RegistrationForm from './pages/registrationFormPage';
-import ResetPassword from './pages/resetPwdPage';
-import Documents from './components/Documents';
-import Chat from './components/Chat';
-import InquiryForm from './components/Inquiry/InquiryForm';
-import AdminInquiryList from './components/Inquiry/AdminInquiryList';
-import openChatIcon from './assets/chat-icon.png';
-import closeChatIcon from './assets/close_chat.png';
-import CardGrid from './components/CardGrid';
-import Reports from './components/Reports';
-import { auth, db } from './fireBase/firebase';
-import { getDoc, doc } from 'firebase/firestore';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
+import Header from "./components/Header";
+import Calendar from "./components/Calendar/Calendar";
+import PersonalArea from "./components/PersonalArea/PeronalArea";
+import LoginPage from "./pages/loginPage";
+import Homepage from "./pages/homepage";
+import RegistrationForm from "./pages/registrationFormPage";
+import ResetPassword from "./pages/resetPwdPage";
+import Documents from "./components/Documents";
+import Chat from "./components/Chat";
+import InquiryForm from "./components/Inquiry/InquiryForm";
+import AdminInquiryList from "./components/Inquiry/AdminInquiryList";
+import openChatIcon from "./assets/chat-icon.png";
+import closeChatIcon from "./assets/close_chat.png";
+import CardGrid from "./components/PersonalStory/CardGrid";
+import Reports from "./components/Reports";
+import { auth, db } from "./fireBase/firebase";
+import { getDoc, doc } from "firebase/firestore";
+import "./App.css";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -29,7 +29,7 @@ const App = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setIsAuthenticated(true);
-        const userDoc = await getDoc(doc(db, 'users', user.email));
+        const userDoc = await getDoc(doc(db, "users", user.email));
         setIsAdmin(userDoc.exists() && userDoc.data().isAdmin);
       } else {
         setIsAuthenticated(false);
@@ -58,8 +58,12 @@ const App = () => {
               <Route path="/stories" element={<CardGrid />} />
               {isAdmin ? (
                 <>
-                  <Route path="/admin-inquiries" element={<AdminInquiryList />} />
-                  <Route path="/reports" element={<Reports />} /> {/* Add route for Reports */}
+                  <Route
+                    path="/admin-inquiries"
+                    element={<AdminInquiryList />}
+                  />
+                  <Route path="/reports" element={<Reports />} />{" "}
+                  {/* Add route for Reports */}
                 </>
               ) : (
                 <Route path="/inquiry" element={<InquiryForm />} />
@@ -79,7 +83,7 @@ const App = () => {
       <footer>
         {isAuthenticated && (
           <img
-            src={showChat? closeChatIcon : openChatIcon}
+            src={showChat ? closeChatIcon : openChatIcon}
             alt="chat"
             className="chat-icon"
             onClick={toggleChat}

@@ -1,16 +1,11 @@
-/* CardGrid.css */
-
 .card-grid-container {
-  background-image: url("../assets/back_ground_stories.png"); /* Path to your background image */
-  background-size: cover; /* Ensure the image covers the entire area */
-  background-position: center; /* Center the background image */
-  background-repeat: no-repeat; /* Prevent the image from repeating */
-  height: 80vh; /* Ensure it covers the full height of the viewport */
-  width: 90%; /* Make the background image less wide */
-  max-width: 100%; /* Optionally, set a max-width to control the width further */
-  margin: 0 auto; /* Center the container */
+  background-image: url("../assets/back_ground_stories.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 5%;
@@ -19,20 +14,20 @@
 .card-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Center the cards */
-  gap: 10px;
-  margin-bottom: 500px;
+  justify-content: center;
+  gap: 20px;
 }
 
 .card {
   position: relative;
-  width: 300px; /* Adjust width as needed */
-  height: 200px; /* Adjust height as needed */
+  width: 400px; /* Larger card size */
+  height: 300px; /* Larger card size */
   border: 1px solid #c2c2c2;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #ffffff; /* Ensure the entire card is white */
+  background-color: #ffffff;
   transition: transform 0.3s ease;
+  margin-top: 20px; /* Added margin to push the card down */
 }
 
 .card:hover {
@@ -40,11 +35,12 @@
 }
 
 .card-content {
-  padding: 20px; /* Adjust padding as needed */
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center; /* Centering the button */
+  align-items: center;
+  text-align: center; /* Center align text */
 }
 
 .card-hover-content {
@@ -68,16 +64,17 @@
 
 .card.expanded {
   position: fixed;
-  top: 50%;
+  top: 35%; /* Adjusted top position to move the expanded card further down */
   left: 50%;
-  width: 80%; /* Adjust width as needed */
-  height: auto;
-  max-height: 80%; /* Adjust max-height as needed */
+  width: 80%; /* Adjust width here */
+  max-width: 1000px; /* Adjust max-width here */
+  height: 65%; /* Adjust height here */
+  max-height: 65%; /* Adjust max-height here */
   padding: 20px;
   background-color: #fff;
   z-index: 1000;
   overflow-y: auto;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -35%); /* Adjusted translate position */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -88,33 +85,32 @@
 
 .card-content button,
 .card-full-view button {
-  padding: 5px 10px; /* Made the button smaller */
+  padding: 10px 20px; /* Adjusted button padding for larger buttons */
   border: none;
-  border-radius: 50px; /* Make the button more circular */
-  background: linear-gradient(
-    45deg,
-    #1e90ff,
-    #00bfff
-  ); /* Linear gradient color */
+  border-radius: 50px;
+  background: linear-gradient(45deg, #1e90ff, #00bfff);
   color: #fff;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.3s ease;
-  font-size: 14px; /* Smaller font size */
+  font-size: 16px; /* Adjusted font size for larger buttons */
 }
 
 .card-content button:hover,
 .card-full-view button:hover {
-  background: linear-gradient(
-    45deg,
-    #00bfff,
-    #1e90ff
-  ); /* Reverse gradient on hover */
-  transform: scale(1.1); /* Slightly enlarge on hover */
+  background: linear-gradient(45deg, #00bfff, #1e90ff);
+  transform: scale(1.1);
 }
 
 .card-full-view button {
   display: block;
   margin: 20px auto;
+}
+
+.story-text {
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: right; /* Align text to the right */
+  direction: rtl; /* Set text direction from right to left */
 }
 
 .backdrop {
@@ -123,26 +119,24 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Dim background */
-  backdrop-filter: blur(5px); /* Blur background */
-  z-index: 999; /* Below the expanded card */
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 999;
 }
 
-/* Media query for viewport width between 900px and 1200px */
 @media (min-width: 900px) and (max-width: 1200px) {
   .card {
-    width: 250px; /* Adjust width for smaller screens */
-    height: 200px; /* Adjust height for smaller screens */
-    margin-top: 200px;
+    width: 350px;
+    height: 250px;
   }
 
   .card-content {
-    padding: 15px; /* Adjust padding for smaller screens */
+    padding: 15px;
   }
 
   .card-content button,
   .card-full-view button {
-    padding: 4px 8px; /* Adjust button padding for smaller screens */
-    font-size: 12px; /* Smaller font size for smaller screens */
+    padding: 8px 16px;
+    font-size: 14px;
   }
 }
