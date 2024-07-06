@@ -1,12 +1,4 @@
 /* Calendar.css */
-
-.calendar-title {
-  text-align: center;
-  font-size: 2rem; /* Adjust as needed */
-  color: #333; /* Adjust color as needed */
-  margin: 2rem 0 1rem 0; /* Adjust margin as needed */
-}
-
 .calendar-container {
   width: 90%;
   margin: 2rem auto;
@@ -14,7 +6,6 @@
   background: #f3f3f3;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 8%;
 }
 
 .calendar-header {
@@ -29,7 +20,7 @@
   color: #254790;
 }
 
-.changeMonth-btn {
+.changeMonth-btn, .today-btn {
   background-color: #05A3BA;
   color: white;
   border: none;
@@ -39,7 +30,7 @@
   font-size: 1.2rem;
 }
 
-.changeMonth-btn:hover {
+.changeMonth-btn:hover, .today-btn:hover {
   background-color: #254790;
 }
 
@@ -165,7 +156,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 1rem;
-  margin-top: 2rem;
+  margin-bottom: 3rem;
   text-align: right;
 }
 

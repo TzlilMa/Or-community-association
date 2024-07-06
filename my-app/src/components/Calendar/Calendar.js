@@ -1,23 +1,23 @@
-// src/components/Calendar/Calendar.js
-
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../fireBase/AuthContext';
 import { db, collection, addDoc, getDocs, Timestamp, doc, updateDoc, arrayUnion, query, where, increment } from '../../fireBase/firebase';
 import '../../styles/Calendar.css';
 import EventForm from './EventForm';
 import CalendarDay from './CalendarDay';
+import Notification from '../Notification';
 
 const Calendar = () => {
   const today = new Date();
   const { currentUser } = useAuth();
   const [events, setEvents] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(today);
   const [newEvent, setNewEvent] = useState({ name: '', location: '', description: '', numUsers: 0, time: '' });
   const [isAdmin, setIsAdmin] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [showEventForm, setShowEventForm] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
+  const [notification, setNotification] = useState({ message: '', type: '' });
 
   const daysOfWeek = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
 
@@ -52,13 +52,13 @@ const Calendar = () => {
 
   const handleAddEvent = async () => {
     if (!selectedDate || !newEvent.time) {
-      alert('Please select a date and time for the event.');
+      setNotification({ message: 'Please select a date and time for the event.', type: 'error' });
       return;
     }
 
     const [hours, minutes] = newEvent.time.split(':').map(Number);
     if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours >= 24 || minutes < 0 || minutes >= 60) {
-      alert('Please enter a valid time in 24-hour format.');
+      setNotification({ message: 'Please enter a valid time in 24-hour format.', type: 'error' });
       return;
     }
 
@@ -74,10 +74,10 @@ const Calendar = () => {
       setNewEvent({ name: '', location: '', description: '', numUsers: 0, time: '' });
       setSelectedDate(null);
       setShowEventForm(false);
-      alert('Event added successfully!');
+      setNotification({ message: 'Event added successfully!', type: 'success' });
     } catch (error) {
       console.error('Error adding event:', error);
-      alert('An error occurred while adding the event. Please try again later.');
+      setNotification({ message: 'An error occurred while adding the event. Please try again later.', type: 'error' });
     }
   };
 
@@ -93,7 +93,7 @@ const Calendar = () => {
 
   const handleRegisterForEvent = async (eventId) => {
     if (!currentUser) {
-      alert('Please log in to register for events.');
+      setNotification({ message: 'Please log in to register for events.', type: 'error' });
       return;
     }
 
@@ -103,17 +103,17 @@ const Calendar = () => {
         numUsers: increment(1),
         registeredUsers: arrayUnion(currentUser.email)
       });
-      alert('Successfully registered for the event!');
+      setNotification({ message: 'נרשמת בהצלחה לאירוע!', type: 'success' });
       setEvents(events.map(event => event.id === eventId ? { ...event, registeredUsers: [...(event.registeredUsers || []), currentUser.email] } : event));
     } catch (error) {
       console.error('Error registering for event:', error);
-      alert('An error occurred while registering for the event. Please try again later.');
+      setNotification({ message: 'אירעה שגיאה בעת רישום לאירוע. בבקשה נסה שוב מאוחר יותר.', type: 'error' });
     }
   };
 
   const renderDaysOfWeek = () => (
     <div className="days-of-week">
-      {[...daysOfWeek].reverse().map(day => (
+      {[...daysOfWeek].map(day => (
         <div key={day} className="day-header">
           {day}
         </div>
@@ -148,7 +148,7 @@ const Calendar = () => {
       <div className="days-grid">
         {weeks.map((week, index) => (
           <div key={index} className="calendar-week">
-            {week.reverse().map((day, dayIndex) => {
+            {week.map((day, dayIndex) => {
               const isToday = day && new Date(currentYear, currentMonth, day).toDateString() === today.toDateString();
               const hasEvent = events.some(event => {
                 const eventDate = event.date?.toDate();
@@ -185,26 +185,31 @@ const Calendar = () => {
   };
 
   const handlePrevMonth = () => {
-    setCurrentMonth((prevMonth) => {
-      const newMonth = prevMonth === 0 ? 11 : prevMonth - 1;
-      if (newMonth === 11) {
-        setCurrentYear((prevYear) => prevYear - 1);
-      }
-      return newMonth;
-    });
+    if (currentMonth === 0) {
+      setCurrentMonth(11);
+      setCurrentYear(currentYear - 1);
+    } else {
+      setCurrentMonth(currentMonth - 1);
+    }
   };
 
   const handleNextMonth = () => {
-    setCurrentMonth((prevMonth) => {
-      const newMonth = prevMonth === 11 ? 0 : prevMonth + 1;
-      if (newMonth === 0) {
-        setCurrentYear((prevYear) => prevYear + 1);
-      }
-      return newMonth;
-    });
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+      setCurrentYear(currentYear + 1);
+    } else {
+      setCurrentMonth(currentMonth + 1);
+    }
   };
 
-  const selectedDateString = selectedDate ? selectedDate.toDateString() : '';
+  const handleToday = () => {
+    const today = new Date();
+    setSelectedDate(today);
+    setCurrentMonth(today.getMonth());
+    setCurrentYear(today.getFullYear());
+  };
+
+  const selectedDateString = selectedDate ? selectedDate.toLocaleDateString() : '';
   const eventsOnSelectedDate = selectedDate
     ? events.filter(event => {
         const eventDate = event.date?.toDate();
@@ -223,82 +228,87 @@ const Calendar = () => {
   );
 
   return (
-    <>
-      <h2 className="calendar-title">לוח שנה</h2>
-      <div className="calendar-container">
-        <div className="calendar-header">
-          <button className="changeMonth-btn" onClick={handlePrevMonth}>&#8249;</button>
-          <h2>
-            {new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} {currentYear}
-          </h2>
-          <button className="changeMonth-btn" onClick={handleNextMonth}>&#8250;</button>
+    <div className="calendar-container">
+      {/* Section for displaying user's registered events */}
+      {currentUser && (
+        <div className="registered-events">
+          <h3>{firstName}, הינה האירועים שהינך רשום אליהם:</h3>
+          {userRegisteredEvents.length > 0 ? (
+            <ul>
+              {userRegisteredEvents.map((event) => (
+                <li key={event.id}>
+                  <strong>{event.name}</strong> - {event.date?.toDate().toLocaleDateString()}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>לא מצאנו אירועים שהינך רשום! זה הזמן לעבור על הלוח אירועים ולהרשם</p>
+          )}
         </div>
-        <div className="calendar-content">
-          <div className="calendar-column">
-            {renderDaysOfWeek()}
-            {renderDaysInMonth()}
-          </div>
-          <div className="details-column">
-            {selectedDate && (
-              <div className="event-details-container">
-                <h3>{selectedDateString}</h3>
-                <div className="actions">
-                  {isAdmin && (
-                    <button
-                      className="action-button"
-                      onClick={() => { setShowEventForm(true); }}
-                    >
-                      צור אירוע
-                    </button>
-                  )}
-                </div>
-                {showEventForm && (
-                  <div className="event-form">
-                    <EventForm
-                      selectedDate={selectedDate}
-                      handleAddEvent={handleAddEvent}
-                      newEvent={newEvent}
-                      setNewEvent={setNewEvent}
-                    />
-                  </div>
-                )}
-                {eventsOnSelectedDate.length > 0 ? (
-                  <div className="event-details">
-                    <CalendarDay
-                      selectedDate={selectedDate}
-                      events={eventsOnSelectedDate}
-                      handleRegisterForEvent={handleRegisterForEvent}
-                      currentUser={currentUser}
-                      updateEvents={updateEvents}
-                    />
-                  </div>
-                ) : (
-                  <p>אין אירועים</p>
+      )}
+      <div className="calendar-header">
+        <button className="changeMonth-btn" onClick={handlePrevMonth}>&#8249;</button>
+        <h2>
+          {new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} {currentYear}
+        </h2>
+        <button className="changeMonth-btn" onClick={handleNextMonth}>&#8250;</button>
+        <button className='today-btn' onClick={handleToday}>היום</button>
+      </div>
+      <div className="calendar-content">
+        <div className="calendar-column">
+          {renderDaysOfWeek()}
+          {renderDaysInMonth()}
+        </div>
+        <div className="details-column">
+          {selectedDate && (
+            <div className="event-details-container">
+              <h3>{selectedDateString}</h3>
+              <div className="actions">
+                {isAdmin && (
+                  <button
+                    className="action-button"
+                    onClick={() => { setShowEventForm(true); }}
+                  >
+                    צור אירוע
+                  </button>
                 )}
               </div>
-            )}
-          </div>
+              {showEventForm && (
+                <div className="event-form">
+                  <EventForm
+                    selectedDate={selectedDate}
+                    handleAddEvent={handleAddEvent}
+                    newEvent={newEvent}
+                    setNewEvent={setNewEvent}
+                    setShowEventForm={setShowEventForm}
+                  />
+                </div>
+              )}
+              {eventsOnSelectedDate.length > 0 ? (
+                <div className="event-details">
+                  <CalendarDay
+                    selectedDate={selectedDate}
+                    events={eventsOnSelectedDate}
+                    handleRegisterForEvent={handleRegisterForEvent}
+                    currentUser={currentUser}
+                    updateEvents={updateEvents}
+                  />
+                </div>
+              ) : (
+                <p>אין אירועים</p>
+              )}
+            </div>
+          )}
         </div>
-
-        {/* Section for displaying user's registered events */}
-        {currentUser && (
-          <div className="registered-events">
-            <h3>:{firstName}, הינה האירועים שהינך רשום אליהם</h3>
-            {userRegisteredEvents.length > 0 ? (
-              <ul>
-                {userRegisteredEvents.map((event) => (
-                  <li key={event.id}>
-                    <strong>{event.name}</strong> - {event.date?.toDate().toLocaleDateString()}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>לא מצאנו אירועים שהינך רשום! זה הזמן לעבור על הלוח אירועים ולהרשם</p>
-            )}
-          </div>
-        )}
       </div>
-    </>
+      {notification.message && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification({ message: '', type: '' })}
+        />
+      )}
+    </div>
   );
 };
 

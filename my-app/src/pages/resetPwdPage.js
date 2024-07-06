@@ -33,7 +33,7 @@ const ResetPassword = () => {
       <div className="gradient-background"></div>
       <div className="reset-container">
         <div className="box-shadow">
-          <h1>?שכחת את הסיסמא</h1>
+          <h1>שכחת את הסיסמא?</h1>
           <h4>
             לא קרה כלום! אנחנו נשלח אלייך קישור לאיפוס סיסמא ובעוד כמה רגעים
             תוכל להתחבר
@@ -42,7 +42,7 @@ const ResetPassword = () => {
           {error && <p className="error">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email">:כתובת מייל</label>
+              <label htmlFor="email">כתובת מייל:</label>
               <input
                 type="email"
                 id="email"

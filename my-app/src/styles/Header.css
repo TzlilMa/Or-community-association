@@ -7,7 +7,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 10px; /* Add padding to the header */
-  flex-direction: row-reverse;
+  
 }
 
 .right-section {
@@ -18,7 +18,6 @@ header {
 
 .left-section {
   display: flex;
-  flex-direction: row-reverse;
   align-items: center;
 }
 

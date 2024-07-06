@@ -44,14 +44,14 @@ const LoginPage = () => {
         <div className="login-container">
           <h2>התחברות</h2>
           <form className="login-form" onSubmit={handleLogin}>
-            <label>:כתובת מייל</label>
+            <label>כתובת מייל:</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <label>:סיסמא</label>
+            <label>סיסמא:</label>
             <input
               type="password"
               value={password}
@@ -62,8 +62,8 @@ const LoginPage = () => {
             <button type="submit">כניסה</button>
           </form>
           <div className="additional-options">
-            <button onClick={handleForgetPwd}>?שכחת את הסיסמא</button>
-            <p><button onClick={handleSignup}>הרשם כאן</button> ?עדיין אין לך חשבון </p>
+            <button onClick={handleForgetPwd}>שכחת את הסיסמא?</button>
+            <p>עדיין אין לך חשבון? <button onClick={handleSignup}>הרשם כאן</button></p>
           </div>
         </div>
       </div>

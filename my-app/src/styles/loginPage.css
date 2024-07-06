@@ -1,7 +1,6 @@
 /* loginPage.css */
 .login-background {
   display: flex;
-  justify-content: flex-end; /* Align the form to the right */
   align-items: center; /* Center vertically */
   min-height: 100vh; /* Full viewport height */
   background: url("../assets/login_backround_cut.png") no-repeat; /* Set background image */

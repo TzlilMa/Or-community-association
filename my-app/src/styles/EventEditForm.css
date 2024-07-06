@@ -1,11 +1,10 @@
-/* EventEditForm.css */
 .event-edit-form-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Slightly darker for better focus */
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,18 +13,18 @@
 
 .event-edit-form-modal {
   background-color: #fff;
-  padding: 30px; /* More padding for spacious look */
-  border-radius: 10px; /* More rounded corners */
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
-  max-width: 500px; /* Limit the maximum width */
-  width: 90%; /* Responsive width */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
 }
 
 .event-edit-form-modal h3 {
   margin-bottom: 20px;
   font-size: 1.8rem;
   color: #333;
-  text-align: center; /* Centered header */
+  text-align: center;
 }
 
 .event-edit-form-modal form {
@@ -41,7 +40,7 @@
   font-size: 1rem;
   color: #666;
   margin-bottom: 5px;
-  display: block; /* Make label block element */
+  display: block;
 }
 
 .event-edit-form-modal form input,
@@ -50,51 +49,50 @@
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 5px; /* Slightly rounded corners */
-  box-sizing: border-box; /* Ensure padding is included in width */
-  transition: border-color 0.3s; /* Smooth border transition */
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
   text-align: center;
 }
 
 .event-edit-form-modal form input:focus,
 .event-edit-form-modal form textarea:focus {
-  border-color: #05A3BA; /* Focus border color */
-  outline: none; /* Remove outline */
+  border-color: #05A3BA;
+  outline: none;
 }
 
 .event-edit-form-modal form textarea {
-  resize: vertical; /* Allow vertical resize only */
-  min-height: 80px; /* Set a minimum height */
+  resize: vertical;
+  min-height: 80px;
+}
+
+.event-edit-form-actions-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .event-edit-form-actions {
   padding: 10px 15px;
   font-size: 1rem;
   color: white;
-  background-color: #05A3BA; /* Button background color */
+  background-color: #05A3BA;
   border: none;
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 5px;
   cursor: pointer;
-  margin: 10px 0; /* Add vertical margin for spacing */
-  transition: background-color 0.3s; /* Smooth background transition */
+  margin: 10px 0;
+  transition: background-color 0.3s;
 }
 
 .event-edit-form-actions:hover {
-  background-color: #007A91; /* Darker on hover */
+  background-color: #007A91;
 }
 
 .button-cancel {
-  background-color: #bbb; /* Different color for cancel button */
-  margin-left: 10px;
+  background-color: #bbb;
 }
 
 .button-cancel:hover {
-  background-color: #999; /* Darker shade on hover */
-}
-
-.event-edit-form-actions-container {
-  display: flex;
-  justify-content: space-between;
+  background-color: #999;
 }
 
 @media (max-width: 500px) {

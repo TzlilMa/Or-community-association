@@ -1,3 +1,4 @@
+/* App.css */
 body,
 html {
   font-family: "Rubik", sans-serif;
@@ -6,9 +7,25 @@ html {
   padding: 0;
   display: flex;
   flex-direction: column;
+  direction: rtl;
 }
 
 .App {
   display: flex;
   flex-direction: column;
+}
+
+main {
+  flex: 1; /* Allow main to take up remaining space */
+  overflow: auto; /* Add scroll if content overflows */
+}
+
+.chat-icon {
+  position: fixed;
+  bottom: 10%; /* Adjust the distance from the bottom */
+  left: 3%; /* Adjust the distance from the left */
+  width: 50px; /* Adjust the size of the icon */
+  height: 50px; /* Adjust the size of the icon */
+  cursor: pointer;
+  z-index: 1000; /* Ensure it is above other elements */
 }

@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/Header";
@@ -16,6 +15,7 @@ import openChatIcon from "./assets/chat-icon.png";
 import closeChatIcon from "./assets/close_chat.png";
 import CardGrid from "./components/PersonalStory/CardGrid";
 import Reports from "./components/Reports";
+import UserManagement from "./components/UserManagement"; // Import the UserManagement component
 import { auth, db } from "./fireBase/firebase";
 import { getDoc, doc } from "firebase/firestore";
 import "./App.css";
@@ -24,6 +24,7 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showChat, setShowChat] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -35,6 +36,7 @@ const App = () => {
         setIsAuthenticated(false);
         setIsAdmin(false);
       }
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
@@ -42,6 +44,10 @@ const App = () => {
   const toggleChat = () => {
     setShowChat(!showChat);
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // Or a loading spinner
+  }
 
   return (
     <div className="App">
@@ -58,15 +64,16 @@ const App = () => {
               <Route path="/stories" element={<CardGrid />} />
               {isAdmin ? (
                 <>
-                  <Route
-                    path="/admin-inquiries"
-                    element={<AdminInquiryList />}
-                  />
-                  <Route path="/reports" element={<Reports />} />{" "}
-                  {/* Add route for Reports */}
+                  <Route path="/admin-inquiries" element={<AdminInquiryList />} />
+                  <Route path="/reports" element={<Reports />} />
+                  <Route path="/accountspanel" element={<UserManagement />} />
+                  <Route path="*" element={<Navigate to="/accountspanel" />} />
                 </>
               ) : (
-                <Route path="/inquiry" element={<InquiryForm />} />
+                <>
+                  <Route path="/inquiry" element={<InquiryForm />} />
+                  <Route path="*" element={<Navigate to="/" />} />
+                </>
               )}
             </>
           ) : (
@@ -77,11 +84,9 @@ const App = () => {
               <Route path="*" element={<Navigate to="/login" />} />
             </>
           )}
-          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </main>
-      <footer>
-        {isAuthenticated && (
+
+        {/* {isAuthenticated && (
           <img
             src={showChat ? closeChatIcon : openChatIcon}
             alt="chat"
@@ -89,8 +94,9 @@ const App = () => {
             onClick={toggleChat}
           />
         )}
-      </footer>
-      {showChat && <Chat />}
+
+        {showChat && <Chat />} */}
+      </main>
     </div>
   );
 };

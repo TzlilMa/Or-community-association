@@ -69,13 +69,13 @@ const ParticipantList = ({ event, participantIds, onClose }) => {
     <div className="participant-list-overlay">
       <div className={`participant-list-modal ${window.matchMedia('print').matches ? 'print-mode' : ''}`} ref={participantListRef}>
         <div className="participant-list-header">
-          <h3>Participant list for the event: {event.name} on {eventDateString}</h3>
+          <h3>רשימת משתתפים לאירוע {event.name} בתאריך {eventDateString}</h3>
           <div>
             <button className="print-button" onClick={handlePrint}>
-              Print
+              הדפס רשימה
             </button>
             <button className="close-button" onClick={onClose}>
-              Close
+              סגור חלון
             </button>
           </div>
         </div>
@@ -83,9 +83,9 @@ const ParticipantList = ({ event, participantIds, onClose }) => {
           <table>
             <thead>
               <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
+                <th>שם פרטי</th>
+                <th>שם משפחה</th>
+                <th>email</th>
               </tr>
             </thead>
             <tbody>

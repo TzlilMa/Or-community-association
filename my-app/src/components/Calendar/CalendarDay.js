@@ -5,7 +5,7 @@ const CalendarDay = ({ selectedDate, events, handleRegisterForEvent, currentUser
   const renderEventDetails = () => {
     const filteredEvents = events.filter(event => {
       const eventDate = event.date?.toDate();
-      return eventDate && eventDate.toDateString() === selectedDate.toDateString();
+      return eventDate && eventDate.toLocaleDateString() === selectedDate.toLocaleDateString();
     });
 
     if (filteredEvents.length === 0) {

@@ -1,0 +1,26 @@
+/* src/styles/Notification.css */
+
+.notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #444;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    z-index: 1000;
+  }
+  
+  .notification.success {
+    background-color: #4CAF50;
+  }
+  
+  .notification.error {
+    background-color: #F44336;
+  }
+  

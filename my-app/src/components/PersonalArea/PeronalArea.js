@@ -129,11 +129,11 @@ const PersonalArea = () => {
 
   return (
     <div className="personal-area">
-      <h1>!{userData.firstName}, איזה כיף {userData.gender === 'male' ? 'שאתה פה' : 'שאת פה'}</h1>
+      <h1>{userData.firstName}, איזה כיף {userData.gender === 'male' ? 'שאתה פה' : 'שאת פה'}!</h1>
       <h3>הינה הפרטים שלך כפי שהם מעודכנים במערכת</h3>
       <form onSubmit={handleFormSubmit} className="personal-area-form">
         <label className="form-label">
-          :שם פרטי
+          שם פרטי:
           <input
             type="text"
             name="firstName"
@@ -143,7 +143,7 @@ const PersonalArea = () => {
           />
         </label>
         <label className="form-label">
-          :שם משפחה
+          שם משפחה:
           <input
             type="text"
             name="lastName"
@@ -153,7 +153,7 @@ const PersonalArea = () => {
           />
         </label>
         <label className="form-label">
-          :כתובת מייל
+          כתובת מייל:
           <input
             type="email"
             name="email"
@@ -164,7 +164,7 @@ const PersonalArea = () => {
         </label>
         <h2>הסיפור שלי</h2>
         <p>
-          !קהילת אור מאפשרת לחברי הקהילה לשתף את הסיפור האישי שלהם. כאן זה המקום לעשות זאת
+          קהילת אור מאפשרת לחברי הקהילה לשתף את הסיפור האישי שלהם. כאן זה המקום לעשות זאת!
         </p>
         <textarea
           name="personalStory"
@@ -187,10 +187,10 @@ const PersonalArea = () => {
           אני מאשר/ת שהסיפור שלי ישותף עם חברי הקהילה
         </label>
         <div className='btns-personal-area'>
-          <button type="submit" className="submit-btn">שמור</button>
           <button type="button" className="change-password-btn" onClick={handleChangePassword}>
             שנה סיסמה
           </button>
+          <button type="submit" className="submit-btn">שמור</button>
         </div>
       </form>
       {showPopup && <Popup message={popupMessage} onClose={() => setShowPopup(false)} />}

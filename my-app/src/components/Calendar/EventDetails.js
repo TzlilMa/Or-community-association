@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { db, doc, updateDoc, getDoc, increment, getDocs, query, collection, where, deleteDoc } from '../../fireBase/firebase'; // Import Firebase functions
+import { db, doc, updateDoc, getDoc, increment, getDocs, query, collection, where, deleteDoc } from '../../fireBase/firebase';
 import ParticipantList from './ParticipantList';
 import EventEditForm from './EventEditForm';
+import Notification from '../Notification';
 import '../../styles/EventDetails.css';
 
 const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents }) => {
@@ -9,9 +10,9 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
   const [isAdmin, setIsAdmin] = useState(false);
   const [showParticipantList, setShowParticipantList] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [notification, setNotification] = useState({ message: '', type: '' });
 
   useEffect(() => {
-    // Check if the current user is registered for the event
     if (event.registeredUsers && event.registeredUsers.includes(currentUser.email)) {
       setIsRegistered(true);
     } else {
@@ -34,62 +35,46 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
     };
     
     fetchUserData();
-
   }, [event, currentUser, isAdmin]);
 
   const handleRegisterClick = () => {
     if (isRegistered) {
-      // If the user is already registered, handle cancellation
       handleCancelRegistration(event.id);
     } else {
-      // Otherwise, handle registration
       handleRegisterForEvent(event.id);
     }
   };
 
   const handleCancelRegistration = async (eventId) => {
     try {
-      // Get a reference to the event document in Firestore
       const eventRef = doc(db, 'events', eventId);
-  
-      // Fetch the current event data
       const eventSnapshot = await getDoc(eventRef);
       const eventData = eventSnapshot.data();
-  
-      // If the event data and registeredUsers array exist
+
       if (eventData && eventData.registeredUsers) {
-        // Remove the current user's email from the registeredUsers array
         const updatedRegisteredUsers = eventData.registeredUsers.filter(email => email !== currentUser.email);
-  
-        // Update the event document with the new registeredUsers array
         await updateDoc(eventRef, { registeredUsers: updatedRegisteredUsers });
-  
-        // Optionally, update the local state to reflect the cancellation
         setIsRegistered(false);
       }
       
-      // Decrement the numUsers field by 1
       await updateDoc(eventRef, {
         numUsers: increment(-1),
       });
-      
-      // Notify the user that registration has been cancelled successfully
-      alert('Registration cancelled successfully!');
+
+      setNotification({ message: 'ההרשמה בוטלה בהצלחה!', type: 'success' });
     } catch (error) {
-      console.error('Error cancelling registration:', error);
-      alert('An error occurred while cancelling registration. Please try again later.');
+      setNotification({ message: 'אירעה שגיאה בעת ביטול הרישום. בבקשה נסה שוב מאוחר יותר.', type: 'error' });
     }
   };
 
   const handleDeleteEvent = async () => {
     try {
       await deleteDoc(doc(db, "events", event.id));
-      // Call the updateEvents function after successful deletion
       updateEvents();
-      alert('Event deleted successfully!');
+      setNotification({ message: 'האירוע נמחק בהצלחה!', type: 'success' });
     } catch (error) {
       console.error('Error deleting event:', error);
-      alert('An error occurred while deleting the event. Please try again later.');
+      setNotification({ message: 'אירעה שגיאה בעת מחיקת האירוע. בבקשה נסה שוב מאוחר יותר.', type: 'error' });
     }
   };
 
@@ -105,12 +90,12 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
     try {
       const eventRef = doc(db, 'events', event.id);
       await updateDoc(eventRef, updatedEvent);
-      alert('Event updated successfully!');
-      updateEvents(); // Update the events list
+      setNotification({ message: 'האירוע עודכן בהצלחה!', type: 'success' });
+      updateEvents();
       setShowEditForm(false);
     } catch (error) {
       console.error('Error updating event:', error);
-      alert('An error occurred while updating the event. Please try again later.');
+      setNotification({ message: 'אירעה שגיאה בעת עדכון האירוע. בבקשה נסה שוב מאוחר יותר.', type: 'error' });
     }
   };
 
@@ -122,6 +107,7 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
     setShowParticipantList(false);
   };
 
+  const isPastEvent = event.date?.toDate() < new Date();
 
   return (
     <div className="event-details">
@@ -142,7 +128,7 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
           </button>
         </div>
       )}
-      {!isAdmin && (
+      {!isPastEvent ? (
         isRegistered ? (
           <div>
             <p>רשום</p>
@@ -151,6 +137,8 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
         ) : (
           <button onClick={handleRegisterClick}>תרשום אותי</button>
         )
+      ) : (
+        <p className="event-past-message">האירוע כבר התרחש</p>
       )}
       {showParticipantList && (
         <ParticipantList
@@ -164,6 +152,13 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
           event={event}
           onSubmit={handleSubmitEditForm}
           onCancel={handleCloseEditForm}
+        />
+      )}
+      {notification.message && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification({ message: '', type: '' })}
         />
       )}
     </div>

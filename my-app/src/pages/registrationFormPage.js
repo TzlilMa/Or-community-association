@@ -81,42 +81,42 @@ const RegistrationForm = () => {
         <h2>טופס הרשמה לקהילת אור</h2>
         {error && <p className="error-message">{error}</p>}
         <form className="registration-form" onSubmit={handleRegistration}>
-          <label>:כתובת מייל</label>
+          <label>כתובת מייל:</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <label>:סיסמא</label>
+          <label>סיסמא:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <label>:שם פרטי</label>
+          <label>שם פרטי:</label>
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
-          <label>:שם משפחה</label>
+          <label>שם משפחה:</label>
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
           />
-          <label>:תאריך לידה</label>
+          <label>תאריך לידה:</label>
           <input
             type="date"
             value={dateOfBirth}
             onChange={(e) => setDateOfBirth(e.target.value)}
             required
           />
-          <label>:מגדר</label>
+          <label>מגדר:</label>
           <select value={gender} onChange={(e) => setGender(e.target.value)}>
             <option value="">בחר</option>
             <option value="male">זכר</option>
