@@ -1,12 +1,17 @@
 /* Personal Area Container */
-.personal-area {
+.personal-area-container {
   width: 90%;
   max-width: 800px;
   margin: 2rem auto;
+}
+
+/* Personal Area Styling */
+.personal-area {
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem; /* Add margin bottom to separate from password section */
 }
 
 .personal-area h1 {
@@ -37,7 +42,6 @@
 .personal-area-form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to the start (left) */
 }
 
 .form-label {
@@ -99,7 +103,7 @@
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
-  align-self: flex-end;
+  justify-content: flex-end; /* Align buttons to the left */
 }
 
 .submit-btn,
@@ -117,6 +121,26 @@
 .submit-btn:hover,
 .change-password-btn:hover {
   background-color: #254790;
+}
+
+.change-password-section {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.change-password-section h2 {
+  font-size: 1.5rem;
+  color: #254790;
+  margin-bottom: 1rem;
+}
+
+.change-password-section .change-password-btn {
+  margin-top: 1rem;
+  align-self: flex-end; /* Align the button to the bottom-left */
 }
 
 /* Popup Styling */
@@ -162,8 +186,12 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .personal-area {
+  .personal-area-container {
     width: 95%;
+  }
+
+  .personal-area,
+  .change-password-section {
     padding: 1.5rem;
   }
 
@@ -171,7 +199,8 @@
     font-size: 1.5rem;
   }
 
-  .personal-area h3 {
+  .personal-area h3,
+  .change-password-section h2 {
     font-size: 1.1rem;
   }
 
