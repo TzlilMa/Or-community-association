@@ -15,7 +15,8 @@ import openChatIcon from "./assets/chat-icon.png";
 import closeChatIcon from "./assets/close_chat.png";
 import CardGrid from "./components/PersonalStory/CardGrid";
 import Reports from "./components/Reports";
-import UserManagement from "./components/UserManagement"; // Import the UserManagement component
+import UserManagement from "./components/UserManagement";
+import ChatLogPage from "./components/ChatLogPage"; // Import the ChatLogPage component
 import { auth, db } from "./fireBase/firebase";
 import { getDoc, doc } from "firebase/firestore";
 import "./App.css";
@@ -67,6 +68,7 @@ const App = () => {
                   <Route path="/admin-inquiries" element={<AdminInquiryList />} />
                   <Route path="/reports" element={<Reports />} />
                   <Route path="/accountspanel" element={<UserManagement />} />
+                  <Route path="/chat-log/:email" element={<ChatLogPage />} /> {/* Add the ChatLogPage route */}
                   <Route path="*" element={<Navigate to="/accountspanel" />} />
                 </>
               ) : (

@@ -1,0 +1,30 @@
+.chat-log {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .chat-log h2 {
+    margin-top: 0;
+  }
+  
+  .chat-log table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .chat-log th, .chat-log td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .chat-log th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .chat-log td {
+    word-wrap: break-word;
+  }
+  
