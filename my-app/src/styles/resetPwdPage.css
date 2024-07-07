@@ -50,10 +50,7 @@
 .reset-page {
   position: relative;
   display: flex;
-<<<<<<< HEAD
-=======
   justify-content: flex-end; /* Align to the right */
->>>>>>> b4171a154af2dd942cd29f8c0570dccd0373b226
   align-items: center;
   width: 100%;
   height: 100vh;
