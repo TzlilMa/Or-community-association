@@ -12,7 +12,7 @@ const UserModal = ({ email, onClose }) => {
         const userDoc = await getDoc(doc(db, 'users', email));
         if (userDoc.exists()) {
           setUser(userDoc.data());
-          console.log("User data:", userDoc.data()); // Debug log
+          console.log("User data fetched:", userDoc.data()); // Debug log
         } else {
           console.error('No such user!');
         }
