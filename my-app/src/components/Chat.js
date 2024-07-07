@@ -11,7 +11,6 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [sessionIp, setSessionIp] = useState('');
-  const [sessionPort, setSessionPort] = useState('');
   const conversationEndRef = useRef(null);
   const userCache = useRef({});
 
