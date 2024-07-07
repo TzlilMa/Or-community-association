@@ -36,15 +36,15 @@ const ChatLogPage = () => {
 
   return (
     <div className="chat-log">
-      <h2>Chat Log for {email}</h2>
+      <h2>היסטוריית שיחת צ'אט עבור  {email}</h2>
       {loading ? (
         <p>Loading...</p>
       ) : (
         <table>
           <thead>
             <tr>
-              <th>Time</th>
-              <th>Content</th>
+              <th>תאריך ושעה</th>
+              <th>תוכן ההודעה</th>
             </tr>
           </thead>
           <tbody>
