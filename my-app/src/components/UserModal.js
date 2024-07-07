@@ -33,7 +33,7 @@ const UserModal = ({ email, onClose }) => {
     <div className="modal-overlay">
       <div className="modal">
         <button onClick={onClose} className="close-button">X</button>
-        <h2>User Information</h2>
+        <h2>פרטי משתמש</h2>
         <table>
           <tbody>
             <tr>
@@ -41,32 +41,28 @@ const UserModal = ({ email, onClose }) => {
               <td>{user.email}</td>
             </tr>
             <tr>
-              <th>First Name</th>
+              <th>שם פרטי</th>
               <td>{user.firstName}</td>
             </tr>
             <tr>
-              <th>Last Name</th>
+              <th>שם משפחה</th>
               <td>{user.lastName}</td>
             </tr>
             <tr>
-              <th>Date of Birth</th>
-              <td>{user.dateOfBirth}</td>
+              <th>תאריך לידה</th>
+              <td>{user.dateOfBirth} ({user.age})</td>
             </tr>
             <tr>
-              <th>Gender</th>
+              <th>מגדר</th>
               <td>{user.gender}</td>
             </tr>
             <tr>
-              <th>Is Admin</th>
+              <th>מנהל</th>
               <td>{user.isAdmin ? 'Yes' : 'No'}</td>
             </tr>
             <tr>
-              <th>Is Story Public</th>
+              <th>מאשר לפרסם סיפור</th>
               <td>{user.isStoryPublic ? 'Yes' : 'No'}</td>
-            </tr>
-            <tr>
-              <th>Personal Story</th>
-              <td>{user.personalStory}</td>
             </tr>
           </tbody>
         </table>

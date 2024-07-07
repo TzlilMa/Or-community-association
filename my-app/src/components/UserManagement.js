@@ -101,7 +101,7 @@ const UserManagement = () => {
             <th onClick={() => handleSort('creationTime')}>תאריך הרשמה</th>
             <th onClick={() => handleSort('lastSignInTime')}>תאריך כניסה אחרון</th>
             <th onClick={() => handleSort('disabled')}>סטטוס חשבון</th>
-            <th>Actions</th>
+            <th>פעולות</th>
           </tr>
         </thead>
         <tbody>
@@ -110,7 +110,7 @@ const UserManagement = () => {
               <td>{user.email}</td>
               <td>{formatDate(user.creationTime)}</td>
               <td>{formatDate(user.lastSignInTime)}</td>
-              <td>{user.disabled ? 'Inactive' : 'Active'}</td>
+              <td>{user.disabled ? 'לא פעיל' : 'פעיל'}</td>
               <td>
                 <button onClick={() => handleDeleteUser(user.uid)}>מחק חשבון</button>
                 <button onClick={() => handleChangeAccountStatus(user.uid, user.disabled ? 'inactive' : 'active')}>
