@@ -11,8 +11,6 @@ import Documents from "./components/Documents";
 import Chat from "./components/Chat";
 import InquiryForm from "./components/Inquiry/InquiryForm";
 import AdminInquiryList from "./components/Inquiry/AdminInquiryList";
-import openChatIcon from "./assets/chat-icon.png";
-import closeChatIcon from "./assets/close_chat.png";
 import CardGrid from "./components/PersonalStory/CardGrid";
 import Reports from "./components/Reports";
 import UserManagement from "./components/UserManagement";
@@ -87,17 +85,6 @@ const App = () => {
             </>
           )}
         </Routes>
-
-        {/* {isAuthenticated && (
-          <img
-            src={showChat ? closeChatIcon : openChatIcon}
-            alt="chat"
-            className="chat-icon"
-            onClick={toggleChat}
-          />
-        )}
-
-        {showChat && <Chat />} */}
       </main>
     </div>
   );
