@@ -36,7 +36,7 @@ const ChatLogPage = () => {
 
   return (
     <div className="chat-log">
-      <h2>היסטוריית שיחת צ'אט עבור  {email}</h2>
+      <h2>היסטוריית שיחת צ'אט עבור {email}</h2>
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -44,6 +44,7 @@ const ChatLogPage = () => {
           <thead>
             <tr>
               <th>תאריך ושעה</th>
+              <th>IP/Port</th>
               <th>תוכן ההודעה</th>
             </tr>
           </thead>
@@ -51,6 +52,7 @@ const ChatLogPage = () => {
             {messages.map(message => (
               <tr key={message.id}>
                 <td>{formatDate(message.timestamp)}</td>
+                <td>{message.ip ? `${message.ip}:${message.port}` : 'N/A'}</td>
                 <td>{message.content}</td>
               </tr>
             ))}
