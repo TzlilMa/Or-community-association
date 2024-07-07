@@ -1,17 +1,29 @@
-/* src/Chat.css */
-.chat-container {
+.chat-background {
+  background: url('../assets/demo-chat-background.jpeg') no-repeat center center fixed;
+  background-size: cover;
   position: fixed;
-  bottom: 100px; /* Adjust this value to position the chat container above the footer */
-  left: 5%; /* Adjusted to fit the page */
-  width: 350px;
-  height: 500px;
-  background: #fff;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.chat-container {
+  width: 80%;
+  max-width: 800px;
+  height: 80%;
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid #ccc;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000; /* Ensure it is above other elements */
+  z-index: 1000;
+  overflow: hidden;
 }
 
 .conversation {
@@ -19,23 +31,28 @@
   padding: 10px;
   overflow-y: auto;
   border-bottom: 1px solid #eee;
+  direction: ltr;
 }
 
 .message {
-  margin: 10px 0;
+  margin: 10px 20%;
   padding: 8px;
   border-radius: 5px;
-  max-width: 80%;
+  max-width: 70%;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
 }
 
 .message.sent {
   background-color: #dcf8c6;
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 .message.received {
   background-color: #f1f0f0;
-  align-self: flex-start;
+  align-self: flex-end;
 }
 
 .message p {
@@ -62,9 +79,12 @@
   border-radius: 5px;
   margin-left: 10px;
   outline: none;
-  text-align: right; /* Align text to the left */
-  direction: rtl; /* Set text direction to right-to-left */
+  text-align: right;
+  direction: rtl;
   font-size: 1em;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  z-index: 1001;
 }
 
 .input-area-chat button {
@@ -74,6 +94,7 @@
   background-color: #007bff;
   color: white;
   cursor: pointer;
+  z-index: 1001;
 }
 
 .input-area-chat button:hover {
@@ -82,20 +103,4 @@
 
 .input-area-chat button:active {
   background-color: #004085;
-}
-
-/* Ensure the chat icon in App.css takes precedence */
-.chat-icon {
-  position: absolute; /* Position the icon inside the footer */
-  left: 10%; /* Adjust as needed */
-  top: 45%; /* Center vertically */
-  transform: translateY(-50%); /* Adjust for vertical centering */
-  width: 40px; /* Adjust size */
-  height: 40px; /* Adjust size */
-  cursor: pointer;
-  transition: transform 0.3s ease-out, width 0.3s ease-out; /* Add transform to transition */
-}
-
-.chat-icon:hover {
-  transform: scale(1.2); /* Scale instead of changing width */
 }

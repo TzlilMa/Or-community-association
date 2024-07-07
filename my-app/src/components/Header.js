@@ -1,4 +1,3 @@
-// src/components/Header.js
 import React, { useState, useEffect } from 'react';
 import { db, doc, getDoc } from '../fireBase/firebase';
 import logo from '../assets/logo_with_text.jpeg';
@@ -6,6 +5,7 @@ import InstagramLogo from '../assets/brand-instagram.png';
 import FacebookLogo from '../assets/brand-facebook.png';
 import userLogo from '../assets/user.png';
 import logoutLogo from '../assets/logout.png';
+import chatIcon from '../assets/chat-icon.png'; // Import the chat icon
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../fireBase/firebase';
 import { useAuth } from '../fireBase/AuthContext';
@@ -59,6 +59,8 @@ const Header = ({ isAdmin }) => {
       navigate('/documents');
     } else if (componentName === 'personalArea') {
       navigate('/profile');
+    } else if (componentName === 'Chat') {
+      navigate('/chat');
     }
   };
 
@@ -100,6 +102,7 @@ const Header = ({ isAdmin }) => {
               <a href="https://www.instagram.com/kheilator?igsh=N2U5bThhYXJ5aHhs" target="_blank" rel="noopener noreferrer">
                 <img src={InstagramLogo} alt="Instagram" className="header-icon" />
               </a>
+              <img src={chatIcon} alt="Chat" className="header-icon" onClick={() => handleComponentClick('Chat')}/> 
             </div>
             <div className="greeting">
               <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')} />
