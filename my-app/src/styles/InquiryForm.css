@@ -1,204 +1,174 @@
-/* Import Rubik font */
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
 
-html,
-body {
-  overflow: auto;
-}
 
-.admin-inquiry-system {
-  width: 80%;
-  padding: 2%;
-  background: #f1f0f0;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-  text-align: right;
-  margin-left: 8%;
-}
-
-.admin-inquiry-list .top-bar {
+.inquiry-container {
+  flex: 1;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: flex-start;
-  margin-bottom: 1rem;
+  text-align: center;
 }
 
-.admin-inquiry-list .top-bar button {
-  padding: 0.5rem 1rem;
-  background: #254790;
-  color: white;
+.selection-cubes {
+  display: flex;
+  width: 50%; /* Adjusted width */
+  justify-content: space-around;
+  margin-top: 2%;
+}
+
+.cube {
+  width: 40%; /* Adjusted width */
+  height: 6vw; /* Adjusted height using viewport width for responsiveness */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 1.8vw;
+}
+
+.cube:hover {
+  background-color: #e0e0e0;
+}
+
+.brain-and-family-image {
+  margin-top: 2%; /* Add some margin to create space between the cubes and the image */
+  width: 50%; /* Set width in percentage */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.button {
+  width: 15%; /* Adjusted width */
+  height: 8%; /* Adjusted height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #f0f0f0; /* Gray background color */
+  color: black; /* Text color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 1.2vw;
+  z-index: 1000; /* Ensure the button is on top */
+  text-decoration: none; /* Remove underline from links */
+  text-align: center; /* Center text */
+}
+
+.button:hover {
+  background-color: #e0e0e0; /* Slightly darker gray for hover */
+}
+
+.back-button {
+  position: absolute;
+  top: 2%; /* Position from the top */
+  right: 2%; /* Position from the right */
+}
+
+.submit-button {
+  width: 25%; /* Adjusted width for submit button */
+  padding: 1.5%; /* Adjusted padding */
   border: none;
-  border-radius: 5px;
+  background-color: #007bff; /* Blue background color */
+  color: white; /* Text color */
+  font-size: 1.6vw;
   cursor: pointer;
+  margin: 0.5% auto;
+  display: block;
 }
 
-.admin-inquiry-list .top-bar button:hover {
-  background: #1e3b7a;
+.submit-button:hover {
+  background-color: #0056b3; /* Darker blue for hover */
 }
 
-.admin-inquiry-list h2 {
-  text-align: center;
-  color: #254790;
-  margin-bottom: 1.5rem;
-}
-
-.admin-inquiry-list h3 {
-  color: #05a3ba;
-  border-bottom: 2px solid #254790;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-  cursor: pointer;
-}
-
-.subject-name:hover {
-  text-decoration: underline;
-}
-
-.response-toggle {
-  text-align: center;
-  margin: 1rem 0;
-}
-
-.response-toggle span {
-  cursor: pointer;
-  margin: 0 0.5rem;
-  color: #254790;
-}
-
-.response-toggle span:hover {
-  text-decoration: underline;
-}
-
-.admin-inquiry-list .inquiry-section {
-  margin-bottom: 2rem;
-}
-
-.admin-inquiry-list .inquiry-item-container {
+.my-inquiries {
+  width: 80%;
+  margin: 0 auto;
+  padding: 2%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: relative;
 }
 
-.admin-inquiry-list .inquiry-item {
-  margin: 0.5rem 0;
-  padding: 0.5rem;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-  direction: rtl;
-}
-
-.admin-inquiry-list .inquiry-item:hover {
-  background-color: #f9f9f9;
-}
-
-.admin-inquiry-list .inquiry-item.selected {
-  border: 2px solid #254790;
-}
-
-.admin-inquiry-detail {
-  margin-top: 1rem;
-  direction: rtl;
-  background: #f9f9f9;
-  padding: 1rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.admin-inquiry-detail h3 {
-  color: #05a3ba;
-  margin-bottom: 1rem;
-}
-
-.admin-inquiry-detail p {
-  margin-bottom: 0.5rem;
-}
-
-.admin-inquiry-detail form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-.admin-inquiry-detail form textarea {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-family: 'Rubik', sans-serif; /* Apply Rubik font */
-}
-
-.admin-inquiry-detail form button {
-  width: 30%;
-  padding: 0.75rem;
-  background: linear-gradient(90deg, #66AB44 0%, #026735 100%);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin: 0 auto;
-  display: block;
-}
-
-.admin-inquiry-detail form button:hover {
-  background: linear-gradient(90deg, #5A9A3C 0%, #025F31 100%);
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 40%;
+.my-inquiries h2 {
   text-align: center;
+  margin-bottom: 2%;
+  color: rgba(37, 71, 144, 1); /* Headline color */
+  font-size: 2rem; /* Increase font size */
 }
 
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
+.inquiry-item {
+  padding: 1%;
+  border-bottom: 1px solid #05a3ba; /* Line color similar to links in Documents.css */
+  font-size: 1.3rem; /* Increase font size */
+}
+
+.inquiry-item:last-child {
+  border-bottom: none;
+}
+
+.inquiry-item p {
+  margin: 0.5% 0;
+  color: black; /* Ensure content and response are black */
+}
+
+.inquiry-item p strong {
+  color: #05a3ba; /* Subject color similar to links in Documents.css */
+}
+
+.inquiry-form {
+  width: 80%;
+  margin: 0 auto;
+  padding: 2%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  font-size: 1.5rem; /* Increase font size */
+}
+
+.inquiry-form h2 {
+  text-align: center;
+  margin-bottom: 2%;
+}
+
+.inquiry-form label {
+  display: block;
+  margin-bottom: 1%;
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-ul li {
-  margin: 10px 0;
-}
-
-ul li button {
-  margin-left: 10px;
-  padding: 0.5rem 1rem;
-  background: #d9534f;
-  color: white;
-  border: none;
+.inquiry-form input[type="text"],
+.inquiry-form textarea,
+.inquiry-form select {
+  width: 98%;
+  padding: 1%;
+  margin-bottom: 1.5%;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  cursor: pointer;
+  font-family: "Rubik", sans-serif; /* Apply Rubik font */
+  font-size: 1.5rem; /* Increase font size */
+  direction: rtl; /* Make text direction RTL */
+  text-align: right; /* Align text to the right */
 }
 
-ul li button:hover {
-  background: #c9302c;
+.inquiry-form textarea {
+  height: 15%;
+  min-height: 50px; /* Ensure a minimum height */
+  direction: rtl; /* Make text direction RTL */
+  text-align: right; /* Align text to the right */
+}
+
+.inquiry-form select {
+  width: 30%; /* Adjust this value to make the select element narrower */
+}
+
+/* Right-to-left styling for specific elements */
+.inquiry-form textarea::placeholder {
+  direction: rtl;
+  text-align: right;
 }
