@@ -14,7 +14,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
   text-align: right;
-  margin-left: 10%; /* Center the container */
+  margin: 0 auto; /* Center the container horizontally */
 }
 
 .documents-container h1 {
