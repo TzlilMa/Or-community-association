@@ -27,8 +27,8 @@ body.no-scroll {
 
 .card {
   position: relative;
-  width: 200px; /* Smaller card size */
-  height: 200px; /* Smaller card size */
+  width: 300px; /* Increased card size */
+  height: 300px; /* Increased card size */
   border: 1px solid #c2c2c2;
   border-radius: 8px;
   overflow: hidden;
@@ -48,6 +48,15 @@ body.no-scroll {
   justify-content: space-between;
   align-items: center;
   text-align: center; /* Center align text */
+}
+
+.card-content h3 {
+  font-size: 28px; /* Larger font size for user name */
+}
+
+.card-content p {
+  font-size: 18px; /* Smaller font size for "הסיפור של" */
+  color: #555; /* Delicate color for "הסיפור של" */
 }
 
 .card-hover-content {
@@ -88,6 +97,7 @@ body.no-scroll {
 
 .card-full-view {
   margin-top: 20px;
+  padding: 20px; /* Added padding */
 }
 
 .card-content button,
@@ -95,8 +105,8 @@ body.no-scroll {
   padding: 10px 20px; /* Adjusted button padding for larger buttons */
   border: none;
   border-radius: 50px;
-  background: linear-gradient(45deg, #1e90ff, #00bfff);
-  color: #fff;
+  background: #cccccc; /* Delicate color for "Read More" button */
+  color: #333; /* Text color for "Read More" button */
   cursor: pointer;
   transition: background 0.3s ease, transform 0.3s ease;
   font-size: 16px; /* Adjusted font size for larger buttons */
@@ -120,6 +130,7 @@ body.no-scroll {
   text-align: right; /* Align text to the right */
   direction: rtl; /* Set text direction from right to left */
   font-family: "Rubik", sans-serif;
+  padding: 20px; /* Added padding */
 }
 
 .backdrop {
@@ -131,6 +142,11 @@ body.no-scroll {
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
   z-index: 999;
+}
+.card-content h3,
+.card-content p {
+  font-size: 24px; /* Same size for "הסיפור של" and user name */
+  color: #555; /* Same color for "הסיפור של" and user name */
 }
 
 @media (min-width: 900px) and (max-width: 1200px) {

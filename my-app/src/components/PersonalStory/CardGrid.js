@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../../styles/CardGrid.css"; // Adjusted to correct the path
-import { db, collection, query, where, getDocs } from "../../fireBase/firebase"; // Updated path
+import "../../styles/CardGrid.css"; // Importing CSS for styling
+import { db, collection, query, where, getDocs } from "../../fireBase/firebase"; // Firebase imports
 
 const CardGrid = () => {
-  const [expandedCardIndex, setExpandedCardIndex] = useState(null);
-  const [cards, setCards] = useState([]);
-  const expandedCardRef = useRef(null);
+  const [expandedCardIndex, setExpandedCardIndex] = useState(null); // State to track the expanded card
+  const [cards, setCards] = useState([]); // State to store the card data
+  const expandedCardRef = useRef(null); // Reference to the expanded card
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +19,7 @@ const CardGrid = () => {
         name: `${doc.data().firstName} ${doc.data().lastName}`,
         story: doc.data().personalStory,
       }));
-      setCards(cardData);
+      setCards(cardData); // Setting the fetched card data to state
     };
 
     fetchData();
@@ -50,6 +50,7 @@ const CardGrid = () => {
             }}
           >
             <div className="card-content">
+              <p>הסיפור של</p>
               <h3>{card.name}</h3>
               {expandedCardIndex !== index && (
                 <button onClick={() => setExpandedCardIndex(index)}>

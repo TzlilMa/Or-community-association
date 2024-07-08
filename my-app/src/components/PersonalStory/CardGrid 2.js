@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "../styles/CardGrid.css";
+import "../styles/CardGrid.css"; // Importing CSS for styling
 
 const CardGrid = () => {
-  const [expandedCardIndex, setExpandedCardIndex] = useState(null);
+  const [expandedCardIndex, setExpandedCardIndex] = useState(null); // State to track the expanded card
 
   const cards = [
     {
@@ -61,6 +61,7 @@ const CardGrid = () => {
           key={index}
         >
           <div className="card-content">
+            <p>The story of</p>
             <h3>{card.title}</h3>
             <p>{card.subtitle}</p>
             <button onClick={() => setExpandedCardIndex(index)}>
