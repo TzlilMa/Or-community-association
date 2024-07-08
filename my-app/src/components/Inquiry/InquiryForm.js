@@ -123,7 +123,7 @@ const InquiryForm = () => {
                 <p><strong>נושא:</strong> {inquiry.subject}</p>
                 <p><strong>תוכן הפנייה:</strong> {inquiry.content}</p>
                 <p>
-                  <strong>תגובה:</strong> {inquiry.response ? inquiry.response : "אין תגובה כרגע במערכת"}
+                  <strong>{inquiry.response ? "תגובה:" : "אין תגובה כרגע במערכת"}</strong> {inquiry.response}
                 </p>
               </div>
             ))
