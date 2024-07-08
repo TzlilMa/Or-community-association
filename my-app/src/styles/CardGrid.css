@@ -21,7 +21,7 @@ body.no-scroll {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 50px;
   margin-bottom: 30%;
 }
 
@@ -32,7 +32,7 @@ body.no-scroll {
   border: 1px solid #c2c2c2;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.7);
   transition: transform 0.3s ease;
   margin-top: 10px; /* Reduced margin to push the card up */
 }
@@ -96,7 +96,7 @@ body.no-scroll {
 }
 
 .card-full-view {
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 20px; /* Added padding */
 }
 
