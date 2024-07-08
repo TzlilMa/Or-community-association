@@ -1,4 +1,3 @@
-// src/pages/Homepage.js
 import React, { useEffect, useState } from "react";
 import { db, doc, getDoc } from "../fireBase/firebase";
 import BulletinBoard from "../components/NotificationComponent/BulletinBoard";
@@ -27,6 +26,7 @@ const Homepage = () => {
           const userData = userDoc.data();
           console.log("User data:", userData);
           setFirstName(userData.firstName);
+          setShowEditButtons(userData.isAdmin);
         } else {
           console.error(
             "User document does not exist for email:",
@@ -40,10 +40,6 @@ const Homepage = () => {
 
     fetchUserData();
   }, [currentUser]);
-
-  const toggleEditButtons = () => {
-    setShowEditButtons((prev) => !prev);
-  };
 
   return (
     <div className="App">

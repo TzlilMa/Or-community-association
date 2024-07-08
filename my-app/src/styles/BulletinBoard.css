@@ -1,15 +1,26 @@
-.bulletin-board {
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+
+* {
+  font-family: 'Rubik', sans-serif; /* Apply Rubik font to all elements */
+}
+.bulletinboard-container {
   width: 100%;
-  height: 500px; /* Set the height to match the ImageSlider */
-  text-align: center;
+  height: 100%; /* Set the height to match the ImageSlider */
+  direction: rtl; /* Set the text direction to right-to-left */
+  text-align: right; /* Align text to the right */
   background: #f1f0f0;
   overflow-y: auto; /* Ensure vertical scrolling */
+  position: relative; /* Add relative positioning for the admin button */
+  color: #004085;
+  font-size: 1.7rem;
 }
 
-.bulletin-board-header {
-  font-size: 24px;
+.bulletinboard-list h2 {
+  font-size: 2.4rem;
   font-weight: bold;
-  margin: 20px 0;
+  margin: 2% 0;
+  color: #004085;
+  text-align: center; 
 }
 
 .ads ul {
@@ -22,47 +33,110 @@
 
 .ads li {
   background-color: #f1f0f0;
-  color: black;
-  margin: 10px 0;
-  padding: 10px;
+  margin: 1% 0;
+  padding: 2%;
   border-radius: 5px;
   list-style-position: inside; /* Ensure the disc is inside the padding */
 }
 
-.ads button {
-  margin-left: 10px;
-  padding: 5px 10px;
-  font-size: 14px;
-  cursor: pointer;
-  background-color: #007bff;
+.bulletinboard-management-button {
+  position: absolute;
+  top: 10px; /* Adjust top position as needed */
+  left: 10px; /* Adjust left position as needed */
+  background-color: #05A3BA; /* Green background color */
   color: white;
   border: none;
   border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
-.ads button:hover {
-  background-color: #0056b3;
-}
-
-.ads button:active {
+.bulletinboard-management-button:hover {
   background-color: #004085;
 }
 
-.change-messages-button {
-  margin: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #28a745;
+/* Modal styling */
+.bulletinboard-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bulletinboard-modal-content {
+  background: white;
+  padding: 2%;
+  border-radius: 8px;
+  width: 25%;
+  text-align: center;
+  font-family: 'Rubik', sans-serif; /* Apply Rubik font */
+  direction: rtl; /* Set text direction to right-to-left */
+  font-size: 1.5rem;
+}
+
+.bulletinboard-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 4%;
+}
+
+.bulletinboard-actions button {
+  padding: 2% 5%;
+  background-color: #05A3BA;
   color: white;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.5rem; /* Increase font size for the action buttons */
 }
 
-.change-messages-button:hover {
+.bulletinboard-actions button:hover {
+  background-color: #254790;
+}
+
+.bulletinboard-modal select, .bulletinboard-modal textarea {
+  width: 100%;
+  padding: 1%;
+  margin-bottom: 4%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+
+.bulletinboard-modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.bulletinboard-modal-buttons button {
+  padding: 2% 6%;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.bulletinboard-modal-buttons button:first-child {
+  background-color: #28a745;
+  color: white;
+  border: none;
+}
+
+.bulletinboard-modal-buttons button:first-child:hover {
   background-color: #218838;
 }
 
-.change-messages-button:active {
-  background-color: #1e7e34;
+.bulletinboard-modal-buttons button:last-child {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.bulletinboard-modal-buttons button:last-child:hover {
+  background-color: #c82333;
 }
