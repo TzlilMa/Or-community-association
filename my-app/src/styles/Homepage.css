@@ -5,7 +5,7 @@
   justify-content: flex-start;
   align-items: flex-start; /* Align items to the start */
   width: 100%;
-  padding-top: 0; /* Remove padding at the top */
+  padding-top: 20px; /* Add padding at the top */
 }
 
 .main-content {
@@ -16,8 +16,8 @@
   font-size: 20px;
   margin-right: 2%;
   margin-bottom: 2%;
-  margin-top: 0; /* Remove margin at the top */
-  padding-top: 0; /* Ensure no padding at the top */
+  margin-top: 20px; /* Add margin at the top */
+  padding-top: 0; /* Ensure no extra padding at the top */
 }
 
 .toggle-edit-button {
@@ -54,14 +54,14 @@ h1 {
   animation: fadeIn 2s ease-in-out;
   font-family: "Rubik", sans-serif;
   color: rgb(0, 0, 0);
-  margin-top: 0; /* Remove margin at the top */
+  margin-top: 20px; /* Add margin at the top */
 }
 
 .content-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  margin-top: 0;
+  margin-top: 50px; /* Add margin at the top */
   width: 100%;
 }
 
