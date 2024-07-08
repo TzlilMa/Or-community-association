@@ -34,9 +34,24 @@ const AdminInquiryList = () => {
     if (currentUser) {
       const q = query(collection(db, "inquiry"), where("subject", "==", subject.name));
       const querySnapshot = await getDocs(q);
-      const inquiries = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      inquiries.sort((a, b) => (a.response ? 1 : -1)); // Sort with no response first
-      setInquiries(inquiries);
+      const inquiriesData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+      // Fetch user details for each inquiry
+      const inquiriesWithUserDetails = await Promise.all(
+        inquiriesData.map(async (inquiry) => {
+          const userQuery = query(collection(db, "users"), where("email", "==", inquiry.email));
+          const userQuerySnapshot = await getDocs(userQuery);
+          const userData = userQuerySnapshot.docs[0]?.data();
+          return {
+            ...inquiry,
+            firstName: userData?.firstName || "Unknown",
+            lastName: userData?.lastName || "Unknown",
+          };
+        })
+      );
+
+      inquiriesWithUserDetails.sort((a, b) => (a.response ? 1 : -1)); // Sort with no response first
+      setInquiries(inquiriesWithUserDetails);
       setSelectedSubject(subject);
     }
   };
@@ -96,7 +111,11 @@ const AdminInquiryList = () => {
       <div className="admin-inquiry-list">
         <h2>רשימת פניות</h2>
         {subjects.map((subject) => (
-          <h3 key={subject.id} onClick={() => fetchInquiries(subject)} className="subject-name">
+          <h3
+            key={subject.id}
+            onClick={() => fetchInquiries(subject)}
+            className={`subject-name ${selectedSubject && selectedSubject.id === subject.id ? 'selected' : ''}`}
+          >
             {subject.name}
           </h3>
         ))}
@@ -106,8 +125,18 @@ const AdminInquiryList = () => {
         {selectedSubject && (
           <>
             <div className="response-toggle">
-              <span onClick={() => setShowWithoutResponse(true)}>ללא תגובה</span> | 
-              <span onClick={() => setShowWithoutResponse(false)}>עם תגובה</span>
+              <span
+                onClick={() => setShowWithoutResponse(true)}
+                className={showWithoutResponse ? 'selected' : ''}
+              >
+                ללא תגובה
+              </span> | 
+              <span
+                onClick={() => setShowWithoutResponse(false)}
+                className={!showWithoutResponse ? 'selected' : ''}
+              >
+                עם תגובה
+              </span>
             </div>
             <div className="inquiry-section">
               {inquiries
