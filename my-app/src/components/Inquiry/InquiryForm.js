@@ -37,6 +37,7 @@ const InquiryForm = () => {
         subject: subject,
         content: content,
         response: "",
+        submitDate: new Date().toISOString(), // Add submit date
       });
       setSubject("");
       setContent("");
@@ -122,8 +123,10 @@ const InquiryForm = () => {
               <div key={inquiry.id} className="inquiry-item">
                 <p><strong>נושא:</strong> {inquiry.subject}</p>
                 <p><strong>תוכן הפנייה:</strong> {inquiry.content}</p>
+                <p><strong>תאריך הגשה:</strong> {new Date(inquiry.submitDate).toLocaleString()}</p> {/* Display submit date */}
                 <p>
                   <strong>{inquiry.response ? "תגובה:" : "אין תגובה כרגע במערכת"}</strong> {inquiry.response}
+                  {inquiry.responseDate && <p><strong>תאריך תגובה:</strong> {new Date(inquiry.responseDate).toLocaleString()}</p>} {/* Display response date */}
                 </p>
               </div>
             ))

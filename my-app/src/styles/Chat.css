@@ -15,7 +15,7 @@
 .chat-container {
   width: 80%;
   max-width: 800px;
-  height: 80%;
+  height: 50%;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid #ccc;
   border-radius: 8px;

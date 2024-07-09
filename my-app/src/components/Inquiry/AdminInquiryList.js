@@ -70,6 +70,7 @@ const AdminInquiryList = () => {
       const inquiryRef = doc(db, "inquiry", selectedInquiry.id);
       await updateDoc(inquiryRef, {
         response: response,
+        responseDate: new Date().toISOString(), // Add response date
       });
       alert("Response submitted successfully!");
       setResponse("");
@@ -154,8 +155,12 @@ const AdminInquiryList = () => {
                         <p><strong>שם פרטי:</strong> {selectedInquiry.firstName}</p>
                         <p><strong>שם משפחה:</strong> {selectedInquiry.lastName}</p>
                         <p><strong>אימייל:</strong> {selectedInquiry.email}</p>
+                        <p><strong>תאריך הגשה:</strong> {new Date(selectedInquiry.submitDate).toLocaleString()}</p> {/* Display submit date */}
                         {selectedInquiry.response ? (
-                          <p><strong>תגובה:</strong> {selectedInquiry.response}</p>
+                          <>
+                            <p><strong>תגובה:</strong> {selectedInquiry.response}</p>
+                            <p><strong>תאריך תגובה:</strong> {new Date(selectedInquiry.responseDate).toLocaleString()}</p> {/* Display response date */}
+                          </>
                         ) : (
                           <form onSubmit={handleResponseSubmit}>
                             <div>
