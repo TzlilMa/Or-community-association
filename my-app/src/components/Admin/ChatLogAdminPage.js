@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { db, collection, query, where, getDocs, orderBy } from '../fireBase/firebase';
+import { db, collection, query, where, getDocs, orderBy } from '../../fireBase/firebase';
 import { useParams } from 'react-router-dom';
-import '../styles/ChatLog.css';
+import '../../styles/ChatLog.css';
 
 const ChatLogPage = () => {
   const { email } = useParams();

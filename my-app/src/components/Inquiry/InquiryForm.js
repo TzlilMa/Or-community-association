@@ -3,7 +3,7 @@ import { db } from "../../fireBase/firebase";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { useAuth } from "../../fireBase/AuthContext";
 import "../../styles/InquiryForm.css";
-import Notification from '../Notification';
+import Notification from '../Genral/Notification';
 import brainAndFamily from '../../assets/brain_and_family.jpg'; // Import the image
 
 const InquiryForm = () => {

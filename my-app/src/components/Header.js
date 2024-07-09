@@ -91,7 +91,7 @@ const Header = ({ isAdmin }) => {
             <button className="nav-btn" onClick={() => handleComponentClick('Calendar')}>אירועים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Documents')}>טפסים ומידע</button>
             {isAdmin && (
-              <button className="nav-btn" onClick={() => handleComponentClick('Reports')}>דוחות</button>
+              <button className="nav-btn" onClick={() => handleComponentClick('Reports')}>דוחות וניהול</button>
             )}
           </div>
           <div className="left-section">

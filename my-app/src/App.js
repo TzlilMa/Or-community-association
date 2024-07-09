@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/Header";
@@ -12,9 +13,10 @@ import Chat from "./components/Chat";
 import InquiryForm from "./components/Inquiry/InquiryForm";
 import AdminInquiryList from "./components/Inquiry/AdminInquiryList";
 import CardGrid from "./components/PersonalStory/CardGrid";
-import Reports from "./components/Reports";
-import UserManagement from "./components/UserManagement";
-import ChatLogPage from "./components/ChatLogPage"; // Import the ChatLogPage component
+import Reports from "./components/Admin/Reports";
+import UserManagement from "./components/Admin/UserManagementAdmin";
+import ChatLogPage from "./components/Admin/ChatLogAdminPage"; // Import the ChatLogPage component
+import PrivateRoute from "./PrivateRoute"; // Import PrivateRoute
 import { auth, db } from "./fireBase/firebase";
 import { getDoc, doc } from "firebase/firestore";
 import "./App.css";
@@ -22,7 +24,6 @@ import "./App.css";
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [showChat, setShowChat] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,10 +40,6 @@ const App = () => {
     });
     return () => unsubscribe();
   }, []);
-
-  const toggleChat = () => {
-    setShowChat(!showChat);
-  };
 
   if (loading) {
     return <div>Loading...</div>; // Or a loading spinner
@@ -63,10 +60,38 @@ const App = () => {
               <Route path="/stories" element={<CardGrid />} />
               {isAdmin ? (
                 <>
-                  <Route path="/admin-inquiries" element={<AdminInquiryList />} />
-                  <Route path="/reports" element={<Reports />} />
-                  <Route path="/accountspanel" element={<UserManagement />} />
-                  <Route path="/chat-log/:email" element={<ChatLogPage />} /> {/* Add the ChatLogPage route */}
+                  <Route
+                    path="/admin-inquiries"
+                    element={
+                      <PrivateRoute adminOnly={true}>
+                        <AdminInquiryList />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/reports"
+                    element={
+                      <PrivateRoute adminOnly={true}>
+                        <Reports />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/accountspanel"
+                    element={
+                      <PrivateRoute adminOnly={true} passwordProtected={true}>
+                        <UserManagement />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/chat-log/:email"
+                    element={
+                      <PrivateRoute adminOnly={true}>
+                        <ChatLogPage />
+                      </PrivateRoute>
+                    }
+                  /> {/* Add the ChatLogPage route */}
                   <Route path="*" element={<Navigate to="/accountspanel" />} />
                 </>
               ) : (

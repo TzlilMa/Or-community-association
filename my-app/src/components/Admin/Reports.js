@@ -1,12 +1,11 @@
 // src/components/Reports.js
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import { db, collection, getDocs } from '../fireBase/firebase';
-import '../styles/Reports.css';
-import '../styles/ParticipantList.css'; // Import the ParticipantList styles
+import { db, collection, getDocs } from '../../fireBase/firebase.js';
+import PasswordPrompt from './PasswordPrompt.js';
+import '../../styles/Reports.css';
 
-// Register all necessary Chart.js components
 Chart.register(...registerables);
 
 const Reports = () => {
@@ -14,9 +13,7 @@ const Reports = () => {
   const [inquiryWithoutResponseData, setInquiryWithoutResponseData] = useState(null);
   const [inquiryWithResponseData, setInquiryWithResponseData] = useState(null);
   const [events, setEvents] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [showUsersModal, setShowUsersModal] = useState(false);
-  const usersListRef = useRef(null);
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +29,6 @@ const Reports = () => {
         const eventList = [];
         const subjects = [];
 
-        // Initialize subjects from inquirySubject collection
         inquirySubjectsSnapshot.forEach(doc => {
           const subjectData = doc.data();
           subjects.push(subjectData.name);
@@ -68,7 +64,7 @@ const Reports = () => {
           const event = doc.data();
           eventList.push({
             name: event.name,
-            date: event.date.toDate().toLocaleDateString(), // Convert Firestore timestamp to readable date
+            date: event.date.toDate().toLocaleDateString(),
             registrations: event.registrations || 0,
           });
         });
@@ -115,39 +111,12 @@ const Reports = () => {
     fetchData();
   }, []);
 
-  const fetchUsers = async () => {
-    try {
-      const usersSnapshot = await getDocs(collection(db, 'users'));
-      const userData = usersSnapshot.docs.map(doc => doc.data());
-      setUsers(userData);
-      setShowUsersModal(true);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
+  const handleFetchUsersClick = () => {
+    setShowPasswordPrompt(true);
   };
 
-  const handlePrintUsers = () => {
-    const printContent = usersListRef.current.cloneNode(true);
-    const headerElement = printContent.querySelector('.participant-list-header');
-    headerElement.remove();
-
-    const printWindow = window.open('', '', 'height=600,width=800');
-    printWindow.document.write(`
-      <html>
-        <head>
-          <title>User List</title>
-          <link rel="stylesheet" href="${window.location.origin}/styles/ParticipantList.css" />
-        </head>
-        <body>
-          ${printContent.outerHTML}
-        </body>
-      </html>
-    `);
-
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-    printWindow.close();
+  const handlePasswordPromptClose = () => {
+    setShowPasswordPrompt(false);
   };
 
   const optionsWithoutResponse = {
@@ -238,40 +207,13 @@ const Reports = () => {
         </div>
       </div>
       <div className="button-container">
-        <button className="fetch-users-button" onClick={fetchUsers}>רשימת משתתפים</button>
+        <button className="fetch-users-button" onClick={handleFetchUsersClick}>ניהול משתמשים</button>
       </div>
-      {showUsersModal && (
-        <div className="participant-list-overlay">
-          <div className="participant-list-modal" ref={usersListRef} style={{ direction: 'rtl' }}>
-            <div className="participant-list-header">
-              <h3>רשימת משתמשים</h3>
-              <div className="button-group">
-                <button className="print-button" onClick={handlePrintUsers}>שמור</button>
-                <button className="close-button" onClick={() => setShowUsersModal(false)}>סגור</button>
-              </div>
-            </div>
-            <div className="participant-list-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>שם פרטי</th>
-                    <th>שם משפחה</th>
-                    <th>כתובת מייל</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user, index) => (
-                    <tr key={index}>
-                      <td style={{ direction: 'rtl' }}>{user.firstName}</td>
-                      <td style={{ direction: 'rtl' }}>{user.lastName}</td>
-                      <td>{user.email}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+      {showPasswordPrompt && (
+        <PasswordPrompt
+          onClose={handlePasswordPromptClose}
+          redirectPath="/accountspanel"
+        />
       )}
     </div>
   );

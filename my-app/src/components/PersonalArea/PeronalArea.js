@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db, doc, getDoc, setDoc, auth } from '../../fireBase/firebase'; // Adjust the import path as needed
 import { reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
-import Notification from '../Notification';
+import Notification from '../Genral/Notification';
 import '../../styles/PersonalArea.css'; // Ensure this path is correct
 
 const PersonalArea = () => {

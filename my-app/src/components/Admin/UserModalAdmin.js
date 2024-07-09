@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { db, doc, getDoc } from '../fireBase/firebase';
-import '../styles/UserModal.css';
+import { db, doc, getDoc } from '../../fireBase/firebase';
+import '../../styles/UserModal.css';
 
 const UserModal = ({ email, onClose }) => {
   const [user, setUser] = useState(null);

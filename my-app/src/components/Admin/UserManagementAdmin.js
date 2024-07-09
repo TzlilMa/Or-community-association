@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import UserModal from './UserModal';
-import '../styles/UserManagement.css';
+import UserModal from './UserModalAdmin';
+import '../../styles/UserManagement.css';
+import Notification from '../Genral/Notification';
+import { getFirestore, getDocs, collection, updateDoc, doc, query, where} from 'firebase/firestore';
 
 const UserManagement = () => {
+  const db = getFirestore();
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [search, setSearch] = useState('');
   const [sortField, setSortField] = useState('creationTime');
   const [sortOrder, setSortOrder] = useState('asc');
   const [selectedEmail, setSelectedEmail] = useState(null);
-  const navigate = useNavigate();
+  const [notification, setNotification] = useState({ message: '', type: '' });
 
   useEffect(() => {
     fetchUsers();
@@ -20,11 +22,31 @@ const UserManagement = () => {
   const fetchUsers = async () => {
     try {
       const response = await axios.get('/api/users');
-      setUsers(response.data);
-      setFilteredUsers(response.data);
+      const apiUsers = response.data;
+
+      const firestoreUsers = await getFirestoreUsers();
+
+      const usersList = apiUsers.map(apiUser => {
+        const firestoreUser = firestoreUsers.find(user => user.email === apiUser.email);
+        return {
+          ...apiUser,
+          ...firestoreUser,
+        };
+      });
+
+      setUsers(usersList);
+      setFilteredUsers(usersList);
     } catch (error) {
       console.error('Error fetching users:', error);
     }
+  };
+
+  const getFirestoreUsers = async () => {
+    const usersSnapshot = await getDocs(collection(db, 'users'));
+    return usersSnapshot.docs.map(doc => ({
+      email: doc.id, // Assuming the document ID is the user's email
+      isAdmin: doc.data().isAdmin,
+    }));
   };
 
   const handleSearch = (e) => {
@@ -71,12 +93,40 @@ const UserManagement = () => {
   };
 
   const handleShowUser = (email) => {
-    console.log("Selected user email:", email); // Debug log
     setSelectedEmail(email);
   };
 
   const handleCloseUserModal = () => {
     setSelectedEmail(null);
+  };
+
+  const handleSetAdmin = async (email) => {
+    try {
+      const userRef = doc(db, 'users', email);
+      await updateDoc(userRef, { isAdmin: true });
+      fetchUsers(); // Refresh the list of users
+      setNotification({ message: 'המשתמש נקבע כמנהל בהצלחה.', type: 'success' });
+    } catch (error) {
+      console.error('Error setting admin:', error.code, error.message); // Log more details
+    }
+  };
+
+  const handleRemoveAdmin = async (email) => {
+    try {
+      // Check if there's at least one other admin
+      const adminQuery = query(collection(db, 'users'), where('isAdmin', '==', true));
+      const adminSnapshot = await getDocs(adminQuery);
+      if (adminSnapshot.size > 1) { // Ensure there's at least one admin left
+        const userRef = doc(db, 'users', email);
+        await updateDoc(userRef, { isAdmin: false });
+        fetchUsers(); // Refresh the list of users
+        setNotification({ message: 'הרשאות הניהול הוסרו מהמשתמש בהצלחה.', type: 'success' });
+      } else {
+        setNotification({ message: 'לא ניתן לבטל הרשאות ניהול ממשתמש זה. יש לוודא שיש לפחות מנהל אחד נוסף.', type: 'error' });
+      }
+    } catch (error) {
+      console.error('Error removing admin:', error);
+    }
   };
 
   const formatDate = (dateString) => {
@@ -112,12 +162,17 @@ const UserManagement = () => {
               <td>{formatDate(user.lastSignInTime)}</td>
               <td>{user.disabled ? 'לא פעיל' : 'פעיל'}</td>
               <td>
-                <button onClick={() => handleDeleteUser(user.uid)}>מחק חשבון</button>
+                {/* <button onClick={() => handleDeleteUser(user.uid)}>מחק חשבון</button> */}
                 <button onClick={() => handleChangeAccountStatus(user.uid, user.disabled ? 'inactive' : 'active')}>
                   {user.disabled ? 'הפעל חשבון' : 'השבת חשבון'}
                 </button>
                 <button onClick={() => handleShowChatLog(user.email)}>הצג לוג שיחה</button>
                 <button onClick={() => handleShowUser(user.email)}>הצג משתמש</button>
+                {user.isAdmin ? (
+                  <button onClick={() => handleRemoveAdmin(user.email)}>בטל הרשאות ניהול</button>
+                ) : (
+                  <button onClick={() => handleSetAdmin(user.email)}>הגדר כמנהל</button>
+                )}
               </td>
             </tr>
           ))}
@@ -125,6 +180,13 @@ const UserManagement = () => {
       </table>
       {selectedEmail && (
         <UserModal email={selectedEmail} onClose={handleCloseUserModal} />
+      )}
+      {notification.message && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification({ message: '', type: '' })}
+        />
       )}
     </div>
   );

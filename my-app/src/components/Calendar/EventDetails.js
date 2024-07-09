@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db, doc, updateDoc, getDoc, increment, getDocs, query, collection, where, deleteDoc } from '../../fireBase/firebase';
 import ParticipantList from './ParticipantList';
 import EventEditForm from './EventEditForm';
-import Notification from '../Notification';
+import Notification from '../Genral/Notification';
 import '../../styles/EventDetails.css';
 
 const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents }) => {
