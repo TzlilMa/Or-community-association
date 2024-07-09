@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { db, auth, getDoc, collection, query, getDocs, addDoc, deleteDoc, doc, orderBy } from "../../fireBase/firebase";
+import {
+  db,
+  auth,
+  getDoc,
+  collection,
+  query,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+  orderBy,
+} from "../../fireBase/firebase";
 import "../../styles/BulletinBoard.css";
 
 const BulletinBoard = () => {
@@ -17,9 +28,14 @@ const BulletinBoard = () => {
 
   const fetchNotifications = async () => {
     try {
-      const q = query(collection(db, "bulletinBoard"), orderBy("timestamp", "desc"));
+      const q = query(
+        collection(db, "bulletinBoard"),
+        orderBy("timestamp", "desc")
+      );
       const querySnapshot = await getDocs(q);
-      setMessages(querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      setMessages(
+        querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      );
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
@@ -66,15 +82,16 @@ const BulletinBoard = () => {
       <div className="bulletinboard-list">
         <h2>לוח הודעות</h2>
         {isAdmin && (
-          <button className="bulletinboard-management-button" onClick={() => setShowModal(true)}>
+          <button
+            className="bulletinboard-management-button"
+            onClick={() => setShowModal(true)}
+          >
             ניהול הודעות
           </button>
         )}
         <ul className="ads">
           {messages.map((message) => (
-            <li key={message.id}>
-              {message.text}
-            </li>
+            <li key={message.id}>{message.text}</li>
           ))}
         </ul>
       </div>
@@ -90,11 +107,19 @@ const BulletinBoard = () => {
             {action === "remove" && (
               <select
                 value={selectedMessage ? selectedMessage.id : ""}
-                onChange={(e) => setSelectedMessage(messages.find((message) => message.id === e.target.value))}
+                onChange={(e) =>
+                  setSelectedMessage(
+                    messages.find((message) => message.id === e.target.value)
+                  )
+                }
               >
-                <option value="" disabled>בחר הודעה</option>
+                <option value="" disabled>
+                  בחר הודעה
+                </option>
                 {messages.map((message) => (
-                  <option key={message.id} value={message.id}>{message.text}</option>
+                  <option key={message.id} value={message.id}>
+                    {message.text}
+                  </option>
                 ))}
               </select>
             )}
@@ -107,8 +132,12 @@ const BulletinBoard = () => {
             )}
             {(action === "add" || action === "remove") && (
               <div className="bulletinboard-modal-buttons">
-                {action === "add" && <button onClick={handleAddMessage}>שמור</button>}
-                {action === "remove" && <button onClick={handleRemoveMessage}>מחק</button>}
+                {action === "add" && (
+                  <button onClick={handleAddMessage}>שמור</button>
+                )}
+                {action === "remove" && (
+                  <button onClick={handleRemoveMessage}>מחק</button>
+                )}
                 <button onClick={() => setShowModal(false)}>סגור</button>
               </div>
             )}
