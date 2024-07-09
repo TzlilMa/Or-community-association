@@ -3,6 +3,7 @@ import { db } from "../../fireBase/firebase";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { useAuth } from "../../fireBase/AuthContext";
 import "../../styles/InquiryForm.css";
+import Notification from '../Notification';
 import brainAndFamily from '../../assets/brain_and_family.jpg'; // Import the image
 
 const InquiryForm = () => {
@@ -12,6 +13,7 @@ const InquiryForm = () => {
   const [content, setContent] = useState("");
   const [myInquiries, setMyInquiries] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [notification, setNotification] = useState({ message: '', type: '' });
 
   useEffect(() => {
     if (currentUser) {
@@ -41,11 +43,11 @@ const InquiryForm = () => {
       });
       setSubject("");
       setContent("");
-      alert("Inquiry submitted successfully!");
+      setNotification({ message: 'פניינתך הוגשה בהצלחה!', type: 'success' });
       setView(null); // Reset to show the two cubes again
     } catch (error) {
       console.error("Error submitting inquiry: ", error);
-      alert("Error submitting inquiry. Please try again.");
+      setNotification({ message: 'הגשת הפנייה נכשלה, אנא נסה שוב', type: 'error' });
     }
   };
 
@@ -134,6 +136,13 @@ const InquiryForm = () => {
             <p>.לא נמצאו פניות</p>
           )}
         </div>
+      )}
+      {notification.message && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification({ message: '', type: '' })}
+        />
       )}
     </div>
   );

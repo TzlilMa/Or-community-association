@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../fireBase/firebase";
 import { collection, query, getDocs, doc, addDoc, deleteDoc, where, updateDoc } from "firebase/firestore";
 import { useAuth } from "../../fireBase/AuthContext";
+import Notification from '../Notification';
 import "../../styles/AdminInquiry.css";
 
 const AdminInquiryList = () => {
@@ -16,6 +17,7 @@ const AdminInquiryList = () => {
   const [subjectAction, setSubjectAction] = useState("");
   const [newSubject, setNewSubject] = useState("");
   const [editSubject, setEditSubject] = useState(null);
+  const [notification, setNotification] = useState({ message: '', type: '' });
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -72,13 +74,13 @@ const AdminInquiryList = () => {
         response: response,
         responseDate: new Date().toISOString(), // Add response date
       });
-      alert("Response submitted successfully!");
+      setNotification({ message: 'תגובה נשלחה בהצלחה', type: 'success' });
       setResponse("");
       setSelectedInquiry(null);
       fetchInquiries(selectedSubject);
     } catch (error) {
       console.error("Error submitting response: ", error);
-      alert("Error submitting response. Please try again.");
+      setNotification({ message: 'תגובתך לא התקבלה במערכת', type: 'error' });
     }
   };
 
@@ -221,6 +223,13 @@ const AdminInquiryList = () => {
             )}
           </div>
         </div>
+      )}
+      {notification.message && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification({ message: '', type: '' })}
+        />
       )}
     </div>
   );
