@@ -1,4 +1,3 @@
-/* Documents.css */
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
 
 html,
@@ -52,8 +51,8 @@ body {
   text-decoration: underline;
 }
 
-.add-link-button,
-.remove-link-button {
+.add-document-button,
+.remove-document-button {
   display: block;
   margin: 1rem auto;
   padding: 0.75rem 1.5rem;
@@ -65,8 +64,8 @@ body {
   font-size: 1.2rem; /* Increase the font size of buttons */
 }
 
-.add-link-button:hover,
-.remove-link-button:hover {
+.add-document-button:hover,
+.remove-document-button:hover {
   background-color: #254790;
 }
 
@@ -78,7 +77,7 @@ body {
 }
 
 /* Modal Styles */
-.modal-overlay {
+.document-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -86,13 +85,12 @@ body {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.document-modal {
   background: white;
   padding: 2%;
   border-radius: 8px;
@@ -101,21 +99,30 @@ body {
   width: 80%;
   max-width: 500px;
   text-align: right; /* Align modal content to the right */
+  display: none; /* Hide modal by default */
+  position: fixed;
+  top: 30%; /* Adjust this value to move the modal up or down */
+  left: 50%;
+  transform: translate(-50%, -30%);
 }
 
-.modal h2 {
+.document-modal.show {
+  display: block; /* Show modal when the "show" class is added */
+}
+
+.document-modal h2 {
   color: #05a3ba;
   margin-bottom: 1rem;
 }
 
-.modal label {
+.document-modal label {
   display: block;
   margin-bottom: 0.5rem;
 }
 
-.modal input[type="text"],
-.modal input[type="url"],
-.modal select {
+.document-modal input[type="text"],
+.document-modal input[type="url"],
+.document-modal select {
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 1rem;
@@ -123,7 +130,7 @@ body {
   border-radius: 4px;
 }
 
-.modal button {
+.document-modal button {
   padding: 0.75rem;
   background-color: #05a3ba;
   color: white;
@@ -134,6 +141,6 @@ body {
   font-size: 1.2rem; /* Increase the font size of modal buttons */
 }
 
-.modal button:hover {
+.document-modal button:hover {
   background-color: #254790;
 }

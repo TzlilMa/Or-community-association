@@ -123,12 +123,12 @@ const Documents = () => {
       ))}
       {isAdmin && (
         <div>
-          <button className="add-link-button" onClick={() => setShowModal(true)}>הוספת קישור</button>
-          <button className="remove-link-button" onClick={() => setShowRemoveModal(true)}>הסרת קישור</button>
+          <button className="add-document-button" onClick={() => setShowModal(true)}>הוספת קישור</button>
+          <button className="remove-document-button" onClick={() => setShowRemoveModal(true)}>הסרת קישור</button>
           {showModal && (
             <>
-              <div className="modal-overlay" onClick={() => setShowModal(false)}></div>
-              <div className="modal">
+              <div className="document-modal-overlay" onClick={() => setShowModal(false)}></div>
+              <div className="document-modal show">
                 <h2>הוספת קישור חדש</h2>
                 <label>
                   <input type="radio" checked={!isAddingNewSubject} onChange={() => setIsAddingNewSubject(false)} />
@@ -176,8 +176,8 @@ const Documents = () => {
           )}
           {showRemoveModal && (
             <>
-              <div className="modal-overlay" onClick={() => setShowRemoveModal(false)}></div>
-              <div className="modal">
+              <div className="document-modal-overlay" onClick={() => setShowRemoveModal(false)}></div>
+              <div className="document-modal show">
                 <h2>הסרת קישור</h2>
                 <label>
                   בחר נושא:
