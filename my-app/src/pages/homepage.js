@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { db, doc, getDoc } from "../fireBase/firebase";
 import BulletinBoard from "../components/NotificationComponent/BulletinBoard";
-import ImageSlider from "../components/NotificationComponent/ImageSlider"; // Correct import statement
+import ImageSlider from "../components/NotificationComponent/ImageSlider";
+import Management from "../components/Management/Management"; // Correct import statement
 import { useAuth } from "../fireBase/AuthContext";
 import "../styles/Homepage.css";
-import "../styles/ImageSlider.css"; // Import CSS for ImageSlider
+import "../styles/ImageSlider.css";
 
 const Homepage = () => {
   const { currentUser } = useAuth();
@@ -47,12 +48,15 @@ const Homepage = () => {
         <div className="main-content">
           <h1>"לעיתים צריכים רק אור קטן בשביל לעשות שינוי גדול"</h1>
           <div className="content-container">
-            <div className="image-slider-container">
-              <ImageSlider /> {/* Add ImageSlider component */}
-            </div>
             <div className="bulletin-board-container">
               <BulletinBoard showEditButtons={showEditButtons} />
             </div>
+            <div className="image-slider-container">
+              <ImageSlider />
+            </div>
+          </div>
+          <div className="management-container">
+            <Management isAdmin={showEditButtons} />
           </div>
         </div>
       </div>

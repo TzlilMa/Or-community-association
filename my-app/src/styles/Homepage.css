@@ -1,8 +1,7 @@
-/* src/styles/Homepage.css */
 .homepage {
   height: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center; /* Center the content horizontally */
   align-items: flex-start; /* Align items to the start */
   width: 100%;
   padding-top: 20px; /* Add padding at the top */
@@ -59,21 +58,20 @@ h1 {
 
 .content-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between; /* Add space between the items */
   align-items: flex-start;
   margin-top: 50px; /* Add margin at the top */
   width: 100%;
 }
 
-.bulletin-board-container {
-  width: 50%; /* Adjust the width as necessary */
-  max-height: 500px; /* Set a max height for the bulletin board */
-  overflow-y: auto; /* Enable vertical scrolling */
-  margin-left: 20px; /* Add space between the image slider and bulletin board */
-  margin-top: 1.5%;
+.bulletin-board-container,
+.image-slider-container {
+  width: 48%; /* Ensure both are the same width */
 }
 
-.image-slider-container {
-  width: 50%; /* Adjust the width as necessary */
-  margin-left: 2%; /* Move the image slider to the left */
+.management-container {
+  width: 100%; /* Full width */
+  margin-top: 20px; /* Add margin at the top */
+  display: flex;
+  justify-content: center; /* Center horizontally */
 }

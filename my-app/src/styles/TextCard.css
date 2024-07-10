@@ -1,0 +1,52 @@
+.text-card {
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-card p {
+  margin: 0;
+  color: #333;
+  flex-grow: 1;
+  margin-right: 20px;
+}
+
+.text-card-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.text-card button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.text-card button:hover {
+  opacity: 0.9;
+}
+
+.text-card .delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.text-card .delete-button:hover {
+  background-color: #c82333;
+}
+
+.text-card .edit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.text-card .edit-button:hover {
+  background-color: #0056b3;
+}

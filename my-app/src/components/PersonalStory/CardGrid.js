@@ -63,7 +63,9 @@ const CardGrid = () => {
               <div className="card-full-view">
                 <div
                   className="story-text"
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(card.story) }}
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(card.story),
+                  }}
                 />
                 <button onClick={() => setExpandedCardIndex(null)}>
                   Close
