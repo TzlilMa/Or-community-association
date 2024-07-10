@@ -11,7 +11,7 @@ import ResetPassword from "./pages/resetPwdPage";
 import Documents from "./components/Documents";
 import Chat from "./components/Chat";
 import InquiryForm from "./components/Inquiry/InquiryForm";
-import AdminInquiryList from "./components/Inquiry/AdminInquiryList";
+import AdminInquiryList from "./components/Admin/AdminInquiryList";
 import CardGrid from "./components/PersonalStory/CardGrid";
 import Reports from "./components/Admin/Reports";
 import UserManagement from "./components/Admin/UserManagementAdmin";

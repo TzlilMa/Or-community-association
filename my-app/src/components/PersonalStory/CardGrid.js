@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../styles/CardGrid.css"; // Importing CSS for styling
 import { db, collection, query, where, getDocs } from "../../fireBase/firebase"; // Firebase imports
+import DOMPurify from "dompurify"; // Sanitizing HTML content
 
 const CardGrid = () => {
   const [expandedCardIndex, setExpandedCardIndex] = useState(null); // State to track the expanded card
@@ -60,7 +61,10 @@ const CardGrid = () => {
             </div>
             {expandedCardIndex === index && (
               <div className="card-full-view">
-                <p className="story-text">{card.story}</p>
+                <div
+                  className="story-text"
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(card.story) }}
+                />
                 <button onClick={() => setExpandedCardIndex(null)}>
                   Close
                 </button>
