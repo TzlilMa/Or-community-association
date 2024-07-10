@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { db, collection, getDocs } from '../../fireBase/firebase.js';
-import PasswordPrompt from './PasswordPrompt.js';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/Reports.css';
 
 Chart.register(...registerables);
@@ -12,7 +12,7 @@ const Reports = () => {
   const [inquiryWithoutResponseData, setInquiryWithoutResponseData] = useState(null);
   const [inquiryWithResponseData, setInquiryWithResponseData] = useState(null);
   const [events, setEvents] = useState([]);
-  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,11 +111,7 @@ const Reports = () => {
   }, []);
 
   const handleFetchUsersClick = () => {
-    setShowPasswordPrompt(true);
-  };
-
-  const handlePasswordPromptClose = () => {
-    setShowPasswordPrompt(false);
+    navigate('/accountspanel');
   };
 
   const optionsWithoutResponse = {
@@ -208,12 +204,6 @@ const Reports = () => {
       <div className="button-container">
         <button className="fetch-users-button" onClick={handleFetchUsersClick}>ניהול משתמשים</button>
       </div>
-      {showPasswordPrompt && (
-        <PasswordPrompt
-          onClose={handlePasswordPromptClose}
-          redirectPath="/accountspanel"
-        />
-      )}
     </div>
   );
 };

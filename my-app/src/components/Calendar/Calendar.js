@@ -111,6 +111,13 @@ const Calendar = () => {
     }
   };
 
+  const handleEventClick = (eventDate) => {
+    const event = new Date(eventDate);
+    setSelectedDate(event);
+    setCurrentMonth(event.getMonth());
+    setCurrentYear(event.getFullYear());
+  };
+
   const renderDaysOfWeek = () => (
     <div className="days-of-week">
       {[...daysOfWeek].map(day => (
@@ -229,38 +236,36 @@ const Calendar = () => {
 
   return (
     <div className="calendar-container">
-      {/* Section for displaying user's registered events */}
-      {currentUser && (
-        <div className="registered-events">
-          <h3>{firstName}, הינה האירועים שהינך רשום אליהם:</h3>
-          {userRegisteredEvents.length > 0 ? (
-            <ul>
-              {userRegisteredEvents.map((event) => (
-                <li key={event.id}>
-                  <strong>{event.name}</strong> - {event.date?.toDate().toLocaleDateString()}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>לא מצאנו אירועים שהינך רשום! זה הזמן לעבור על הלוח אירועים ולהרשם</p>
-          )}
-        </div>
-      )}
-      <div className="calendar-header">
-        <button className="changeMonth-btn" onClick={handlePrevMonth}>&#8249;</button>
-        <h2>
-          {new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} {currentYear}
-        </h2>
-        <button className="changeMonth-btn" onClick={handleNextMonth}>&#8250;</button>
-        <button className='today-btn' onClick={handleToday}>היום</button>
+      <div className="registered-events">
+        <h3>{firstName}, הינה האירועים שהינך רשום אליהם:</h3>
+        {userRegisteredEvents.length > 0 ? (
+          <ul>
+            {userRegisteredEvents.map((event) => (
+              <li key={event.id} onClick={() => handleEventClick(event.date.toDate())}>
+                <strong>{event.name}</strong> - {event.date?.toDate().toLocaleDateString()}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>לא מצאנו אירועים שהינך רשום! זה הזמן לעבור על הלוח אירועים ולהרשם</p>
+        )}
       </div>
-      <div className="calendar-content">
-        <div className="calendar-column">
+      <div className="vertical-line"></div>
+      <div className="calendar-column">
+        <div className="calendar-header">
+          <button className="changeMonth-btn" onClick={handlePrevMonth}>&#8249;</button>
+          <h2>
+            {new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} {currentYear}
+          </h2>
+          <button className="changeMonth-btn" onClick={handleNextMonth}>&#8250;</button>
+          <button className='today-btn' onClick={handleToday}>היום</button>
+        </div>
+        <div>
           {renderDaysOfWeek()}
           {renderDaysInMonth()}
         </div>
-        <div className="details-column">
-          {selectedDate && (
+        {selectedDate && (
+          <div className="details-column">
             <div className="event-details-container">
               <h3>{selectedDateString}</h3>
               <div className="actions">
@@ -298,8 +303,8 @@ const Calendar = () => {
                 <p>אין אירועים</p>
               )}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
       {notification.message && (
         <Notification

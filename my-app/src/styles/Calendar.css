@@ -1,4 +1,3 @@
-/* Calendar.css */
 .calendar-container {
   width: 90%;
   margin: 2rem auto;
@@ -6,6 +5,55 @@
   background: #f3f3f3;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.calendar-column {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.registered-events {
+  flex: 1;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 3rem;
+  margin-left: 3%;
+  text-align: right;
+  height: fit-content;
+}
+
+.registered-events h3 {
+  font-size: 1.5rem;
+  color: #254790;
+  margin-bottom: 1rem;
+}
+
+.registered-events ul {
+  list-style: none;
+  padding: 0;
+}
+
+.registered-events li {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.vertical-line {
+  width: 2px;
+  background-color: #7c95ca;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(66.66%);
+  margin-left: -2%; /* To center the line */
 }
 
 .calendar-header {
@@ -32,15 +80,6 @@
 
 .changeMonth-btn:hover, .today-btn:hover {
   background-color: #254790;
-}
-
-.calendar-content {
-  display: flex;
-  gap: 1rem;
-}
-
-.calendar-column {
-  flex: 1;
 }
 
 .days-of-week {
@@ -105,11 +144,11 @@
 }
 
 .details-column {
-  flex: 0.5;
   background-color: white;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
 }
 
 .event-details-container {
@@ -150,35 +189,24 @@
   margin-top: 1rem;
 }
 
-.registered-events {
-  flex: 0.5;
-  background-color: #f3f3f3;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  margin-bottom: 3rem;
-  text-align: right;
-}
-
-.registered-events h3 {
-  font-size: 1.5rem;
-  color: #254790;
-  margin-bottom: 1rem;
-}
-
-.registered-events ul {
-  list-style: none;
-  padding: 0;
-}
-
-.registered-events li {
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
-  color: #333;
-}
-
 @media (max-width: 768px) {
-  .calendar-content {
+  .calendar-container {
     flex-direction: column;
+  }
+
+  .registered-events {
+    order: 3;
+  }
+
+  .calendar-column {
+    order: 1;
+  }
+
+  .details-column {
+    order: 2;
+  }
+
+  .vertical-line {
+    display: none;
   }
 }
