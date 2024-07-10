@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import UserModal from './UserModalAdmin';
 import '../../styles/UserManagement.css';
 import Notification from '../General/Notification';
-import { getFirestore, getDocs, collection, updateDoc, doc, query, where} from 'firebase/firestore';
+import { getFirestore, getDocs, collection, updateDoc, doc, query, where } from 'firebase/firestore';
 
 const UserManagement = () => {
   const db = getFirestore();
@@ -15,11 +15,15 @@ const UserManagement = () => {
   const [selectedEmail, setSelectedEmail] = useState(null);
   const [notification, setNotification] = useState({ message: '', type: '' });
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const getFirestoreUsers = useCallback(async () => {
+    const usersSnapshot = await getDocs(collection(db, 'users'));
+    return usersSnapshot.docs.map(doc => ({
+      email: doc.id, // Assuming the document ID is the user's email
+      isAdmin: doc.data().isAdmin,
+    }));
+  }, [db]);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const response = await axios.get('/api/users');
       const apiUsers = response.data;
@@ -39,15 +43,11 @@ const UserManagement = () => {
     } catch (error) {
       console.error('Error fetching users:', error);
     }
-  };
+  }, [getFirestoreUsers]);
 
-  const getFirestoreUsers = async () => {
-    const usersSnapshot = await getDocs(collection(db, 'users'));
-    return usersSnapshot.docs.map(doc => ({
-      email: doc.id, // Assuming the document ID is the user's email
-      isAdmin: doc.data().isAdmin,
-    }));
-  };
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
@@ -66,15 +66,6 @@ const UserManagement = () => {
       return 0;
     });
     setFilteredUsers(sorted);
-  };
-
-  const handleDeleteUser = async (userId) => {
-    try {
-      await axios.delete(`/api/user/${userId}`);
-      fetchUsers(); // Refresh the list of users
-    } catch (error) {
-      console.error('Error deleting user:', error);
-    }
   };
 
   const handleChangeAccountStatus = async (userId, currentStatus) => {
@@ -162,7 +153,6 @@ const UserManagement = () => {
               <td>{formatDate(user.lastSignInTime)}</td>
               <td>{user.disabled ? 'לא פעיל' : 'פעיל'}</td>
               <td>
-                {/* <button onClick={() => handleDeleteUser(user.uid)}>מחק חשבון</button> */}
                 <button onClick={() => handleChangeAccountStatus(user.uid, user.disabled ? 'inactive' : 'active')}>
                   {user.disabled ? 'הפעל חשבון' : 'השבת חשבון'}
                 </button>
