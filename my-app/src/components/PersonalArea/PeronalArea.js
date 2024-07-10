@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { db, doc, getDoc, setDoc, auth } from '../../fireBase/firebase'; // Adjust the import path as needed
 import { reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
-import Notification from '../Genral/Notification';
+import Notification from '../General/Notification';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import styles
 import '../../styles/PersonalArea.css'; // Ensure this path is correct
 
 const PersonalArea = () => {
@@ -23,8 +25,10 @@ const PersonalArea = () => {
   const [passwordError, setPasswordError] = useState('');
   const [isPasswordTooShort, setIsPasswordTooShort] = useState(false);
   const [notification, setNotification] = useState({ message: '', type: '' });
-  
+
   const MIN_PASSWORD_LENGTH = 6; // Minimum password length
+  const MIN_STORY_LENGTH = 100; // Minimum story length
+  const MAX_CHARS = 5000; // Maximum story length
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -55,19 +59,23 @@ const PersonalArea = () => {
     return () => unsubscribe();
   }, []);
 
-  const MAX_CHARS = 5000;
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
-    if (name === 'personalStory' && value.length <= MAX_CHARS) {
-      setStoryLength(value.length);
-    }
 
     setUserData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const handleStoryChange = (value) => {
+    if (value.length <= MAX_CHARS) {
+      setStoryLength(value.length);
+      setUserData((prevData) => ({
+        ...prevData,
+        personalStory: value,
+      }));
+    }
   };
 
   const handleCheckboxChange = (event) => {
@@ -89,17 +97,17 @@ const PersonalArea = () => {
     }
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleFormDetailsSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (!userData.firstName.trim() || !userData.lastName.trim()) {
       setNotification({ message: 'שם פרטי ושם משפחה הינם שדות חובה', type: 'error' });
       return;
     }
-
+  
     const currentUserData = await getDoc(doc(db, 'users', auth.currentUser.email));
     const currentUserDataFromDB = currentUserData.exists() ? currentUserData.data() : null;
-
+  
     if (
       currentUserDataFromDB &&
       currentUserDataFromDB.firstName === userData.firstName &&
@@ -110,13 +118,31 @@ const PersonalArea = () => {
       setNotification({ message: 'לא בוצעו שינויים', type: 'success' });
       return;
     }
-
+  
+    const updatedUserData = { ...userData };
+    delete updatedUserData.email; // Remove email from the data being updated
+  
     try {
-      await setDoc(doc(db, 'users', auth.currentUser.email), userData);
+      await setDoc(doc(db, 'users', auth.currentUser.email), updatedUserData, { merge: true });
       setNotification({ message: 'הנתונים נשמרו בהצלחה', type: 'success' });
     } catch (error) {
       console.error('Error updating user data:', error);
-      setNotification({ message: 'אירעה שגיאה בעדכון נתונים, אנא נסה שוב מאוחר יותר', type: 'success' });
+      setNotification({ message: 'אירעה שגיאה בעדכון נתונים, אנא נסה שוב מאוחר יותר', type: 'error' });
+    }
+  };
+
+  const handleChangePersonalStory = async () => {
+    if (userData.personalStory.length < MIN_STORY_LENGTH) {
+      setNotification({ message: `הסיפור חייב להיות באורך של לפחות ${MIN_STORY_LENGTH} תווים`, type: 'error' });
+      return;
+    }
+    
+    try {
+      await setDoc(doc(db, 'users', auth.currentUser.email), userData, { merge: true });
+      setNotification({ message: 'הסיפור נשמר בהצלחה', type: 'success' });
+    } catch (error) {
+      console.error('Error updating personal story:', error);
+      setNotification({ message: 'אירעה שגיאה בעדכון הסיפור, אנא נסה שוב מאוחר יותר', type: 'error' });
     }
   };
 
@@ -163,7 +189,7 @@ const PersonalArea = () => {
       <div className="personal-area">
         <h1>{userData.firstName}, איזה כיף {userData.gender === 'male' ? 'שאתה פה' : 'שאת פה'}!</h1>
         <h3>הינה הפרטים שלך כפי שהם מעודכנים במערכת</h3>
-        <form onSubmit={handleFormSubmit} className="personal-area-form">
+        <form onSubmit={handleFormDetailsSubmit} className="personal-area-form">
           <label className="form-label">
             שם פרטי:
             <input
@@ -194,19 +220,32 @@ const PersonalArea = () => {
               className="input read-only"
             />
           </label>
-          <h2>הסיפור שלי</h2>
-          <p>
-            קהילת אור מאפשרת לחברי הקהילה לשתף את הסיפור האישי שלהם. כאן זה המקום לעשות זאת!
-          </p>
-          <textarea
-            name="personalStory"
-            value={userData.personalStory}
-            onChange={handleInputChange}
-            className="story-textarea"
-            dir="rtl"
-            maxLength={MAX_CHARS}
-            placeholder='הקלד כאן את הסיפור שלך...'
-          />
+          <div className="btns-personal-area">
+            <button type="submit" className="submit-btn">שמור</button>
+          </div>
+        </form>
+      </div>
+      <div className="personal-story-section">
+        <h2>הסיפור שלי</h2>
+        <p>
+          קהילת אור מאפשרת לחברי הקהילה לשתף את הסיפור האישי שלהם. כאן זה המקום לעשות זאת!
+        </p>
+        <ReactQuill
+          value={userData.personalStory}
+          onChange={handleStoryChange}
+          className="story-textarea"
+          modules={{
+            toolbar: [
+              ['bold', 'italic', 'link']
+            ],
+          }}
+          formats={[
+            'bold', 'italic', 'blockquote', 'link'
+          ]}
+          dir="rtl"
+          placeholder='הקלד כאן את הסיפור שלך...'
+        />
+        <div className="story-footer">
           <p>{storyLength}/{MAX_CHARS}</p>
           <label className="checkbox-label">
             <input
@@ -218,10 +257,10 @@ const PersonalArea = () => {
             />
             אני מאשר/ת שהסיפור שלי ישותף עם חברי הקהילה
           </label>
-          <div className='btns-personal-area'>
-            <button type="submit" className="submit-btn">שמור</button>
-          </div>
-        </form>
+        </div>
+        <div className='btns-personal-area'>
+          <button type="submit" className="submit-btn" onClick={handleChangePersonalStory}>שמור</button>
+        </div>
       </div>
       <div className="change-password-section">
         <h2>שנה סיסמה</h2>

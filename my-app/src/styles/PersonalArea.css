@@ -11,7 +11,7 @@
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem; /* Add margin bottom to separate from password section */
+  margin-bottom: 2rem; /* Add margin bottom to separate from personal story section */
 }
 
 .personal-area h1 {
@@ -26,13 +26,22 @@
   margin-bottom: 1.5rem;
 }
 
-.personal-area h2 {
+/* Personal Story Section Styling */
+.personal-story-section {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem; /* Add margin bottom to separate from password section */
+}
+
+.personal-story-section h2 {
   font-size: 1.5rem;
   color: #254790;
   margin-top: 1rem;
 }
 
-.personal-area p {
+.personal-story-section p {
   color: #666;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -73,19 +82,22 @@
 }
 
 .story-textarea {
-  width: 100%; /* Full width for textarea */
-  height: 150px;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-  box-sizing: border-box;
+  height: 200px; /* Adjust the height as needed */
 }
 
-.story-textarea:focus {
-  outline: none;
-  border-color: #05A3BA;
+.ql-container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.ql-toolbar {
+  border-radius: 4px 4px 0 0;
+}
+
+.ql-editor {
+  min-height: 200px; /* Adjust the min height if necessary */
+  direction: rtl;
+  text-align: right;
 }
 
 .checkbox-label {
@@ -98,12 +110,24 @@
   margin-left: 0.5rem;
 }
 
+.story-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.story-footer p{
+  color: #666;
+  font-size: 1rem;
+}
+
 /* Buttons */
 .btns-personal-area {
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
-  justify-content: flex-end; /* Align buttons to the left */
+  justify-content: flex-end; /* Align buttons to the right */
 }
 
 .submit-btn,
@@ -140,48 +164,7 @@
 
 .change-password-section .change-password-btn {
   margin-top: 1rem;
-  align-self: flex-end; /* Align the button to the bottom-left */
-}
-
-/* Popup Styling */
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.popup-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.popup-content p {
-  margin-bottom: 1rem;
-}
-
-.popup-content button {
-  background-color: #05A3BA;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  text-align: center;
-}
-
-.popup-content button:hover {
-  background-color: #254790;
+  align-self: flex-end; /* Align the button to the bottom-right */
 }
 
 /* Responsive Design */
@@ -191,6 +174,7 @@
   }
 
   .personal-area,
+  .personal-story-section,
   .change-password-section {
     padding: 1.5rem;
   }
@@ -200,6 +184,7 @@
   }
 
   .personal-area h3,
+  .personal-story-section h2,
   .change-password-section h2 {
     font-size: 1.1rem;
   }

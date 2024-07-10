@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../fireBase/firebase";
 import { collection, query, getDocs, doc, addDoc, deleteDoc, where, updateDoc } from "firebase/firestore";
 import { useAuth } from "../../fireBase/AuthContext";
-import Notification from '../Genral/Notification';
+import Notification from '../General/Notification';
 import "../../styles/AdminInquiry.css";
 
 const AdminInquiryList = () => {

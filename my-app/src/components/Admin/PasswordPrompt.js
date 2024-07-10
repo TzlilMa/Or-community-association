@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, signInWithEmailAndPassword } from '../../fireBase/firebase';
-import Notification from '../Genral/Notification';
+import Notification from '../General/Notification';
 import '../../styles/PasswordPrompt.css';
 
 const PasswordPrompt = ({ onClose, redirectPath }) => {

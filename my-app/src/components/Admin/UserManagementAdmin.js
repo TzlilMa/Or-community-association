@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserModal from './UserModalAdmin';
 import '../../styles/UserManagement.css';
-import Notification from '../Genral/Notification';
+import Notification from '../General/Notification';
 import { getFirestore, getDocs, collection, updateDoc, doc, query, where} from 'firebase/firestore';
 
 const UserManagement = () => {

@@ -4,7 +4,7 @@ import { db, collection, addDoc, getDocs, Timestamp, doc, updateDoc, arrayUnion,
 import '../../styles/Calendar.css';
 import EventForm from './EventForm';
 import CalendarDay from './CalendarDay';
-import Notification from '../Genral/Notification';
+import Notification from '../General/Notification';
 
 const Calendar = () => {
   const today = new Date();
