@@ -198,7 +198,7 @@ const Reports = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="3">No events found</td>
+                  <td colSpan="3">לא נמצאו אירועים</td>
                 </tr>
               )}
             </tbody>
