@@ -16,10 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
-
-      - name: Navigate to my-app directory
-        run: cd my-app
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
@@ -32,7 +29,4 @@ jobs:
       - name: Deploy to Firebase Hosting
         run: |
           cd my-app
-          npx firebase-tools deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_OR_PROJECT_DA21F }}
+          npx firebase-tools deploy --only hosting --token "$FIREBASE_TOKEN"
