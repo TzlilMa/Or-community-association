@@ -1,15 +1,17 @@
+// src/pages/homepage.js
 import React, { useEffect, useState } from "react";
 import { db, doc, getDoc } from "../fireBase/firebase";
 import BulletinBoard from "../components/NotificationComponent/BulletinBoard";
 import ImageSlider from "../components/NotificationComponent/ImageSlider";
-import Management from "../components/Management/Management"; // Correct import statement
+import Management from "../components/Management/Management";
+import InstagramPhotos from "../components/InstagramPhotos";
 import { useAuth } from "../fireBase/AuthContext";
 import "../styles/Homepage.css";
 import "../styles/ImageSlider.css";
+import "../styles/InstagramPhotos.css";
 
 const Homepage = () => {
   const { currentUser } = useAuth();
-  const [firstName, setFirstName] = useState("");
   const [showEditButtons, setShowEditButtons] = useState(false);
 
   useEffect(() => {
@@ -26,7 +28,6 @@ const Homepage = () => {
         if (userDoc.exists()) {
           const userData = userDoc.data();
           console.log("User data:", userData);
-          setFirstName(userData.firstName);
           setShowEditButtons(userData.isAdmin);
         } else {
           console.error(
@@ -48,15 +49,18 @@ const Homepage = () => {
         <div className="main-content">
           <h1>"לעיתים צריכים רק אור קטן בשביל לעשות שינוי גדול"</h1>
           <div className="content-container">
+            <div className="instagram-photos-container">
+              <InstagramPhotos />
+            </div>
             <div className="bulletin-board-container">
               <BulletinBoard showEditButtons={showEditButtons} />
+            </div>
+            <div className="management-container">
+              <Management isAdmin={showEditButtons} />
             </div>
             <div className="image-slider-container">
               <ImageSlider />
             </div>
-          </div>
-          <div className="management-container">
-            <Management isAdmin={showEditButtons} />
           </div>
         </div>
       </div>

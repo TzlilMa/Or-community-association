@@ -30,9 +30,9 @@ const UserModal = ({ email, onClose }) => {
   if (!user) return <div>No user data found.</div>;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <button onClick={onClose} className="close-button">X</button>
+    <div className="userModalAdmin">
+      <div className="modal-showUser-Admin">
+        <button onClick={onClose} className="close-button-user-modal">X</button>
         <h2>פרטי משתמש</h2>
         <table>
           <tbody>
