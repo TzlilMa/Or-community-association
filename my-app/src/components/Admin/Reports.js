@@ -1,4 +1,3 @@
-// src/components/Reports.js
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
@@ -65,7 +64,7 @@ const Reports = () => {
           eventList.push({
             name: event.name,
             date: event.date.toDate().toLocaleDateString(),
-            registrations: event.registrations || 0,
+            registrations: event.numUsers || 0, // Use numUsers column
           });
         });
 
@@ -199,7 +198,7 @@ const Reports = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="3">No events found</td>
+                  <td colSpan="3">לא נמצאו אירועים</td>
                 </tr>
               )}
             </tbody>
