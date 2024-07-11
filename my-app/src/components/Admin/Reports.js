@@ -11,6 +11,7 @@ const Reports = () => {
   const [ageData, setAgeData] = useState(null);
   const [inquiryWithoutResponseData, setInquiryWithoutResponseData] = useState(null);
   const [inquiryWithResponseData, setInquiryWithResponseData] = useState(null);
+  const [averageResponseTimeData, setAverageResponseTimeData] = useState(null);
   const [events, setEvents] = useState([]);
   const navigate = useNavigate();
 
@@ -25,6 +26,8 @@ const Reports = () => {
         const ageRanges = Array(5).fill(0);
         const inquiriesWithoutResponseCount = {};
         const inquiriesWithResponseCount = {};
+        const responseTimes = {};
+        const responseCounts = {};
         const eventList = [];
         const subjects = [];
 
@@ -33,6 +36,8 @@ const Reports = () => {
           subjects.push(subjectData.name);
           inquiriesWithoutResponseCount[subjectData.name] = 0;
           inquiriesWithResponseCount[subjectData.name] = 0;
+          responseTimes[subjectData.name] = 0;
+          responseCounts[subjectData.name] = 0;
         });
 
         usersSnapshot.forEach(doc => {
@@ -49,12 +54,19 @@ const Reports = () => {
           const inquiry = doc.data();
           const subject = inquiry.subject;
           const response = inquiry.response || '';
+          const submittedAt = new Date(inquiry.submitDate);
+          const respondedAt = new Date(inquiry.responseDate);
 
           if (subjects.includes(subject)) {
             if (response.trim() === '') {
               inquiriesWithoutResponseCount[subject]++;
             } else {
               inquiriesWithResponseCount[subject]++;
+              if (submittedAt && respondedAt) {
+                const responseTime = (respondedAt - submittedAt) / (1000 * 60 * 60); // difference in hours
+                responseTimes[subject] += responseTime;
+                responseCounts[subject]++;
+              }
             }
           }
         });
@@ -97,6 +109,17 @@ const Reports = () => {
               label: 'פניות עם תגובה',
               data: subjects.map(subject => inquiriesWithResponseCount[subject]),
               backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            },
+          ],
+        });
+
+        setAverageResponseTimeData({
+          labels: subjects,
+          datasets: [
+            {
+              label: 'זמן תגובה ממוצע (שעות)',
+              data: subjects.map(subject => responseCounts[subject] ? (responseTimes[subject] / responseCounts[subject]).toFixed(2) : 0),
+              backgroundColor: 'rgba(153, 102, 255, 0.6)',
             },
           ],
         });
@@ -162,6 +185,22 @@ const Reports = () => {
     },
   };
 
+  const optionsAverageResponseTime = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: 'זמן תגובה ממוצע לפי נושא (שעות)',
+        font: {
+          size: 20,
+        },
+      },
+    },
+  };
+
   return (
     <div className="reports-container">
       <div className="charts-container">
@@ -173,6 +212,9 @@ const Reports = () => {
         </div>
         <div className="chart">
           {inquiryWithResponseData ? <Bar data={inquiryWithResponseData} options={optionsWithResponse} /> : <p>Loading inquiry data...</p>}
+        </div>
+        <div className="chart">
+          {averageResponseTimeData ? <Bar data={averageResponseTimeData} options={optionsAverageResponseTime} /> : <p>Loading average response time data...</p>}
         </div>
         <div className="table-container">
           <table>
