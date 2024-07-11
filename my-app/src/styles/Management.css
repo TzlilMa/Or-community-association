@@ -20,6 +20,15 @@
   margin-bottom: 20px; /* Add margin at the bottom */
 }
 
+.text-card {
+  white-space: pre-wrap; /* Respect spaces and line breaks */
+  background-color: #fff; /* White background */
+  padding: 10px; /* Padding for text content */
+  border-radius: 4px; /* Rounded corners for text content */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+  width: 100%; /* Full width within the container */
+}
+
 .add-text {
   margin-top: 20px;
   display: flex;

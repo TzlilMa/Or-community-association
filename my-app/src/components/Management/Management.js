@@ -75,6 +75,7 @@ const Management = ({ isAdmin }) => {
             text={textItem.text}
             onEdit={() => handleEditText(textItem.id, textItem.text)}
             onDelete={() => handleDeleteText(textItem.id)}
+            className="text-card"
           />
         ))}
       </div>
