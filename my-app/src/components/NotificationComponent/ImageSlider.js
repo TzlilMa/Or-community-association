@@ -24,10 +24,6 @@ const ImageSlider = () => {
       imgURL: p4,
       imgAlt: "img-4",
     },
-    {
-      imgURL: p5,
-      imgAlt: "img-5",
-    },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

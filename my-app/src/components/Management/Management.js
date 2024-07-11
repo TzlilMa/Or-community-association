@@ -67,7 +67,7 @@ const Management = ({ isAdmin }) => {
 
   return (
     <div className="management-container">
-      <h1>Manager's Words</h1>
+      <h1>דבר מנהל</h1>
       <div className="text-cards-container">
         {texts.map((textItem) => (
           <TextCard
