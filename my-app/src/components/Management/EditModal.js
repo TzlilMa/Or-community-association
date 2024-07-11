@@ -11,14 +11,19 @@ const EditModal = ({ text, onSave, onClose }) => {
   return (
     <div className="modal">
       <div className="modal-content">
+        <h2>Edit Text</h2>
         <textarea
           value={newText}
           onChange={(e) => setNewText(e.target.value)}
           rows="10"
         />
         <div className="modal-actions">
-          <button onClick={handleSave}>Save</button>
-          <button onClick={onClose}>Close</button>
+          <button className="close-button" onClick={onClose}>
+            Close
+          </button>
+          <button className="save-button" onClick={handleSave}>
+            Save
+          </button>
         </div>
       </div>
     </div>

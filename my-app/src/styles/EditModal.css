@@ -12,13 +12,21 @@
 }
 
 .modal-content {
-  background: #fff;
+  background: white;
   padding: 40px; /* Increase padding for larger size */
   border-radius: 8px;
-  width: 60%; /* Increase width for larger size */
-  max-width: 90%; /* Adjust max width to fit smaller screens */
+  width: 50%; /* Adjust width for larger size */
+  max-width: 600px; /* Ensure the modal is not too wide */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add shadow for better visibility */
   overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .modal-content textarea {
@@ -37,7 +45,7 @@
 }
 
 .modal-actions button {
-  padding: 15px 30px; /* Increase padding for larger buttons */
+  padding: 10px 20px; /* Adjust padding for better readability */
   font-size: 16px; /* Increase font size for better readability */
   cursor: pointer;
   border: none;
