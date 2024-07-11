@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db, collection, getDocs, addDoc, deleteDoc, query, where } from '../fireBase/firebase';
 import '../styles/Documents.css';
+import Notification from './General/Notification';
 
 const Documents = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -13,6 +14,7 @@ const Documents = () => {
   const [isAddingNewSubject, setIsAddingNewSubject] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [linkToRemove, setLinkToRemove] = useState({ subject: '', link: '' });
+  const [notification, setNotification] = useState({ message: '', type: '' });
 
   useEffect(() => {
     const fetchUserAndLinks = async () => {
@@ -55,6 +57,18 @@ const Documents = () => {
     }
   };
 
+  const checkUrl = (url) => {
+    if (!url) return 'empty';
+    if (!(url.startsWith('https://') || url.startsWith('http://'))) return 'invalid';
+    const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+    return pattern.test(url) ? 'valid' : 'invalid';
+  };
+
   const handleAddLink = async () => {
     console.log("handleAddLink called");
     console.log("newLinkUrl:", newLinkUrl);
@@ -62,8 +76,15 @@ const Documents = () => {
     console.log("selectedSubject:", selectedSubject);
     console.log("newSubject:", newSubject);
 
-    if (!newLinkUrl || !newLinkText || (!selectedSubject && !newSubject)) {
-      alert("All fields are required.");
+    const urlCheck = checkUrl(newLinkUrl);
+
+    if (urlCheck === 'empty' || !newLinkText || (!selectedSubject && !newSubject) || urlCheck === 'empty') {
+      setNotification({ message: 'יש למלא את כל השדות', type: 'error' });
+      return;
+    }
+
+    if (urlCheck === 'invalid') {
+      setNotification({ message: 'יש להזין כתובת URL חוקית', type: 'error' });
       return;
     }
 
@@ -81,6 +102,7 @@ const Documents = () => {
       setNewLinkText('');
       setNewLinkUrl('');
       setSelectedSubject('');
+      setNotification({ message: 'הקישור נוסף בהצלחה!', type: 'success' });
     } catch (error) {
       console.error("Error adding link: ", error);
     }
@@ -89,7 +111,7 @@ const Documents = () => {
   const handleRemoveLink = async () => {
     const { subject, link } = linkToRemove;
     if (!subject || !link) {
-      alert("All fields are required.");
+      setNotification({ message: 'יש למלא את כל השדות', type: 'error' });
       return;
     }
 
@@ -103,6 +125,7 @@ const Documents = () => {
       fetchLinks();
       setShowRemoveModal(false);
       setLinkToRemove({ subject: '', link: '' });
+      setNotification({ message: 'הקישור הוסר בהצלחה!', type: 'success' });
     } catch (error) {
       console.error("Error removing link: ", error);
     }
@@ -163,14 +186,15 @@ const Documents = () => {
                   URL קישור:
                   <input type="text" value={newLinkUrl} onChange={(e) => setNewLinkUrl(e.target.value)} />
                 </label>
-                <button onClick={handleAddLink}>אישור</button>
-                <button onClick={() => {
-                  setShowModal(false);
-                  setNewSubject('');
-                  setNewLinkText('');
-                  setNewLinkUrl('');
-                  setSelectedSubject('');
-                }}>ביטול</button>
+                  <button className="confirm-button" onClick={handleAddLink}>הוספה</button>
+                  <button className="cancel-button" onClick={() => {
+                    setShowModal(false);
+                    setNewSubject('');
+                    setNewLinkText('');
+                    setNewLinkUrl('');
+                    setSelectedSubject('');
+                    setNotification({ message: '', type: '' }); // Clear any existing notification
+                  }}>ביטול</button>
               </div>
             </>
           )}
@@ -197,14 +221,17 @@ const Documents = () => {
                     ))}
                   </select>
                 </label>
-                <button onClick={handleRemoveLink}>הסר</button>
-                <button onClick={() => setShowRemoveModal(false)}>ביטול</button>
+                  <button className="confirm-button" onClick={handleRemoveLink}>הסר</button>
+                  <button className="cancel-button" onClick={() => setShowRemoveModal(false)}>ביטול</button>
               </div>
             </>
           )}
         </div>
       )}
       <p className="disclaimer">המידע כללי בלבד ואינו מהווה חוות דעת רפואית או משפטית או תחליף לייעוץ רפואי או משפטי</p>
+      {notification.message && (
+        <Notification message={notification.message} type={notification.type} onClose={() => setNotification({ message: '', type: '' })} />
+      )}
     </div>
   );
 };

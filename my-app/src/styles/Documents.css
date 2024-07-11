@@ -123,24 +123,37 @@ body {
 .document-modal input[type="text"],
 .document-modal input[type="url"],
 .document-modal select {
-  width: 100%;
+  width: 98%; 
   padding: 0.5rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.document-modal button {
+.document-modal .confirm-button,
+.document-modal .cancel-button {
   padding: 0.75rem;
-  background-color: #05a3ba;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 0.5rem; /* Change to margin-left for RTL */
   font-size: 1.2rem; /* Increase the font size of modal buttons */
+  justify-content: center;
+  align-items: center;
 }
 
-.document-modal button:hover {
+.document-modal .confirm-button {
+  background-color: #05a3ba;
+}
+
+.document-modal .cancel-button {
   background-color: #254790;
+}
+
+.document-modal .confirm-button:hover {
+  background-color: #254790;
+}
+
+.document-modal .cancel-button:hover {
+  background-color: #05a3ba;
 }
