@@ -18,6 +18,7 @@ const AdminInquiryList = () => {
   const [newSubject, setNewSubject] = useState("");
   const [editSubject, setEditSubject] = useState(null);
   const [notification, setNotification] = useState({ message: '', type: '' });
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -85,6 +86,16 @@ const AdminInquiryList = () => {
   };
 
   const handleSubjectManagement = async () => {
+    if ((subjectAction === "edit" || subjectAction === "remove") && !editSubject) {
+      setErrorMessage("אנא בחר נושא מהרשימה");
+      return;
+    }
+
+    if ((subjectAction === "add" || subjectAction === "edit") && !newSubject.trim()) {
+      setErrorMessage("אנא מלא את שם הנושא");
+      return;
+    }
+
     try {
       if (subjectAction === "add") {
         await addDoc(collection(db, "inquirySubject"), { name: newSubject });
@@ -256,6 +267,7 @@ const AdminInquiryList = () => {
                     />
                   </div>
                 )}
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <div className="admin-inquiry-buttons">
                   <button className="admin-inquiry-submit-button" onClick={handleSubjectManagement}>שמור</button>
                   <button className="admin-inquiry-cancel-button" onClick={() => setShowSubjectModal(false)}>סגור</button>
