@@ -85,12 +85,12 @@ const InquiryForm = () => {
           {myInquiries.length > 0 ? (
             myInquiries.map((inquiry) => (
               <div key={inquiry.id} className="inquiry-item">
+                <p><strong>תאריך הגשה:</strong> {formatDate(inquiry.submitDate)}</p> {/* Format date without seconds */}
                 <p><strong>נושא:</strong> {inquiry.subject}</p>
                 <p><strong>תוכן הפנייה:</strong> {inquiry.content}</p>
-                <p><strong>תאריך הגשה:</strong> {formatDate(inquiry.submitDate)}</p> {/* Format date without seconds */}
                 <p>
-                  <strong>{inquiry.response ? "תגובה:" : "אין תגובה כרגע במערכת"}</strong> {inquiry.response}
                   {inquiry.responseDate && <p><strong>תאריך תגובה:</strong> {formatDate(inquiry.responseDate)}</p>} {/* Format date without seconds */}
+                  <strong>{inquiry.response ? "תגובה:" : "אין תגובה כרגע במערכת"}</strong> {inquiry.response}
                 </p>
               </div>
             ))
