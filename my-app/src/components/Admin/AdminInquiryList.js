@@ -14,7 +14,7 @@ const AdminInquiryList = () => {
   const [response, setResponse] = useState("");
   const [showWithoutResponse, setShowWithoutResponse] = useState(true);
   const [showSubjectModal, setShowSubjectModal] = useState(false);
-  const [subjectAction, setSubjectAction] = useState("");
+  const [subjectAction, setSubjectAction] = useState("add");
   const [newSubject, setNewSubject] = useState("");
   const [editSubject, setEditSubject] = useState(null);
   const [notification, setNotification] = useState({ message: '', type: '' });
@@ -95,7 +95,7 @@ const AdminInquiryList = () => {
         const subjectRef = doc(db, "inquirySubject", editSubject.id);
         await deleteDoc(subjectRef);
       }
-      alert("Subject management action completed successfully!");
+      setNotification({ message: 'הפעולה הושלמה בהצלחה!', type: 'success' });
       setShowSubjectModal(false);
       setNewSubject("");
       setEditSubject(null);
@@ -105,7 +105,7 @@ const AdminInquiryList = () => {
       setSubjects(subjectsList);
     } catch (error) {
       console.error("Error managing subject: ", error);
-      alert("Error managing subject. Please try again.");
+      setNotification({ message: 'שגיאה בניהול הנושא. נסה שוב.', type: 'error' });
     }
   };
 
@@ -157,7 +157,7 @@ const AdminInquiryList = () => {
                         <p><strong>שם פרטי:</strong> {selectedInquiry.firstName}</p>
                         <p><strong>שם משפחה:</strong> {selectedInquiry.lastName}</p>
                         <p><strong>אימייל:</strong> {selectedInquiry.email}</p>
-                        <p><strong>תאריך הגשה:</strong> {new Date(selectedInquiry.submitDate).toLocaleString()}</p> {/* Display submit date */}
+                        <p><strong>תאריך הגשה:</strong> {new Date(selectedInquiry.submitDate).toLocaleString()}</p> {/* Display submit date */} 
                         {selectedInquiry.response ? (
                           <>
                             <p><strong>תגובה:</strong> {selectedInquiry.response}</p>
@@ -184,40 +184,81 @@ const AdminInquiryList = () => {
           </>
         )}
       </div>
-
       {showSubjectModal && (
-        <div className="subject-modal">
-          <div className="subject-modal-content">
-            <h3>ניהול נושאים</h3>
-            <div className="subject-actions">
-              <button onClick={() => setSubjectAction("add")}>הוסף נושא</button>
-              <button onClick={() => setSubjectAction("edit")}>ערוך נושא</button>
-              <button onClick={() => setSubjectAction("remove")}>מחק נושא</button>
+        <div className="admin-inquiry-modal">
+          <div className="admin-inquiry-form">
+            <h2>ניהול נושאים</h2>
+            <hr className="admin-inquiry-underline"/>
+            <div className="admin-inquiry-options">
+              <label>
+                <input
+                  type="radio"
+                  value="add"
+                  checked={subjectAction === "add"}
+                  onChange={() => {
+                    setSubjectAction("add");
+                    setEditSubject(null);  // Reset selected subject when changing to add
+                  }}
+                />
+                הוספת נושא
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="edit"
+                  checked={subjectAction === "edit"}
+                  onChange={() => {
+                    setSubjectAction("edit");
+                    setEditSubject(null);  // Reset selected subject when changing to edit
+                  }}
+                />
+                עריכת נושא
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="remove"
+                  checked={subjectAction === "remove"}
+                  onChange={() => {
+                    setSubjectAction("remove");
+                    setEditSubject(null);  // Reset selected subject when changing to remove
+                  }}
+                />
+                הסרת נושא
+              </label>
             </div>
             {subjectAction && (
               <>
-                {subjectAction !== "add" && (
-                  <select
-                    value={editSubject ? editSubject.id : ""}
-                    onChange={(e) => setEditSubject(subjects.find((subject) => subject.id === e.target.value))}
-                  >
-                    <option value="" disabled>בחר נושא</option>
-                    {subjects.map((subject) => (
-                      <option key={subject.id} value={subject.id}>{subject.name}</option>
-                    ))}
-                  </select>
+                {(subjectAction === "edit" || subjectAction === "remove") && (
+                  <div className="admin-inquiry-selection">
+                    <label>בחר נושא:</label>
+                    <select
+                      value={editSubject ? editSubject.id : ""}
+                      onChange={(e) => setEditSubject(subjects.find((subject) => subject.id === e.target.value))}
+                      className="admin-inquiry-input"
+                    >
+                      <option value="" disabled>בחר נושא</option>
+                      {subjects.map((subject) => (
+                        <option key={subject.id} value={subject.id}>{subject.name}</option>
+                      ))}
+                    </select>
+                  </div>
                 )}
-                {subjectAction === "add" || (subjectAction === "edit" && editSubject) ? (
-                  <input
-                    type="text"
-                    placeholder="שם נושא"
-                    value={newSubject}
-                    onChange={(e) => setNewSubject(e.target.value)}
-                  />
-                ) : null}
-                <div className="modal-buttons">
-                  <button onClick={handleSubjectManagement}>שמור</button>
-                  <button onClick={() => setShowSubjectModal(false)}>סגור</button>
+                {(subjectAction === "add" || (subjectAction === "edit" && editSubject)) && (
+                  <div className="admin-inquiry-name-input">
+                    <label>שם נושא:</label>
+                    <input
+                      type="text"
+                      placeholder="שם נושא"
+                      value={newSubject}
+                      onChange={(e) => setNewSubject(e.target.value)}
+                      className="admin-inquiry-input"
+                    />
+                  </div>
+                )}
+                <div className="admin-inquiry-buttons">
+                  <button className="admin-inquiry-submit-button" onClick={handleSubjectManagement}>שמור</button>
+                  <button className="admin-inquiry-cancel-button" onClick={() => setShowSubjectModal(false)}>סגור</button>
                 </div>
               </>
             )}
