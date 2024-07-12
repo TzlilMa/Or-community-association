@@ -12,7 +12,11 @@ export const fetchInstagramPhotos = async () => {
         access_token: ACCESS_TOKEN,
       },
     });
-    return response.data.data;
+
+    // Filter out videos
+    const photos = response.data.data.filter(item => item.media_type !== 'VIDEO');
+    
+    return photos;
   } catch (error) {
     console.error('Error fetching Instagram photos', error);
     throw error;
