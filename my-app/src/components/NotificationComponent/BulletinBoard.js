@@ -18,8 +18,9 @@ const BulletinBoard = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [action, setAction] = useState("");
+  const [action, setAction] = useState("add");
   const [selectedMessage, setSelectedMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     fetchNotifications();
@@ -53,6 +54,11 @@ const BulletinBoard = () => {
   };
 
   const handleAddMessage = async () => {
+    if (!newMessage.trim()) {
+      setErrorMessage("אנא מלא את תוכן ההודעה");
+      return;
+    }
+
     try {
       await addDoc(collection(db, "bulletinBoard"), {
         text: newMessage,
@@ -67,6 +73,11 @@ const BulletinBoard = () => {
   };
 
   const handleRemoveMessage = async () => {
+    if (!selectedMessage) {
+      setErrorMessage("אנא בחר הודעה מהרשימה");
+      return;
+    }
+
     try {
       await deleteDoc(doc(db, "bulletinBoard", selectedMessage.id));
       setSelectedMessage(null);
@@ -99,48 +110,97 @@ const BulletinBoard = () => {
       {showModal && (
         <div className="bulletinboard-modal">
           <div className="bulletinboard-modal-content">
-            <h3>ניהול הודעות</h3>
-            <div className="bulletinboard-actions">
-              <button onClick={() => setAction("add")}>הוסף הודעה</button>
-              <button onClick={() => setAction("remove")}>מחק הודעה</button>
+            <h2>ניהול הודעות</h2>
+            <hr className="bulletinboard-underline" />
+            <div className="bulletinboard-options">
+              <label>
+                <input
+                  type="radio"
+                  value="add"
+                  checked={action === "add"}
+                  onChange={() => {
+                    setAction("add");
+                    setSelectedMessage(null);
+                    setNewMessage("");
+                    setErrorMessage("");
+                  }}
+                />
+                הוסף הודעה
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="remove"
+                  checked={action === "remove"}
+                  onChange={() => {
+                    setAction("remove");
+                    setSelectedMessage(null);
+                    setNewMessage("");
+                    setErrorMessage("");
+                  }}
+                />
+                מחק הודעה
+              </label>
             </div>
             {action === "remove" && (
-              <select
-                value={selectedMessage ? selectedMessage.id : ""}
-                onChange={(e) =>
-                  setSelectedMessage(
-                    messages.find((message) => message.id === e.target.value)
-                  )
-                }
-              >
-                <option value="" disabled>
-                  בחר הודעה
-                </option>
-                {messages.map((message) => (
-                  <option key={message.id} value={message.id}>
-                    {message.text}
+              <div className="bulletinboard-selection">
+                <label>בחר הודעה:</label>
+                <select
+                  value={selectedMessage ? selectedMessage.id : ""}
+                  onChange={(e) =>
+                    setSelectedMessage(
+                      messages.find((message) => message.id === e.target.value)
+                    )
+                  }
+                  className="bulletinboard-input"
+                >
+                  <option value="" disabled>
+                    בחר הודעה
                   </option>
-                ))}
-              </select>
-            )}
-            {action === "add" && (
-              <textarea
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Write your message here..."
-              />
-            )}
-            {(action === "add" || action === "remove") && (
-              <div className="bulletinboard-modal-buttons">
-                {action === "add" && (
-                  <button onClick={handleAddMessage}>שמור</button>
-                )}
-                {action === "remove" && (
-                  <button onClick={handleRemoveMessage}>מחק</button>
-                )}
-                <button onClick={() => setShowModal(false)}>סגור</button>
+                  {messages.map((message) => (
+                    <option key={message.id} value={message.id}>
+                      {message.text}
+                    </option>
+                  ))}
+                </select>
               </div>
             )}
+            {(action === "add" || (action === "edit" && selectedMessage)) && (
+              <div className="bulletinboard-name-input">
+                <label>תוכן ההודעה:</label>
+                <textarea
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  placeholder="כתוב את ההודעה כאן..."
+                  className="bulletinboard-input"
+                />
+              </div>
+            )}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <div className="bulletinboard-buttons">
+              {action === "add" && (
+                <button
+                  className="bulletinboard-submit-button"
+                  onClick={handleAddMessage}
+                >
+                  שמור
+                </button>
+              )}
+              {action === "remove" && (
+                <button
+                  className="bulletinboard-submit-button"
+                  onClick={handleRemoveMessage}
+                >
+                  מחק
+                </button>
+              )}
+              <button
+                className="bulletinboard-cancel-button"
+                onClick={() => setShowModal(false)}
+              >
+                סגור
+              </button>
+            </div>
           </div>
         </div>
       )}

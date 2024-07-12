@@ -11,7 +11,7 @@
   background: #f1f0f0;
   overflow-y: auto; /* Ensure vertical scrolling */
   position: relative; /* Add relative positioning for the admin button */
-  color: #004085;
+  color: #000000; /* Change text color to black */
   font-size: 1.7rem;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .ads ul {
-  list-style-type: disc;
+  list-style-type: none;
   padding: 0;
   margin: 0;
   direction: rtl; /* Set the direction to right-to-left */
@@ -73,70 +73,94 @@
   background: white;
   padding: 2%;
   border-radius: 8px;
-  width: 25%;
-  text-align: center;
+  width: 45%; /* Adjust width as needed */
+  text-align: right;
   font-family: 'Rubik', sans-serif; /* Apply Rubik font */
   direction: rtl; /* Set text direction to right-to-left */
   font-size: 1.5rem;
 }
 
-.bulletinboard-actions {
+.bulletinboard-underline {
+  border: 0;
+  height: 2px;
+  background-color: #254790;
+  margin-bottom: 2%;
+}
+
+.bulletinboard-options {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: flex-start;
   margin-bottom: 4%;
 }
 
-.bulletinboard-actions button {
-  padding: 2% 5%;
-  background-color: #05A3BA;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.5rem; /* Increase font size for the action buttons */
+.bulletinboard-options label {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #000000; /* Change label text color to black */
+  margin-bottom: 1rem;
 }
 
-.bulletinboard-actions button:hover {
+.bulletinboard-options input[type="radio"] {
+  margin-left: 10px;
+}
+
+.bulletinboard-selection,
+.bulletinboard-name-input {
+  margin-bottom: 1rem;
+  text-align: right;
+  color: #000000; /* Change input text color to black */
+}
+
+.bulletinboard-input {
+  width: 98%;
+  padding: 1%;
+  margin-bottom: 1.5%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: "Rubik", sans-serif;
+  font-size: 1.5rem;
+  direction: rtl;
+  text-align: right;
+  color: #000000; /* Change input text color to black */
+}
+
+.bulletinboard-submit-button,
+.bulletinboard-cancel-button {
+  padding: 0.75rem;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2rem; /* Increase the font size of modal buttons */
+  justify-content: center;
+  align-items: center;
+}
+
+.bulletinboard-submit-button {
+  background-color: #05a3ba;
+}
+
+.bulletinboard-cancel-button {
   background-color: #254790;
 }
 
-.bulletinboard-modal select, .bulletinboard-modal textarea {
-  width: 100%;
-  padding: 1%;
-  margin-bottom: 4%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1.2rem;
+.bulletinboard-submit-button:hover {
+  background-color: #254790;
 }
 
-.bulletinboard-modal-buttons {
-  display: flex;
-  justify-content: space-around;
+.bulletinboard-cancel-button:hover {
+  background-color: #05a3ba;
 }
 
-.bulletinboard-modal-buttons button {
-  padding: 2% 6%;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.2rem;
+.error-message {
+  color: red;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
-.bulletinboard-modal-buttons button:first-child {
-  background-color: #28a745;
-  color: white;
-  border: none;
-}
-
-.bulletinboard-modal-buttons button:first-child:hover {
-  background-color: #218838;
-}
-
-.bulletinboard-modal-buttons button:last-child {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-}
-
-.bulletinboard-modal-buttons button:last-child:hover {
-  background-color: #c82333;
+.bulletinboard-modal-content h2 {
+  text-align: right; /* Align headline to the right */
+  color: #05a3ba;
 }
