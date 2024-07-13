@@ -1,0 +1,15 @@
+/* src/styles/StoryCarousel.css */
+.story-carousel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Ensure stories fit within the grid */
+  gap: 2%;
+  padding: 2%;
+  width: 100%;
+}
+
+.carousel-story-card-wrapper {
+  flex: 1;
+  min-width: 0; /* Ensure the cards do not exceed the container */
+  max-width: 100%;
+  transition: opacity 1s ease-in-out;
+}
