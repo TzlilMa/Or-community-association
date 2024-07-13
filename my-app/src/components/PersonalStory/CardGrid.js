@@ -60,6 +60,7 @@ const CardGrid = () => {
       {expandedCardIndex !== null && (
         <div className="expanded-card-container">
           <div className="expanded-card" ref={expandedCardRef}>
+            <h2 className="expanded-card-title">הסיפור של {cards[expandedCardIndex].name}</h2>
             <div className="expanded-card-full-view">
               <div
                 className="expanded-story-text"
