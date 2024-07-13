@@ -70,20 +70,20 @@ const Homepage = () => {
               <div className="homepage-component-container">
                 <BulletinBoard showEditButtons={showEditButtons} />
               </div>
-              <div className="homepage-component-container">
+              
                 <InstagramPhotos />
-              </div>
+              
             </div>
           </div>
 
           <div className="homepage-section homepage-gradient-background-2">
             <div className="homepage-content-container">
-              <div className="homepage-component-container">
+              
                 <Management isAdmin={showEditButtons} />
-              </div>
-              <div className="homepage-component-container">
+              
+              
                 <ImageSlider />
-              </div>
+              
             </div>
           </div>
           
