@@ -1,30 +1,45 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../../styles/CardGrid.css"; // Importing CSS for styling
-import { db, collection, query, where, getDocs } from "../../fireBase/firebase"; // Firebase imports
-import DOMPurify from "dompurify"; // Sanitizing HTML content
+import { useLocation } from "react-router-dom";
+import { collection, getDocs, query, where } from "firebase/firestore"; // Import Firestore functions
+import "../../styles/CardGrid.css";
+import { db } from "../../fireBase/firebase"; // Import your Firebase config
+import StoryCard from "./StoryCard";
+import DOMPurify from "dompurify";
+
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
 
 const CardGrid = () => {
-  const [expandedCardIndex, setExpandedCardIndex] = useState(null); // State to track the expanded card
-  const [cards, setCards] = useState([]); // State to store the card data
-  const expandedCardRef = useRef(null); // Reference to the expanded card
+  const [expandedCardIndex, setExpandedCardIndex] = useState(null);
+  const [cards, setCards] = useState([]);
+  const expandedCardRef = useRef(null);
+  const queryParam = useQuery();
+  const storyId = queryParam.get("id");
 
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(
-        collection(db, "users"),
-        where("isStoryPublic", "==", true)
-      );
+      const q = query(collection(db, "users"), where("isStoryPublic", "==", true));
       const querySnapshot = await getDocs(q);
       const cardData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
+        userId: doc.data().userId,
         name: `${doc.data().firstName} ${doc.data().lastName}`,
         story: doc.data().personalStory,
       }));
-      setCards(cardData); // Setting the fetched card data to state
+      setCards(cardData);
+
+      // Expand the story if id is present in the query
+      if (storyId) {
+        const index = cardData.findIndex((card) => card.userId === storyId);
+        if (index !== -1) {
+          setExpandedCardIndex(index);
+        }
+      }
     };
 
     fetchData();
-  }, []);
+  }, [storyId]);
 
   useEffect(() => {
     if (expandedCardRef.current) {
@@ -39,48 +54,25 @@ const CardGrid = () => {
     <div className="card-grid-container">
       <div className="card-grid">
         {cards.map((card, index) => (
-          <div
-            className={`card ${expandedCardIndex === index ? "expanded" : ""}`}
-            key={card.id}
-            ref={expandedCardIndex === index ? expandedCardRef : null}
-            style={{
-              display:
-                expandedCardIndex !== null && expandedCardIndex !== index
-                  ? "none"
-                  : "block",
-            }}
-          >
-            <div className="card-content">
-              <p>הסיפור של</p>
-              <h3>{card.name}</h3>
-              {expandedCardIndex !== index && (
-                <button onClick={() => setExpandedCardIndex(index)}>
-                  Read More
-                </button>
-              )}
-            </div>
-            {expandedCardIndex === index && (
-              <div className="card-full-view">
-                <div
-                  className="story-text"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(card.story),
-                  }}
-                />
-                <button onClick={() => setExpandedCardIndex(null)}>
-                  Close
-                </button>
-              </div>
-            )}
-          </div>
+          <StoryCard key={card.userId} card={card} onClick={() => setExpandedCardIndex(index)} />
         ))}
-        {expandedCardIndex !== null && (
-          <div
-            className="backdrop"
-            onClick={() => setExpandedCardIndex(null)}
-          ></div>
-        )}
       </div>
+      {expandedCardIndex !== null && (
+        <div className="expanded-card-container">
+          <div className="expanded-card" ref={expandedCardRef}>
+            <div className="expanded-card-full-view">
+              <div
+                className="expanded-story-text"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(cards[expandedCardIndex].story),
+                }}
+              />
+              <button onClick={() => setExpandedCardIndex(null)}>Close</button>
+            </div>
+          </div>
+          <div className="expanded-backdrop" onClick={() => setExpandedCardIndex(null)}></div>
+        </div>
+      )}
     </div>
   );
 };
