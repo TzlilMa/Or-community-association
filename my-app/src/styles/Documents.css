@@ -19,6 +19,7 @@ body {
 .documents-image {
   width: 40%; /* Adjusted width to be smaller */
   height: auto;
+  margin-top: 13%;
 }
 
 .documents-container {
