@@ -15,11 +15,15 @@
   margin: 40px 0; /* Adjust margin for spacing around the title */
   text-align: center; /* Center align the text */
   padding: 20px; /* Add padding around the title */
-  background: linear-gradient(120deg, #e0eafc, #cfdef3); /* Add a gradient background */
+  background: linear-gradient(
+    120deg,
+    #e0eafc,
+    #cfdef3
+  ); /* Add a gradient background */
   border-radius: 10px; /* Round the corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
   color: #004085; /* Set a consistent text color */
-  font-family: 'Rubik', sans-serif; /* Ensure consistent font */
+  font-family: "Rubik", sans-serif; /* Ensure consistent font */
 }
 
 .title-container h1 {
