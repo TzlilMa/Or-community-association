@@ -3,6 +3,8 @@ import { db } from "../../fireBase/firebase";
 import { collection, query, getDocs, doc, addDoc, deleteDoc, where, updateDoc } from "firebase/firestore";
 import { useAuth } from "../../fireBase/AuthContext";
 import Notification from '../General/Notification';
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import "../../styles/AdminInquiry.css";
 
 const AdminInquiryList = () => {
@@ -180,11 +182,11 @@ const AdminInquiryList = () => {
                           <form onSubmit={handleResponseSubmit}>
                             <div>
                               <label>כתיבת תגובה:</label>
-                              <textarea
+                              <ReactQuill
                                 value={response}
                                 onChange={(e) => setResponse(e.target.value)}
                                 required
-                              ></textarea>
+                              />
                             </div>
                             <button type="submit">שליחת תגובה</button>
                           </form>
