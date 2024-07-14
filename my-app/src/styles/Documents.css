@@ -8,11 +8,11 @@ body {
 
 .documents-page {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
-  height: 100vh;
-  padding: 0.5rem 2rem; /* Adjust the top padding to move the content higher */
+  padding: 2rem 2rem; /* Adjust the top padding to move the content higher */
   flex-direction: row-reverse; /* Reverse the order of items */
 }
 
