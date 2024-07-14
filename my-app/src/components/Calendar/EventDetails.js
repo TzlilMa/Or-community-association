@@ -61,6 +61,8 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
         numUsers: increment(-1),
       });
 
+      updateEvents(); // Call updateEvents to refresh the list in Calendar component
+
       setNotification({ message: 'ההרשמה בוטלה בהצלחה!', type: 'success' });
     } catch (error) {
       setNotification({ message: 'אירעה שגיאה בעת ביטול הרישום. בבקשה נסה שוב מאוחר יותר.', type: 'error' });

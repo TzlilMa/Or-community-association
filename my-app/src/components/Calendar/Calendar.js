@@ -8,6 +8,7 @@ import Notification from '../General/Notification';
 
 const Calendar = () => {
   const today = new Date();
+  today.setHours(0, 0, 0, 0); // Set today's date to midnight for accurate comparison
   const { currentUser } = useAuth();
   const [events, setEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(today);
@@ -229,10 +230,13 @@ const Calendar = () => {
       })
     : [];
 
-  // Filter events for the current user
-  const userRegisteredEvents = events.filter(event =>
-    event.registeredUsers?.includes(currentUser?.email)
-  );
+  // Filter events for the current user and only future events
+  const userRegisteredEvents = events.filter(event => {
+    const eventDate = event.date?.toDate();
+    return event.registeredUsers?.includes(currentUser?.email) && eventDate && eventDate >= today;
+  });
+
+  const isFutureOrToday = selectedDate && (selectedDate >= today);
 
   return (
     <div className="calendar-container">
@@ -269,7 +273,7 @@ const Calendar = () => {
             <div className="event-details-container">
               <h3>{selectedDateString}</h3>
               <div className="actions">
-                {isAdmin && (
+                {isAdmin && isFutureOrToday && (
                   <button
                     className="action-button"
                     onClick={() => { setShowEventForm(true); }}
