@@ -11,6 +11,7 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
   const [showParticipantList, setShowParticipantList] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [notification, setNotification] = useState({ message: '', type: '' });
+  const [loading, setLoading] = useState(false); // Add loading state
 
   useEffect(() => {
     if (event.registeredUsers && event.registeredUsers.includes(currentUser.email)) {
@@ -46,6 +47,9 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
   };
 
   const handleCancelRegistration = async (eventId) => {
+    if (loading) return; // Prevent multiple clicks
+    setLoading(true);
+
     try {
       const eventRef = doc(db, 'events', eventId);
       const eventSnapshot = await getDoc(eventRef);
@@ -57,15 +61,20 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
         setIsRegistered(false);
       }
       
-      await updateDoc(eventRef, {
-        numUsers: increment(-1),
-      });
+      // Ensure numUsers does not go below 0
+        if (eventData.numUsers > 0) {
+          await updateDoc(eventRef, {
+            numUsers: increment(-1),
+          });
+        }
 
       updateEvents(); // Call updateEvents to refresh the list in Calendar component
 
       setNotification({ message: 'ההרשמה בוטלה בהצלחה!', type: 'success' });
     } catch (error) {
       setNotification({ message: 'אירעה שגיאה בעת ביטול הרישום. בבקשה נסה שוב מאוחר יותר.', type: 'error' });
+    } finally {
+      setLoading(false);
     }
   };
 
