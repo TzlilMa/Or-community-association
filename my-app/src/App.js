@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/Header";
@@ -15,8 +14,8 @@ import AdminInquiryList from "./components/Admin/AdminInquiryList";
 import CardGrid from "./components/PersonalStory/CardGrid";
 import Reports from "./components/Admin/Reports";
 import UserManagement from "./components/Admin/UserManagementAdmin";
-import ChatLogPage from "./components/Admin/ChatLogAdminPage"; // Import the ChatLogPage component
-import PrivateRoute from "./PrivateRoute"; // Import PrivateRoute
+import ChatLogPage from "./components/Admin/ChatLogAdminPage";
+import PrivateRoute from "./PrivateRoute";
 import { auth, db } from "./fireBase/firebase";
 import { getDoc, doc } from "firebase/firestore";
 import "./App.css";
@@ -29,9 +28,15 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        setIsAuthenticated(true);
         const userDoc = await getDoc(doc(db, "users", user.email));
-        setIsAdmin(userDoc.exists() && userDoc.data().isAdmin);
+        if (userDoc.exists() && !userDoc.data().disabled) {
+          setIsAuthenticated(true);
+          setIsAdmin(userDoc.data().isAdmin);
+        } else {
+          setIsAuthenticated(false);
+          setIsAdmin(false);
+          await auth.signOut(); // Ensure the user is signed out if they are disabled
+        }
       } else {
         setIsAuthenticated(false);
         setIsAdmin(false);
@@ -91,7 +96,7 @@ const App = () => {
                         <ChatLogPage />
                       </PrivateRoute>
                     }
-                  /> {/* Add the ChatLogPage route */}
+                  />
                   <Route path="*" element={<Navigate to="/accountspanel" />} />
                 </>
               ) : (
