@@ -9,22 +9,16 @@ import {
   getDocs,
 } from "../fireBase/firebase";
 import BulletinBoard from "../components/NotificationComponent/BulletinBoard";
-import ImageSlider from "../components/NotificationComponent/ImageSlider";
 import Management from "../components/Management/Management";
 import InstagramPhotos from "../components/InstagramPhotos";
-import StoryCarousel from "../components/StoryCarousel";
 import { useAuth } from "../fireBase/AuthContext";
 import "../styles/Homepage.css";
 import "../styles/BulletinBoard.css";
-import "../styles/ImageSlider.css";
 import "../styles/InstagramPhotos.css";
-import "../styles/StoryCarousel.css";
-import "../styles/storyCard.css";
 
 const Homepage = () => {
   const { currentUser } = useAuth();
   const [showEditButtons, setShowEditButtons] = useState(false);
-  const [stories, setStories] = useState([]);
   const sectionRefs = useRef([]);
 
   useEffect(() => {
@@ -50,28 +44,7 @@ const Homepage = () => {
       }
     };
 
-    const fetchStories = async () => {
-      try {
-        const q = query(
-          collection(db, "users"),
-          where("isStoryPublic", "==", true)
-        );
-        const querySnapshot = await getDocs(q);
-        const storyData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          userId: doc.data().userId,
-          name: `${doc.data().firstName} ${doc.data().lastName}`,
-          story: doc.data().personalStory,
-        }));
-        console.log("Fetched stories:", storyData);
-        setStories(storyData);
-      } catch (error) {
-        console.error("Error fetching stories:", error);
-      }
-    };
-
     fetchUserData();
-    fetchStories();
   }, [currentUser]);
 
   useEffect(() => {
@@ -110,32 +83,16 @@ const Homepage = () => {
             className="homepage-section homepage-gradient-background-1"
           >
             <div className="homepage-content-container">
-              <div className="homepage-component-container">
+              <div className="homepage-component-container same-size">
                 <BulletinBoard showEditButtons={showEditButtons} />
               </div>
-              <InstagramPhotos />
+              <div className="homepage-component-container same-size">
+                <Management isAdmin={showEditButtons} />
+              </div>
+              <div className="homepage-component-container same-size">
+                <InstagramPhotos />
+              </div>
             </div>
-          </div>
-
-          <div
-            ref={(el) => (sectionRefs.current[1] = el)}
-            className="homepage-section homepage-gradient-background-2"
-          >
-            <Management isAdmin={showEditButtons} />
-          </div>
-
-          <div
-            ref={(el) => (sectionRefs.current[2] = el)}
-            className="homepage-section homepage-gradient-background-3"
-          >
-            <ImageSlider />
-          </div>
-
-          <div
-            ref={(el) => (sectionRefs.current[3] = el)}
-            className="homepage-section homepage-gradient-background-4"
-          >
-            <StoryCarousel stories={stories} />
           </div>
         </div>
       </div>

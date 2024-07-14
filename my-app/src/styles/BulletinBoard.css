@@ -1,6 +1,6 @@
 .bulletinboard-container {
-  width: 100%;
-  height: 100%; /* Set the height to match the ImageSlider */
+  width: 80%;
+  height: 80%; /* Set the height to match the ImageSlider */
   direction: rtl; /* Set the text direction to right-to-left */
   text-align: right; /* Align text to the right */
   background: #f1f0f0;
@@ -15,7 +15,7 @@
   font-weight: bold;
   margin: 2% 0;
   color: #004085;
-  text-align: center; 
+  text-align: center;
 }
 
 .ads ul {
@@ -38,7 +38,7 @@
   position: absolute;
   top: 10px; /* Adjust top position as needed */
   left: 10px; /* Adjust left position as needed */
-  background-color: #05A3BA; /* Green background color */
+  background-color: #05a3ba; /* Green background color */
   color: white;
   border: none;
   border-radius: 5px;
@@ -70,7 +70,7 @@
   border-radius: 8px;
   width: 45%; /* Adjust width as needed */
   text-align: right;
-  font-family: 'Rubik', sans-serif; /* Apply Rubik font */
+  font-family: "Rubik", sans-serif; /* Apply Rubik font */
   direction: rtl; /* Set text direction to right-to-left */
   font-size: 1.5rem;
 }
