@@ -5,7 +5,6 @@ import '../../styles/Calendar.css';
 import EventForm from './EventForm';
 import CalendarDay from './CalendarDay';
 import Notification from '../General/Notification';
-import calendarImage from '../../assets/calendar2.png';
 import calendarImage1 from '../../assets/calendar1.png';
 
 const Calendar = () => {
@@ -262,7 +261,7 @@ const Calendar = () => {
           <p>לא מצאנו אירועים שהינך רשום! זה הזמן לעבור על הלוח אירועים ולהרשם</p>
         )}
       </div>
-      <img src={calendarImage1} alt="image" className="calendar-image" />
+      <img src={calendarImage1} alt='' className="calendar-image" />
       </div>
       <div className="vertical-line"></div>
       <div className="calendar-column">

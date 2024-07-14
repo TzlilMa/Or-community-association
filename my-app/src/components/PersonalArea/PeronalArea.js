@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { db, doc, getDoc, setDoc, auth } from "../../fireBase/firebase";
 import {
   reauthenticateWithCredential,
@@ -35,6 +35,8 @@ const PersonalArea = () => {
   const MIN_PASSWORD_LENGTH = 6;
   const MIN_STORY_LENGTH = 100;
   const MAX_CHARS = 5000;
+
+  const changePasswordRef = useRef(null); // Ref for the "Change Password" section
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -227,6 +229,10 @@ const PersonalArea = () => {
     }
   };
 
+  const scrollToChangePassword = () => {
+    changePasswordRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -286,6 +292,13 @@ const PersonalArea = () => {
             <button type="submit" className="submit-btn">
               שמור
             </button>
+            <button
+              type="button"
+              className="scroll-change-pwd-btn"
+              onClick={scrollToChangePassword}
+            >
+              שנה סיסמא
+            </button>
           </div>
         </form>
       </div>
@@ -324,7 +337,7 @@ const PersonalArea = () => {
           </button>
         </div>
       </div>
-      <div className="change-password-section">
+      <div className="change-password-section" ref={changePasswordRef}>
         <h2>שינוי סיסמה</h2>
         <label className="form-label">
           סיסמה נוכחית:
