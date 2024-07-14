@@ -79,7 +79,7 @@ const LoginPage = () => {
           </form>
           <div className="additional-options">
             <button onClick={handleForgetPwd}>שכחת את הסיסמא?</button>
-            <p>עדיין אין לך חשבון? <button onClick={handleSignup}>הרשם כאן</button></p>
+            <p>עדיין אין לך חשבון? <button onClick={handleSignup}>להרשמה</button></p>
           </div>
         </div>
       </div>

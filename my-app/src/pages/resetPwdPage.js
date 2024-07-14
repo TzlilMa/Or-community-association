@@ -51,7 +51,7 @@ const ResetPassword = () => {
                 required
               />
             </div>
-            <button type="submit">אפס סיסמא</button>
+              <button type="submit">לאיפוס הסיסמא</button>
           </form>
         </div>
       </div>

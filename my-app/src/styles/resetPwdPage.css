@@ -69,14 +69,15 @@
 .reset-container {
   display: flex;
   align-items: center;
+  justify-content: flex-start; /* Align container to the left */
   width: 100%;
   height: 100%;
-  padding-right: 2rem; /* Add padding to the right */
+  padding-left: 2rem; /* Add padding to the left */
 }
 
 .box-shadow {
-  width: 500px; /* Increase width */
-  height: 600px; /* Increase height */
+  width: 30%; /* Adjusted width for smaller box */
+  padding: 2rem; /* Adjusted padding for smaller box */
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 20px 100px rgba(0, 0, 0, 0.1);
@@ -84,7 +85,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem; /* Add padding */
+  margin-right: 5%;
 }
 
 .box-shadow h1 {
@@ -103,10 +104,14 @@
 
 .box-shadow form {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items inside the form */
 }
 
 .box-shadow form div {
   margin-bottom: 1rem;
+  width: 100%; /* Ensure the div takes full width */
 }
 
 .box-shadow form label {
@@ -115,15 +120,21 @@
 }
 
 .box-shadow form input {
-  width: 100%;
+  width: 98%;
   padding: 0.75rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
 }
 
+.box-shadow form .button-container {
+  width: 100%; /* Ensure the container takes full width */
+  display: flex;
+  justify-content: center; /* Center the button */
+}
+
 .box-shadow form button {
-  width: 100%;
+  width: 50%; /* Adjusted width for smaller button */
   padding: 0.75rem;
   background-color: #05a3ba;
   color: white;
