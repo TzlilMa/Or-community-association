@@ -5,6 +5,8 @@ import '../../styles/Calendar.css';
 import EventForm from './EventForm';
 import CalendarDay from './CalendarDay';
 import Notification from '../General/Notification';
+import calendarImage from '../../assets/calendar2.png';
+import calendarImage1 from '../../assets/calendar1.png';
 
 const Calendar = () => {
   const today = new Date();
@@ -245,6 +247,7 @@ const Calendar = () => {
 
   return (
     <div className="calendar-container">
+      <div className="calendar-right-side">
       <div className="registered-events">
         <h3>{firstName}, הינה האירועים שהינך רשום אליהם:</h3>
         {userRegisteredEvents.length > 0 ? (
@@ -258,6 +261,8 @@ const Calendar = () => {
         ) : (
           <p>לא מצאנו אירועים שהינך רשום! זה הזמן לעבור על הלוח אירועים ולהרשם</p>
         )}
+      </div>
+      <img src={calendarImage1} alt="image" className="calendar-image" />
       </div>
       <div className="vertical-line"></div>
       <div className="calendar-column">
