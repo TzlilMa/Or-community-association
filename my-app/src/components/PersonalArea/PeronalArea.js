@@ -1,32 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { db, doc, getDoc, setDoc, auth } from '../../fireBase/firebase';
-import { reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
-import Notification from '../General/Notification';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import '../../styles/PersonalArea.css';
+import React, { useEffect, useState } from "react";
+import { db, doc, getDoc, setDoc, auth } from "../../fireBase/firebase";
+import {
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  updatePassword,
+} from "firebase/auth";
+import Notification from "../General/Notification";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import "../../styles/PersonalArea.css";
 
 const PersonalArea = () => {
   const [userDetails, setUserDetails] = useState({
-    firstName: '',
-    lastName: '',
-    gender: 'male',
+    firstName: "",
+    lastName: "",
+    gender: "male",
   });
   const [userStory, setUserStory] = useState({
-    personalStory: '',
+    personalStory: "",
     isStoryPublic: false,
   });
   const [loading, setLoading] = useState(true);
   const [storyLength, setStoryLength] = useState(0);
   const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   });
 
-  const [passwordError, setPasswordError] = useState('');
+  const [passwordError, setPasswordError] = useState("");
   const [isPasswordTooShort, setIsPasswordTooShort] = useState(false);
-  const [notification, setNotification] = useState({ message: '', type: '' });
+  const [notification, setNotification] = useState({ message: "", type: "" });
 
   const MIN_PASSWORD_LENGTH = 6;
   const MIN_STORY_LENGTH = 100;
@@ -37,7 +41,7 @@ const PersonalArea = () => {
       if (user) {
         const fetchUserData = async () => {
           try {
-            const userDoc = await getDoc(doc(db, 'users', user.email));
+            const userDoc = await getDoc(doc(db, "users", user.email));
             if (userDoc.exists()) {
               const userDataFromDB = userDoc.data();
               setUserDetails({
@@ -49,19 +53,21 @@ const PersonalArea = () => {
                 personalStory: userDataFromDB.personalStory,
                 isStoryPublic: userDataFromDB.isStoryPublic,
               });
-              setStoryLength(stripHtmlTags(userDataFromDB.personalStory || '').length);
+              setStoryLength(
+                stripHtmlTags(userDataFromDB.personalStory || "").length
+              );
             } else {
-              console.error('User document does not exist.');
+              console.error("User document does not exist.");
             }
           } catch (error) {
-            console.error('Error fetching user data:', error);
+            console.error("Error fetching user data:", error);
           } finally {
             setLoading(false);
           }
         };
         fetchUserData();
       } else {
-        console.log('No user is signed in.');
+        console.log("No user is signed in.");
         setLoading(false);
       }
     });
@@ -84,7 +90,7 @@ const PersonalArea = () => {
   };
 
   const handleStoryChange = (value) => {
-    console.log('Story change detected:', value);
+    console.log("Story change detected:", value);
     setStoryLength(stripHtmlTags(value).length);
     setUserStory((prevStory) => ({
       ...prevStory,
@@ -94,8 +100,14 @@ const PersonalArea = () => {
 
   const handleCheckboxChange = (event) => {
     const isPublic = event.target.checked;
-    if (isPublic && stripHtmlTags(userStory.personalStory).length < MIN_STORY_LENGTH) {
-      setNotification({ message: `הסיפור חייב להיות באורך של לפחות ${MIN_STORY_LENGTH} תווים כדי להיות ציבורי`, type: 'error' });
+    if (
+      isPublic &&
+      stripHtmlTags(userStory.personalStory).length < MIN_STORY_LENGTH
+    ) {
+      setNotification({
+        message: `הסיפור חייב להיות באורך של לפחות ${MIN_STORY_LENGTH} תווים כדי להיות ציבורי`,
+        type: "error",
+      });
       return;
     }
     setUserStory((prevStory) => ({
@@ -111,7 +123,7 @@ const PersonalArea = () => {
       [name]: value,
     }));
 
-    if (name === 'newPassword') {
+    if (name === "newPassword") {
       setIsPasswordTooShort(value.length < MIN_PASSWORD_LENGTH);
     }
   };
@@ -120,74 +132,98 @@ const PersonalArea = () => {
     event.preventDefault();
 
     if (!userDetails.firstName.trim() || !userDetails.lastName.trim()) {
-      setNotification({ message: 'שם פרטי ושם משפחה הינם שדות חובה', type: 'error' });
+      setNotification({
+        message: "שם פרטי ושם משפחה הינם שדות חובה",
+        type: "error",
+      });
       return;
     }
 
-    const allowedFields = ['firstName', 'lastName', 'gender'];
+    const allowedFields = ["firstName", "lastName", "gender"];
     const updateData = {};
 
-    allowedFields.forEach(field => {
+    allowedFields.forEach((field) => {
       if (userDetails[field] !== undefined) {
         updateData[field] = userDetails[field];
       }
     });
 
-    console.log('Update data:', updateData);
+    console.log("Update data:", updateData);
 
     try {
-      await setDoc(doc(db, 'users', auth.currentUser.email), updateData, { merge: true });
-      setNotification({ message: 'הנתונים נשמרו בהצלחה', type: 'success' });
+      await setDoc(doc(db, "users", auth.currentUser.email), updateData, {
+        merge: true,
+      });
+      setNotification({ message: "הנתונים נשמרו בהצלחה", type: "success" });
     } catch (error) {
-      console.error('Error updating user details:', error);
-      setNotification({ message: 'אירעה שגיאה בעדכון נתונים, אנא נסה שוב מאוחר יותר', type: 'error' });
+      console.error("Error updating user details:", error);
+      setNotification({
+        message: "אירעה שגיאה בעדכון נתונים, אנא נסה שוב מאוחר יותר",
+        type: "error",
+      });
     }
   };
 
   const handleStorySubmit = async () => {
-    if (userStory.isStoryPublic && stripHtmlTags(userStory.personalStory).length < MIN_STORY_LENGTH) {
-      setNotification({ message: `הסיפור חייב להיות באורך של לפחות ${MIN_STORY_LENGTH} תווים כדי להיות ציבורי`, type: 'error' });
+    if (
+      userStory.isStoryPublic &&
+      stripHtmlTags(userStory.personalStory).length < MIN_STORY_LENGTH
+    ) {
+      setNotification({
+        message: `הסיפור חייב להיות באורך של לפחות ${MIN_STORY_LENGTH} תווים כדי להיות ציבורי`,
+        type: "error",
+      });
       return;
     }
 
     try {
-      await setDoc(doc(db, 'users', auth.currentUser.email), userStory, { merge: true });
-      setNotification({ message: 'הסיפור נשמר בהצלחה', type: 'success' });
+      await setDoc(doc(db, "users", auth.currentUser.email), userStory, {
+        merge: true,
+      });
+      setNotification({ message: "הסיפור נשמר בהצלחה", type: "success" });
     } catch (error) {
-      console.error('Error updating personal story:', error);
-      setNotification({ message: 'אירעה שגיאה בעדכון הסיפור, אנא נסה שוב מאוחר יותר', type: 'error' });
+      console.error("Error updating personal story:", error);
+      setNotification({
+        message: "אירעה שגיאה בעדכון הסיפור, אנא נסה שוב מאוחר יותר",
+        type: "error",
+      });
     }
   };
 
   const handleChangePassword = async () => {
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      setPasswordError('הסיסמאות אינן תואמות');
+      setPasswordError("הסיסמאות אינן תואמות");
       return;
     }
 
     if (passwordData.newPassword.length < MIN_PASSWORD_LENGTH) {
-      setPasswordError(`הסיסמה חייבת להיות באורך של לפחות ${MIN_PASSWORD_LENGTH} תווים`);
+      setPasswordError(
+        `הסיסמה חייבת להיות באורך של לפחות ${MIN_PASSWORD_LENGTH} תווים`
+      );
       return;
     }
 
     try {
       const user = auth.currentUser;
-      const credential = EmailAuthProvider.credential(user.email, passwordData.currentPassword);
+      const credential = EmailAuthProvider.credential(
+        user.email,
+        passwordData.currentPassword
+      );
 
       await reauthenticateWithCredential(user, credential);
 
       await updatePassword(user, passwordData.newPassword);
 
-      setPasswordError('');
-      setNotification({ message: 'סיסמא שונתה בהצלחה', type: 'success' });
+      setPasswordError("");
+      setNotification({ message: "סיסמא שונתה בהצלחה", type: "success" });
       setPasswordData({
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: '',
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
       });
     } catch (error) {
-      console.error('Error changing password:', error);
-      setPasswordError('אירעה שגיאה, בדוק את הסיסמה הנוכחית ונסה שוב');
+      console.error("Error changing password:", error);
+      setPasswordError("אירעה שגיאה, בדוק את הסיסמה הנוכחית ונסה שוב");
     }
   };
 
@@ -198,7 +234,10 @@ const PersonalArea = () => {
   return (
     <div className="personal-area-container">
       <div className="personal-area">
-        <h1>{userDetails.firstName}, איזה כיף {userDetails.gender === 'male' ? 'שאתה פה' : 'שאת פה'}!</h1>
+        <h1>
+          {userDetails.firstName}, איזה כיף{" "}
+          {userDetails.gender === "male" ? "שאתה פה" : "שאת פה"}!
+        </h1>
         <h3>הינה הפרטים שלך כפי שהם מעודכנים במערכת</h3>
         <form onSubmit={handleDetailsSubmit} className="personal-area-form">
           <label className="form-label">
@@ -244,21 +283,26 @@ const PersonalArea = () => {
             />
           </label>
           <div className="btns-personal-area">
-            <button type="submit" className="submit-btn">שמור</button>
+            <button type="submit" className="submit-btn">
+              שמור
+            </button>
           </div>
         </form>
       </div>
       <div className="personal-story-section">
         <h2>הסיפור שלי</h2>
         <p>
-          קהילת אור מאפשרת לחברי הקהילה לשתף את הסיפור האישי שלהם. כאן זה המקום לעשות זאת!
+          קהילת אור מאפשרת לחברי הקהילה לשתף את הסיפור האישי שלהם. כאן זה המקום
+          לעשות זאת!
         </p>
         <ReactQuill
           value={userStory.personalStory}
           onChange={handleStoryChange}
         />
         <div className="story-footer">
-          <p>{storyLength}/{MAX_CHARS}</p>
+          <p>
+            {storyLength}/{MAX_CHARS}
+          </p>
           <label className="checkbox-label">
             <input
               type="checkbox"
@@ -270,12 +314,18 @@ const PersonalArea = () => {
             אני מאשר/ת שהסיפור שלי ישותף עם חברי הקהילה
           </label>
         </div>
-        <div className='btns-personal-area'>
-          <button type="button" className="submit-btn" onClick={handleStorySubmit}>שמור</button>
+        <div className="btns-personal-area">
+          <button
+            type="button"
+            className="submit-btn"
+            onClick={handleStorySubmit}
+          >
+            שמור
+          </button>
         </div>
       </div>
       <div className="change-password-section">
-        <h2>שנה סיסמה</h2>
+        <h2>שינוי סיסמה</h2>
         <label className="form-label">
           סיסמה נוכחית:
           <input
@@ -296,7 +346,9 @@ const PersonalArea = () => {
             className="input"
           />
         </label>
-        {isPasswordTooShort && <p className="password-length-warning">קצר מידי</p>}
+        {isPasswordTooShort && (
+          <p className="password-length-warning">קצר מידי</p>
+        )}
         <label className="form-label">
           אשר סיסמה חדשה:
           <input
@@ -308,7 +360,11 @@ const PersonalArea = () => {
           />
         </label>
         {passwordError && <p className="error">{passwordError}</p>}
-        <button type="button" className="change-password-btn" onClick={handleChangePassword}>
+        <button
+          type="button"
+          className="change-password-btn"
+          onClick={handleChangePassword}
+        >
           שנה סיסמה
         </button>
       </div>
@@ -316,7 +372,7 @@ const PersonalArea = () => {
         <Notification
           message={notification.message}
           type={notification.type}
-          onClose={() => setNotification({ message: '', type: '' })}
+          onClose={() => setNotification({ message: "", type: "" })}
         />
       )}
     </div>
