@@ -1,7 +1,7 @@
 .registration-page {
   position: relative;
   display: flex;
-  justify-content: center; /* Center the registration box horizontally */
+  justify-content: flex-end; /* Move the container to the right */
   align-items: center;
   width: 100%;
   height: 100vh;
@@ -27,8 +27,8 @@
   width: 90%; /* Responsive width */
   margin: 0 auto; /* Center the container */
   z-index: 1;
-  margin-right: 5%;
-  height: 60%;
+  direction: rtl; /* Set text direction to right-to-left */
+  margin-right: 2rem; /* Move the container a bit to the right */
 }
 
 .registration-container h2 {
@@ -39,13 +39,17 @@
 }
 
 .registration-form {
+  display: flex;
   flex-direction: column;
-  height: 50%;
+  align-items: center; /* Center the items */
+  width: 100%;
 }
 
 .registration-form label {
   margin-bottom: 0.5rem; /* Increase margin for better spacing */
   font-size: 0.9rem; /* Increase font size */
+  text-align: right; /* Align text to the right */
+  width: 100%; /* Ensure label takes full width */
 }
 
 .registration-form input,
@@ -66,8 +70,9 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width: 100%; /* Ensure full width */
+  width: 50%; /* Ensure full width */
   font-size: 1rem; /* Increase font size */
+  margin-top: 1rem; /* Add margin-top for better spacing */
 }
 
 .registration-form button:hover {
@@ -88,6 +93,7 @@
   .registration-container {
     max-width: 90%;
     padding: 1rem;
+    margin-right: 1rem; /* Adjust margin for small screens */
   }
 
   .registration-container h2 {
@@ -109,6 +115,7 @@
   .registration-container {
     max-width: 70%;
     padding: 1.5rem;
+    margin-right: 1.5rem; /* Adjust margin for medium screens */
   }
 
   .registration-container h2 {
@@ -130,6 +137,7 @@
   .registration-container {
     max-width: 30%;
     padding: 2rem;
+    margin-right: 2rem; /* Adjust margin for large screens */
   }
 
   .registration-container h2 {

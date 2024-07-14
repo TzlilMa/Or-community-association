@@ -131,7 +131,7 @@ const RegistrationForm = () => {
             <option value="male">זכר</option>
             <option value="female">נקבה</option>
           </select>
-          <button type="submit">הרשם עכשיו</button>
+          <button type="submit">להרשמה</button>
         </form>
       </div>
     </div>
