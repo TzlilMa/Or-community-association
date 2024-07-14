@@ -42,7 +42,8 @@ const RegistrationForm = () => {
       }
 
       // Register user with email and password
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
       // Generate a unique userId
       const userId = uuidv4();
@@ -59,6 +60,9 @@ const RegistrationForm = () => {
         isStoryPublic,
         gender,
         isAdmin,
+        creationTime: user.metadata.creationTime,
+        lastSignInTime: user.metadata.lastSignInTime,
+        disabled: false, // Default value
       };
       await setDoc(doc(db, "users", email), userData);
 

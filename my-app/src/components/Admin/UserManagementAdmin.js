@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import { getFirestore, getDocs, collection, updateDoc, doc, query, where } from 'firebase/firestore';
 import UserModal from './UserModalAdmin';
 import '../../styles/UserManagement.css';
 import Notification from '../General/Notification';
-import { getFirestore, getDocs, collection, updateDoc, doc, query, where } from 'firebase/firestore';
 
 const UserManagement = () => {
   const db = getFirestore();
@@ -11,39 +10,37 @@ const UserManagement = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [search, setSearch] = useState('');
   const [sortField, setSortField] = useState('creationTime');
-  const [sortOrder, setSortOrder] = useState('asc');
+  const [sortOrder, setSortOrder] = useState('desc'); // Default to descending for newest users first
   const [selectedEmail, setSelectedEmail] = useState(null);
   const [notification, setNotification] = useState({ message: '', type: '' });
 
-  const getFirestoreUsers = useCallback(async () => {
-    const usersSnapshot = await getDocs(collection(db, 'users'));
-    return usersSnapshot.docs.map(doc => ({
-      email: doc.id, // Assuming the document ID is the user's email
-      isAdmin: doc.data().isAdmin,
-    }));
-  }, [db]);
-
   const fetchUsers = useCallback(async () => {
     try {
-      const response = await axios.get('/api/users');
-      const apiUsers = response.data;
-
-      const firestoreUsers = await getFirestoreUsers();
-
-      const usersList = apiUsers.map(apiUser => {
-        const firestoreUser = firestoreUsers.find(user => user.email === apiUser.email);
+      const usersSnapshot = await getDocs(collection(db, 'users'));
+      const usersList = usersSnapshot.docs.map(doc => {
+        const data = doc.data();
         return {
-          ...apiUser,
-          ...firestoreUser,
+          email: doc.id,
+          ...data,
+          creationTime: data.creationTime && data.creationTime.toDate ? data.creationTime.toDate() : (data.creationTime || 'N/A'),
+          lastSignInTime: data.lastSignInTime && data.lastSignInTime.toDate ? data.lastSignInTime.toDate() : (data.lastSignInTime || 'N/A'),
         };
       });
 
-      setUsers(usersList);
-      setFilteredUsers(usersList);
+      const sortedUsersList = usersList.sort((a, b) => {
+        if (a.creationTime === 'N/A') return 1;
+        if (b.creationTime === 'N/A') return -1;
+        if (a.creationTime < b.creationTime) return 1;
+        if (a.creationTime > b.creationTime) return -1;
+        return 0;
+      });
+
+      setUsers(sortedUsersList);
+      setFilteredUsers(sortedUsersList);
     } catch (error) {
       console.error('Error fetching users:', error);
     }
-  }, [getFirestoreUsers]);
+  }, [db]);
 
   useEffect(() => {
     fetchUsers();
@@ -57,21 +54,34 @@ const UserManagement = () => {
   };
 
   const handleSort = (field) => {
-    const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
+    let order = 'asc';
+    if (sortField === field) {
+      order = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
     setSortField(field);
     setSortOrder(order);
+
     const sorted = [...filteredUsers].sort((a, b) => {
+      if (field === 'disabled') {
+        // Sort by account status
+        if (a.disabled === b.disabled) return 0;
+        return a.disabled === false ? (order === 'asc' ? -1 : 1) : (order === 'asc' ? 1 : -1);
+      }
+      if (a[field] === 'N/A') return 1;
+      if (b[field] === 'N/A') return -1;
       if (a[field] < b[field]) return order === 'asc' ? -1 : 1;
       if (a[field] > b[field]) return order === 'asc' ? 1 : -1;
       return 0;
     });
+
     setFilteredUsers(sorted);
   };
 
-  const handleChangeAccountStatus = async (userId, currentStatus) => {
+  const handleChangeAccountStatus = async (email, currentStatus) => {
     try {
       const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
-      await axios.patch(`/api/user/${userId}`, { status: newStatus });
+      const userRef = doc(db, 'users', email);
+      await updateDoc(userRef, { disabled: newStatus === 'inactive' });
       fetchUsers(); // Refresh the list of users
     } catch (error) {
       console.error('Error changing account status:', error);
@@ -120,9 +130,10 @@ const UserManagement = () => {
     }
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString();
+  const formatDate = (date) => {
+    if (!date || date === 'N/A') return 'N/A';
+    const d = new Date(date);
+    return d.toLocaleDateString('he-IL');
   };
 
   return (
@@ -139,6 +150,8 @@ const UserManagement = () => {
         <thead>
           <tr>
             <th onClick={() => handleSort('email')}>אימייל</th>
+            <th onClick={() => handleSort('firstName')}>שם פרטי</th>
+            <th onClick={() => handleSort('lastName')}>שם משפחה</th>
             <th onClick={() => handleSort('creationTime')}>תאריך הרשמה</th>
             <th onClick={() => handleSort('lastSignInTime')}>תאריך כניסה אחרון</th>
             <th onClick={() => handleSort('disabled')}>סטטוס חשבון</th>
@@ -147,13 +160,15 @@ const UserManagement = () => {
         </thead>
         <tbody>
           {filteredUsers.map(user => (
-            <tr key={user.uid}>
+            <tr key={user.email}>
               <td>{user.email}</td>
+              <td>{user.firstName}</td>
+              <td>{user.lastName}</td>
               <td>{formatDate(user.creationTime)}</td>
               <td>{formatDate(user.lastSignInTime)}</td>
-              <td>{user.disabled ? 'לא פעיל' : 'פעיל'}</td>
+              <td>{user.disabled ? 'מושבת' : 'פעיל'}</td>
               <td>
-                <button onClick={() => handleChangeAccountStatus(user.uid, user.disabled ? 'inactive' : 'active')}>
+                <button onClick={() => handleChangeAccountStatus(user.email, user.disabled ? 'inactive' : 'active')}>
                   {user.disabled ? 'הפעל חשבון' : 'השבת חשבון'}
                 </button>
                 <button onClick={() => handleShowChatLog(user.email)}>הצג לוג שיחה</button>
