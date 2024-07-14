@@ -7,7 +7,7 @@ const StoryCard = ({ card, onClick }) => {
       <div className="story-card-content">
         <p>הסיפור של</p>
         <h3>{card.name}</h3>
-        <button>Read More</button>
+        <button>לקריאה</button>
       </div>
     </div>
   );

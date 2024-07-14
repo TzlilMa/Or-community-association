@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { db, doc, getDoc, collection, query, where, getDocs } from "../fireBase/firebase";
 import BulletinBoard from "../components/NotificationComponent/BulletinBoard";
 import ImageSlider from "../components/NotificationComponent/ImageSlider";
 import Management from "../components/Management/Management";
 import InstagramPhotos from "../components/InstagramPhotos";
-import StoryCarousel from "../components/StoryCarousel"; // Ensure this import is correct
+import StoryCarousel from "../components/StoryCarousel";
 import { useAuth } from "../fireBase/AuthContext";
 import "../styles/Homepage.css";
 import "../styles/BulletinBoard.css";
@@ -17,6 +17,7 @@ const Homepage = () => {
   const { currentUser } = useAuth();
   const [showEditButtons, setShowEditButtons] = useState(false);
   const [stories, setStories] = useState([]);
+  const sectionRefs = useRef([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -44,11 +45,11 @@ const Homepage = () => {
         const querySnapshot = await getDocs(q);
         const storyData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
-          userId: doc.data().userId, // Ensure userId is included
+          userId: doc.data().userId,
           name: `${doc.data().firstName} ${doc.data().lastName}`,
           story: doc.data().personalStory,
         }));
-        console.log("Fetched stories:", storyData); // Add this line to check fetched stories
+        console.log("Fetched stories:", storyData);
         setStories(storyData);
       } catch (error) {
         console.error("Error fetching stories:", error);
@@ -59,38 +60,57 @@ const Homepage = () => {
     fetchStories();
   }, [currentUser]);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentRefs = sectionRefs.current;
+    currentRefs.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      currentRefs.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
+  }, []);
+
   return (
     <div className="App">
       <div className="homepage">
-        <div className="homepage-main-content">
+      <div className="title-container">
           <h1>"לעיתים צריכים רק אור קטן בשביל לעשות שינוי גדול"</h1>
-
-          <div className="homepage-section homepage-gradient-background-1">
+        </div>
+          <div className="homepage-main-content">
+          <div ref={(el) => (sectionRefs.current[0] = el)} className="homepage-section homepage-gradient-background-1">
             <div className="homepage-content-container">
               <div className="homepage-component-container">
                 <BulletinBoard showEditButtons={showEditButtons} />
               </div>
-              
                 <InstagramPhotos />
-              
             </div>
           </div>
 
-          <div className="homepage-section homepage-gradient-background-2">
-            <div className="homepage-content-container">
-              
-                <Management isAdmin={showEditButtons} />
-              
-              
-                <ImageSlider />
-              
-            </div>
+          <div ref={(el) => (sectionRefs.current[1] = el)} className="homepage-section homepage-gradient-background-2">
+            <Management isAdmin={showEditButtons} />
           </div>
-          
-          <div className="homepage-story-carousel-container">
+
+          <div ref={(el) => (sectionRefs.current[2] = el)} className="homepage-section homepage-gradient-background-3">
+            <ImageSlider />
+          </div>
+
+          <div ref={(el) => (sectionRefs.current[3] = el)} className="homepage-section homepage-gradient-background-4">
             <StoryCarousel stories={stories} />
           </div>
-
         </div>
       </div>
     </div>
