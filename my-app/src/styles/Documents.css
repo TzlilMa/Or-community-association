@@ -19,6 +19,7 @@ body {
 .documents-image {
   width: 40%; /* Adjusted width to be smaller */
   height: auto;
+  margin-top: 13%;
 }
 
 .documents-container {
@@ -28,7 +29,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
   text-align: right;
-  margin-right: 4%;
+  margin-right: 3%;
 }
 
 .documents-container h1 {
