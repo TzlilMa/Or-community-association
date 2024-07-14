@@ -58,11 +58,11 @@ const UserModal = ({ email, onClose }) => {
             </tr>
             <tr>
               <th>מנהל</th>
-              <td>{user.isAdmin ? 'Yes' : 'No'}</td>
+              <td>{user.isAdmin ? 'כן' : 'לא'}</td>
             </tr>
             <tr>
               <th>מאשר לפרסם סיפור</th>
-              <td>{user.isStoryPublic ? 'Yes' : 'No'}</td>
+              <td>{user.isStoryPublic ? 'כן' : 'לא'}</td>
             </tr>
           </tbody>
         </table>

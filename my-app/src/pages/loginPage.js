@@ -1,8 +1,8 @@
-// src/pages/loginPage.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../fireBase/firebase';
+import { auth, db } from '../fireBase/firebase'; // Import Firestore
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import '../styles/loginPage.css';
 
 const LoginPage = () => {
@@ -25,7 +25,23 @@ const LoginPage = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      navigate('/', { state: { email: user.email } });
+      
+      // Check if user is active
+      const userDoc = await getDoc(doc(db, "users", email));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        if (!userData.disabled) {
+          // Update lastSignInTime
+          await updateDoc(doc(db, "users", email), {
+            lastSignInTime: new Date().toISOString()
+          });
+          navigate('/', { state: { email: user.email } });
+        } else {
+          setError('Your account is disabled. Please contact support.');
+        }
+      } else {
+        setError('User data not found.');
+      }
     } catch (error) {
       setError('Invalid email or password.');
     }
