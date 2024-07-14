@@ -5,7 +5,7 @@
   border: 1px solid #c2c2c2;
   border-radius: 8px;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.5); /* Adjusted transparency */
   transition: transform 0.3s ease;
   margin-top: 10px;
 }

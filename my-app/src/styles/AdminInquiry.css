@@ -24,21 +24,39 @@ body {
   font-size: 2.5rem;
 }
 
-.admin-inquiry-list h3 {
-  color: #05a3ba;
-  border-bottom: 2px solid #254790;
-  padding-bottom: 0.5rem;
-  margin-bottom: 2%;
+.subject-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.subject-card {
+  width: 22%; /* Adjusted width for smaller cards */
+  padding: 1%; /* Adjusted padding for smaller cards */
+  margin: 1%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.subject-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.subject-card h3 {
+  margin: 0;
+  padding: 10px 0;
+  color: #05a3ba;
   font-size: 1.5rem;
 }
 
-.admin-inquiry-list h3.selected {
-  text-decoration: underline; /* Add underline to selected subject */
-}
-
-.subject-name:hover {
-  text-decoration: underline;
+.subject-card.selected {
+  border: 2px solid #254790;
 }
 
 .response-toggle {
@@ -61,8 +79,8 @@ body {
   text-decoration: underline;
 }
 
-.admin-inquiry-list .inquiry-section {
-  margin-bottom: 4%;
+.inquiry-section {
+  margin-top: 2rem;
 }
 
 .admin-inquiry-list .inquiry-item-container {

@@ -1,5 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { db, doc, getDoc, collection, query, where, getDocs } from "../fireBase/firebase";
+import {
+  db,
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "../fireBase/firebase";
 import BulletinBoard from "../components/NotificationComponent/BulletinBoard";
 import ImageSlider from "../components/NotificationComponent/ImageSlider";
 import Management from "../components/Management/Management";
@@ -32,7 +40,10 @@ const Homepage = () => {
           const userData = userDoc.data();
           setShowEditButtons(userData.isAdmin);
         } else {
-          console.error("User document does not exist for email:", currentUser.email);
+          console.error(
+            "User document does not exist for email:",
+            currentUser.email
+          );
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -41,7 +52,10 @@ const Homepage = () => {
 
     const fetchStories = async () => {
       try {
-        const q = query(collection(db, "users"), where("isStoryPublic", "==", true));
+        const q = query(
+          collection(db, "users"),
+          where("isStoryPublic", "==", true)
+        );
         const querySnapshot = await getDocs(q);
         const storyData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -87,28 +101,40 @@ const Homepage = () => {
   return (
     <div className="App">
       <div className="homepage">
-      <div className="title-container">
+        <div className="title-container">
           <h1>"לעיתים צריכים רק אור קטן בשביל לעשות שינוי גדול"</h1>
         </div>
-          <div className="homepage-main-content">
-          <div ref={(el) => (sectionRefs.current[0] = el)} className="homepage-section homepage-gradient-background-1">
+        <div className="homepage-main-content">
+          <div
+            ref={(el) => (sectionRefs.current[0] = el)}
+            className="homepage-section homepage-gradient-background-1"
+          >
             <div className="homepage-content-container">
               <div className="homepage-component-container">
                 <BulletinBoard showEditButtons={showEditButtons} />
               </div>
-                <InstagramPhotos />
+              <InstagramPhotos />
             </div>
           </div>
 
-          <div ref={(el) => (sectionRefs.current[1] = el)} className="homepage-section homepage-gradient-background-2">
+          <div
+            ref={(el) => (sectionRefs.current[1] = el)}
+            className="homepage-section homepage-gradient-background-2"
+          >
             <Management isAdmin={showEditButtons} />
           </div>
 
-          <div ref={(el) => (sectionRefs.current[2] = el)} className="homepage-section homepage-gradient-background-3">
+          <div
+            ref={(el) => (sectionRefs.current[2] = el)}
+            className="homepage-section homepage-gradient-background-3"
+          >
             <ImageSlider />
           </div>
 
-          <div ref={(el) => (sectionRefs.current[3] = el)} className="homepage-section homepage-gradient-background-4">
+          <div
+            ref={(el) => (sectionRefs.current[3] = el)}
+            className="homepage-section homepage-gradient-background-4"
+          >
             <StoryCarousel stories={stories} />
           </div>
         </div>
