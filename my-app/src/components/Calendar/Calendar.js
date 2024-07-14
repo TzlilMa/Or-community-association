@@ -19,7 +19,8 @@ const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [notification, setNotification] = useState({ message: '', type: '' });
-
+  const [loading, setLoading] = useState(false); // Add loading state
+  
   const daysOfWeek = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
 
   useEffect(() => {
@@ -93,6 +94,8 @@ const Calendar = () => {
   };
 
   const handleRegisterForEvent = async (eventId) => {
+    if(loading) return;
+    setLoading(true);
     if (!currentUser) {
       setNotification({ message: 'Please log in to register for events.', type: 'error' });
       return;
@@ -109,6 +112,8 @@ const Calendar = () => {
     } catch (error) {
       console.error('Error registering for event:', error);
       setNotification({ message: 'אירעה שגיאה בעת רישום לאירוע. בבקשה נסה שוב מאוחר יותר.', type: 'error' });
+    } finally {
+      setLoading(false);
     }
   };
 
