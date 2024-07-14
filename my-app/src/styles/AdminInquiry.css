@@ -87,6 +87,9 @@ body {
   position: relative;
 }
 
+.quill {
+  margin: 1rem 0 2rem 0;
+}
 .admin-inquiry-list .inquiry-item {
   background: #fff;
   border: 1px solid #ccc;
