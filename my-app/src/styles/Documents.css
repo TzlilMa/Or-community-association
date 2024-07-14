@@ -6,14 +6,29 @@ body {
   font-family: 'Rubik', sans-serif;
 }
 
+.documents-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  padding: 0.5rem 2rem; /* Adjust the top padding to move the content higher */
+  flex-direction: row-reverse; /* Reverse the order of items */
+}
+
+.documents-image {
+  width: 40%; /* Adjusted width to be smaller */
+  height: auto;
+}
+
 .documents-container {
-  width: 75%;
+  width: 50%; /* Adjusted width to be larger */
   padding: 2%;
-  background: #f1f0f0;
+  background: #fbf9f9;
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
   text-align: right;
-  margin: 0 auto; /* Center the container horizontally */
+  margin-right: 4%;
 }
 
 .documents-container h1 {
@@ -123,7 +138,7 @@ body {
 .document-modal input[type="text"],
 .document-modal input[type="url"],
 .document-modal select {
-  width: 98%; 
+  width: 98%;
   padding: 0.5rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;

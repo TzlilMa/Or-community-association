@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth, db, collection, getDocs, addDoc, deleteDoc, query, where } from '../fireBase/firebase';
 import '../styles/Documents.css';
 import Notification from './General/Notification';
+import documentImage from '../assets/document_pic.png';
 
 const Documents = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -132,60 +133,62 @@ const Documents = () => {
   };
 
   return (
-    <div className="documents-container">
-      <h1>טפסים ומידע</h1>
-      {Object.entries(data).map(([subject, links]) => (
-        <section key={subject}>
-          <h2>{subject}</h2>
-          <ul>
-            {links.map((link, index) => (
-              <li key={index}><a href={link.url} target="_blank" rel="noopener noreferrer">{link.text}</a></li>
-            ))}
-          </ul>
-        </section>
-      ))}
-      {isAdmin && (
-        <div>
-          <button className="add-document-button" onClick={() => setShowModal(true)}>הוספת קישור</button>
-          <button className="remove-document-button" onClick={() => setShowRemoveModal(true)}>הסרת קישור</button>
-          {showModal && (
-            <>
-              <div className="document-modal-overlay" onClick={() => setShowModal(false)}></div>
-              <div className="document-modal show">
-                <h2>הוספת קישור חדש</h2>
-                <label>
-                  <input type="radio" checked={!isAddingNewSubject} onChange={() => setIsAddingNewSubject(false)} />
-                  הוספה לנושא קיים
-                </label>
-                <label>
-                  <input type="radio" checked={isAddingNewSubject} onChange={() => setIsAddingNewSubject(true)} />
-                  יצירת נושא חדש
-                </label>
-                {!isAddingNewSubject && (
+    <div className="documents-page">
+      <img src={documentImage} alt="Document" className="documents-image" />
+      <div className="documents-container">
+        <h1>טפסים ומידע</h1>
+        {Object.entries(data).map(([subject, links]) => (
+          <section key={subject}>
+            <h2>{subject}</h2>
+            <ul>
+              {links.map((link, index) => (
+                <li key={index}><a href={link.url} target="_blank" rel="noopener noreferrer">{link.text}</a></li>
+              ))}
+            </ul>
+          </section>
+        ))}
+        {isAdmin && (
+          <div>
+            <button className="add-document-button" onClick={() => setShowModal(true)}>הוספת קישור</button>
+            <button className="remove-document-button" onClick={() => setShowRemoveModal(true)}>הסרת קישור</button>
+            {showModal && (
+              <>
+                <div className="document-modal-overlay" onClick={() => setShowModal(false)}></div>
+                <div className="document-modal show">
+                  <h2>הוספת קישור חדש</h2>
                   <label>
-                    בחר נושא:
-                    <select value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)}>
-                      <option value="">בחר נושא</option>
-                      {Object.keys(data).map((subject) => (
-                        <option key={subject} value={subject}>{subject}</option>
-                      ))}
-                    </select>
+                    <input type="radio" checked={!isAddingNewSubject} onChange={() => setIsAddingNewSubject(false)} />
+                    הוספה לנושא קיים
                   </label>
-                )}
-                {isAddingNewSubject && (
                   <label>
-                    נושא חדש:
-                    <input type="text" value={newSubject} onChange={(e) => setNewSubject(e.target.value)} />
+                    <input type="radio" checked={isAddingNewSubject} onChange={() => setIsAddingNewSubject(true)} />
+                    יצירת נושא חדש
                   </label>
-                )}
-                <label>
-                  טקסט קישור:
-                  <input type="text" value={newLinkText} onChange={(e) => setNewLinkText(e.target.value)} />
-                </label>
-                <label>
-                  URL קישור:
-                  <input type="text" value={newLinkUrl} onChange={(e) => setNewLinkUrl(e.target.value)} />
-                </label>
+                  {!isAddingNewSubject && (
+                    <label>
+                      בחר נושא:
+                      <select value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)}>
+                        <option value="">בחר נושא</option>
+                        {Object.keys(data).map((subject) => (
+                          <option key={subject} value={subject}>{subject}</option>
+                        ))}
+                      </select>
+                    </label>
+                  )}
+                  {isAddingNewSubject && (
+                    <label>
+                      נושא חדש:
+                      <input type="text" value={newSubject} onChange={(e) => setNewSubject(e.target.value)} />
+                    </label>
+                  )}
+                  <label>
+                    טקסט קישור:
+                    <input type="text" value={newLinkText} onChange={(e) => setNewLinkText(e.target.value)} />
+                  </label>
+                  <label>
+                    URL קישור:
+                    <input type="text" value={newLinkUrl} onChange={(e) => setNewLinkUrl(e.target.value)} />
+                  </label>
                   <button className="confirm-button" onClick={handleAddLink}>הוספה</button>
                   <button className="cancel-button" onClick={() => {
                     setShowModal(false);
@@ -195,43 +198,44 @@ const Documents = () => {
                     setSelectedSubject('');
                     setNotification({ message: '', type: '' }); // Clear any existing notification
                   }}>ביטול</button>
-              </div>
-            </>
-          )}
-          {showRemoveModal && (
-            <>
-              <div className="document-modal-overlay" onClick={() => setShowRemoveModal(false)}></div>
-              <div className="document-modal show">
-                <h2>הסרת קישור</h2>
-                <label>
-                  בחר נושא:
-                  <select value={linkToRemove.subject} onChange={(e) => setLinkToRemove({ ...linkToRemove, subject: e.target.value })}>
-                    <option value="">בחר נושא</option>
-                    {Object.keys(data).map((subject) => (
-                      <option key={subject} value={subject}>{subject}</option>
-                    ))}
-                  </select>
-                </label>
-                <label>
-                  בחר קישור:
-                  <select value={linkToRemove.link} onChange={(e) => setLinkToRemove({ ...linkToRemove, link: e.target.value })}>
-                    <option value="">בחר קישור</option>
-                    {linkToRemove.subject && data[linkToRemove.subject].map((link, index) => (
-                      <option key={index} value={link.url}>{link.text}</option>
-                    ))}
-                  </select>
-                </label>
+                </div>
+              </>
+            )}
+            {showRemoveModal && (
+              <>
+                <div className="document-modal-overlay" onClick={() => setShowRemoveModal(false)}></div>
+                <div className="document-modal show">
+                  <h2>הסרת קישור</h2>
+                  <label>
+                    בחר נושא:
+                    <select value={linkToRemove.subject} onChange={(e) => setLinkToRemove({ ...linkToRemove, subject: e.target.value })}>
+                      <option value="">בחר נושא</option>
+                      {Object.keys(data).map((subject) => (
+                        <option key={subject} value={subject}>{subject}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    בחר קישור:
+                    <select value={linkToRemove.link} onChange={(e) => setLinkToRemove({ ...linkToRemove, link: e.target.value })}>
+                      <option value="">בחר קישור</option>
+                      {linkToRemove.subject && data[linkToRemove.subject].map((link, index) => (
+                        <option key={index} value={link.url}>{link.text}</option>
+                      ))}
+                    </select>
+                  </label>
                   <button className="confirm-button" onClick={handleRemoveLink}>הסר</button>
                   <button className="cancel-button" onClick={() => setShowRemoveModal(false)}>ביטול</button>
-              </div>
-            </>
-          )}
-        </div>
-      )}
-      <p className="disclaimer">המידע כללי בלבד ואינו מהווה חוות דעת רפואית או משפטית או תחליף לייעוץ רפואי או משפטי</p>
-      {notification.message && (
-        <Notification message={notification.message} type={notification.type} onClose={() => setNotification({ message: '', type: '' })} />
-      )}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+        <p className="disclaimer">המידע כללי בלבד ואינו מהווה חוות דעת רפואית או משפטית או תחליף לייעוץ רפואי או משפטי</p>
+        {notification.message && (
+          <Notification message={notification.message} type={notification.type} onClose={() => setNotification({ message: '', type: '' })} />
+        )}
+      </div>
     </div>
   );
 };
