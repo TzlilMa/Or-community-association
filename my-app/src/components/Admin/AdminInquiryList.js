@@ -124,15 +124,17 @@ const AdminInquiryList = () => {
     <div className="admin-inquiry-system">
       <div className="admin-inquiry-list">
         <h2>רשימת פניות</h2>
-        {subjects.map((subject) => (
-          <h3
-            key={subject.id}
-            onClick={() => fetchInquiries(subject)}
-            className={`subject-name ${selectedSubject && selectedSubject.id === subject.id ? 'selected' : ''}`}
-          >
-            {subject.name}
-          </h3>
-        ))}
+        <div className="subject-card-container">
+          {subjects.map((subject) => (
+            <div
+              key={subject.id}
+              className={`subject-card ${selectedSubject && selectedSubject.id === subject.id ? 'selected' : ''}`}
+              onClick={() => fetchInquiries(subject)}
+            >
+              <h3>{subject.name}</h3>
+            </div>
+          ))}
+        </div>
         <button className="subject-management-button" onClick={() => setShowSubjectModal(true)}>
           ניהול נושאים
         </button>

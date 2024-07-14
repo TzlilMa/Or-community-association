@@ -28,6 +28,7 @@
   margin: 0 auto; /* Center the container */
   z-index: 1;
   margin-right: 5%;
+  height: 60%;
 }
 
 .registration-container h2 {
@@ -38,8 +39,8 @@
 }
 
 .registration-form {
-  display: flex;
   flex-direction: column;
+  height: 50%;
 }
 
 .registration-form label {
