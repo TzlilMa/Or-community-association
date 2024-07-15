@@ -57,7 +57,7 @@
 .homepage-content-container {
   display: flex;
   justify-content: space-between;
-  gap: 10%;
+  gap: 6%;
   
 }
 
@@ -75,6 +75,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-left: 3%;
+  margin-right: 3%;
 }
 
 .homepage-card-instegram iframe,

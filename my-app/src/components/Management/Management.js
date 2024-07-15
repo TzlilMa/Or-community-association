@@ -102,17 +102,17 @@ const Management = ({ isAdmin }) => {
       <h1>דבר מנהל</h1>
       <div className="text-cards-container">
         {texts.map((textItem) => (
-          <div key={textItem.id}>
-            <p>עדכון מתאריך: {new Date(textItem.date).toLocaleDateString()}</p>
+          <div key={textItem.id} className="text-card">
+            <p className="date-line">עדכון מתאריך: {new Date(textItem.date).toLocaleDateString()}</p>
             <p>{textItem.text}</p>
+            {isAdmin && (
+              <button className="management-manage-button" onClick={() => handleOpenModal("edit")}>
+                ניהול
+              </button>
+            )}
           </div>
         ))}
       </div>
-      {isAdmin && (
-        <button className="management-manage-button" onClick={() => handleOpenModal("add")}>
-          ניהול
-        </button>
-      )}
       {showModal && (
         <div className="management-modal">
           <div className="management-modal-content">
@@ -124,7 +124,7 @@ const Management = ({ isAdmin }) => {
                   type="radio"
                   value="add"
                   checked={action === "add"}
-                  onChange={() => handleOpenModal("add")}
+                  onChange={() => setAction("add")}
                 />
                 הוספת טקסט
               </label>
@@ -133,7 +133,7 @@ const Management = ({ isAdmin }) => {
                   type="radio"
                   value="edit"
                   checked={action === "edit"}
-                  onChange={() => handleOpenModal("edit")}
+                  onChange={() => setAction("edit")}
                 />
                 עריכת טקסט
               </label>
@@ -142,7 +142,7 @@ const Management = ({ isAdmin }) => {
                   type="radio"
                   value="delete"
                   checked={action === "delete"}
-                  onChange={() => handleOpenModal("delete")}
+                  onChange={() => setAction("delete")}
                 />
                 מחיקת טקסט
               </label>
@@ -155,46 +155,44 @@ const Management = ({ isAdmin }) => {
                   placeholder="הוסף טקסט חדש..."
                   className="management-input"
                 ></textarea>
-                <button onClick={handleAddText} className="management-submit-button">
-                  שמור
-                </button>
+                <div className="management-buttons">
+                  <button onClick={handleAddText} className="management-submit-button">
+                    שמור
+                  </button>
+                  <button className="management-cancel-button" onClick={() => setShowModal(false)}>
+                    סגור
+                  </button>
+                </div>
               </div>
             )}
             {(action === "edit" || action === "delete") && (
-              <div className="management-selection">
-                <label>בחר תאריך:</label>
-                <select value={selectedDate} onChange={handleSelectDate} className="management-input">
-                  <option value="" disabled>
-                    בחר תאריך
-                  </option>
-                  {texts.map((textItem) => (
-                    <option key={textItem.id} value={textItem.date}>
-                      {new Date(textItem.date).toLocaleDateString()}
+              <>
+                <div className="management-selection">
+                  <label>בחר תאריך:</label>
+                  <select value={selectedDate} onChange={handleSelectDate} className="management-input">
+                    <option value="" disabled>
+                      בחר תאריך
                     </option>
-                  ))}
-                </select>
-              </div>
+                    {texts.map((textItem) => (
+                      <option key={textItem.id} value={textItem.date}>
+                        {new Date(textItem.date).toLocaleDateString()}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="management-buttons">
+                  <button
+                    onClick={action === "edit" ? handleEditText : handleDeleteText}
+                    className="management-submit-button"
+                  >
+                    {action === "edit" ? "שמור" : "מחק"}
+                  </button>
+                  <button className="management-cancel-button" onClick={() => setShowModal(false)}>
+                    סגור
+                  </button>
+                </div>
+              </>
             )}
-            {action === "edit" && selectedDate && (
-              <div className="management-textbox">
-                <textarea
-                  value={editText}
-                  onChange={(e) => setEditText(e.target.value)}
-                  className="management-input"
-                ></textarea>
-                <button onClick={handleEditText} className="management-submit-button">
-                  שמור
-                </button>
-              </div>
-            )}
-            {action === "delete" && selectedDate && (
-              <button onClick={handleDeleteText} className="management-submit-button">
-                מחק
-              </button>
-            )}
-            <button className="management-cancel-button" onClick={() => setShowModal(false)}>
-              סגור
-            </button>
           </div>
         </div>
       )}
