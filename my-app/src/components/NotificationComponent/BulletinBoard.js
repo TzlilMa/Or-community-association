@@ -10,6 +10,7 @@ import {
   deleteDoc,
   doc,
   orderBy,
+  Timestamp,
 } from "../../fireBase/firebase";
 import "../../styles/BulletinBoard.css";
 
@@ -34,8 +35,11 @@ const BulletinBoard = () => {
         orderBy("timestamp", "desc")
       );
       const querySnapshot = await getDocs(q);
+      const currentDate = new Date();
       setMessages(
-        querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+        querySnapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data() }))
+          .filter((message) => message.timestamp.toDate() > currentDate)
       );
     } catch (error) {
       console.error("Error fetching notifications:", error);
@@ -62,7 +66,7 @@ const BulletinBoard = () => {
     try {
       await addDoc(collection(db, "bulletinBoard"), {
         text: newMessage,
-        timestamp: new Date(),
+        timestamp: Timestamp.fromDate(new Date(new Date().setDate(new Date().getDate() + 7))), // Default to 7 days from now
       });
       setNewMessage("");
       fetchNotifications();
