@@ -40,6 +40,21 @@ const RegistrationForm = () => {
         return;
       }
 
+      if (password.length < 6) {
+        setError("הסיסמא חייבת להכיל לפחות 6 תווים");
+        return;
+      }
+
+      if (!firstName.trim() || firstName.length < 2) {
+        setError("שם פרטי הוא שדה חובה - אנא הזן 2 תווים לפחות");
+        return;
+      }
+
+      if (!lastName.trim() || lastName.length < 2) {
+        setError("שם משפחה הוא שדה חובה -  אנא הזן 2 תווים לפחות");
+        return;
+      }
+
       // Register user with email and password
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -47,8 +62,8 @@ const RegistrationForm = () => {
       // Add user details to Firestore
       const userData = {
         email,
-        firstName,
-        lastName,
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
         dateOfBirth,
         age,
         personalStory,
