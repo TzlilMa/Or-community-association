@@ -9,10 +9,12 @@ import Notification from "../General/Notification";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../../styles/PersonalArea.css";
+import { useUser } from '../../UserContext'; // Import useUser
 
 const PersonalArea = () => {
+  const { user, updateUser } = useUser(); // Use the UserContext
   const [userDetails, setUserDetails] = useState({
-    firstName: "",
+    firstName: user.firstName,
     lastName: "",
     gender: "male",
   });
@@ -163,6 +165,7 @@ const PersonalArea = () => {
       await setDoc(doc(db, "users", auth.currentUser.email), updateData, {
         merge: true,
       });
+      updateUser({ ...user, firstName: userDetails.firstName }); // Update the user context
       setNotification({ message: "הנתונים נשמרו בהצלחה", type: "success" });
     } catch (error) {
       console.error("Error updating user details:", error);
