@@ -157,3 +157,30 @@
   color: red;
   margin-bottom: 1rem;
 }
+
+/* Media queries for mobile responsiveness */
+@media only screen and (max-width: 768px) {
+  .reset-container {
+    justify-content: center; /* Center the container on smaller screens */
+    padding-left: 1rem; /* Adjust padding */
+  }
+
+  .box-shadow {
+    width: 90%; /* Full width on mobile */
+    margin: 0; /* Remove right margin */
+    padding: 1rem; /* Adjust padding */
+  }
+
+  .box-shadow form input {
+    width: 100%; /* Full width for inputs on mobile */
+  }
+
+  .box-shadow form button {
+    width: 100%; /* Full width for button on mobile */
+  }
+
+  .popup-content {
+    width: 90%; /* Full width for popup on mobile */
+    height: auto; /* Adjust height for mobile */
+  }
+}

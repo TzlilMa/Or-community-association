@@ -1,48 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { db, doc, getDoc } from '../fireBase/firebase';
+import React, { useState } from 'react';
 import logo from '../assets/logo_with_text.jpeg';
 import InstagramLogo from '../assets/brand-instagram.png';
 import FacebookLogo from '../assets/brand-facebook.png';
 import userLogo from '../assets/user.png';
 import logoutLogo from '../assets/logout.png';
-import chatIcon from '../assets/chat-icon.png'; // Import the chat icon
+import chatIcon from '../assets/chat-icon.png';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../fireBase/firebase';
 import { useAuth } from '../fireBase/AuthContext';
+import { useUser } from '../UserContext';
 import '../styles/Header.css';
 
 const Header = ({ isAdmin }) => {
-  const [firstName, setFirstName] = useState(null);
+  const { user } = useUser(); // Use the UserContext
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        if (!currentUser || !currentUser.email) {
-          console.error('User or email is not provided.');
-          return;
-        }
-
-        console.log('Fetching user data for email:', currentUser.email); // Debug log
-
-        const userDoc = await getDoc(doc(db, 'users', currentUser.email));
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          console.log('User data:', userData); // Debug log
-          setFirstName(userData.firstName);
-        } else {
-          console.error('User document does not exist for email:', currentUser.email);
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, [currentUser]);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleComponentClick = (componentName) => {
+    setMenuOpen(false);
     if (componentName === 'Calendar') {
       navigate('/calendar');
     } else if (componentName === 'Inquiry') {
@@ -82,10 +58,15 @@ const Header = ({ isAdmin }) => {
         <div className="logo-container" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
           <img src={logo} alt="Logo" className="logo-image" />
         </div>
+        <div className="hamburger-icon" onClick={() => setMenuOpen(!menuOpen)}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
       {currentUser && (
         <>
-          <div className="center-section">
+          <div className={`center-section ${menuOpen ? 'open' : ''}`}>
             <button className="nav-btn" onClick={() => handleComponentClick('Inquiry')}>מערכת פניות</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Stories')}>סיפורים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Calendar')}>אירועים</button>
@@ -106,9 +87,9 @@ const Header = ({ isAdmin }) => {
             </div>
             <div className="greeting">
               <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')} />
-              <p>שלום {firstName}</p>
+              <p>שלום {user.firstName}</p>
             </div>
-            <img src={logoutLogo} alt="exit" className="header-icon" onClick={handleSignOut} />
+            <img src={logoutLogo} alt="exit" className="header-icon logout-icon" onClick={handleSignOut} />
           </div>
         </>
       )}

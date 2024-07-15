@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, getDoc, where, Timestamp } from "firebase/firestore";
 import { auth, db } from "../fireBase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Spinner } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import "../styles/Chat.css";
 import axios from 'axios';
 
@@ -135,7 +137,10 @@ const Chat = () => {
     <div className="chat-background">
       <div className="chat-container">
         {loading ? (
-          <p>...טוען הודעות</p>
+          <div className="spinner-container">
+            <Spinner animation="border" variant="primary" />
+            <p>טוען הודעות...</p>
+          </div>
         ) : (
           <>
             <div className="conversation">

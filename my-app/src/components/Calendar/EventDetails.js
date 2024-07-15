@@ -3,6 +3,7 @@ import { db, doc, updateDoc, getDoc, increment, getDocs, query, collection, wher
 import ParticipantList from './ParticipantList';
 import EventEditForm from './EventEditForm';
 import Notification from '../General/Notification';
+import generateICS from '../../utilis/generateICS'; // import the generateICS function
 import '../../styles/EventDetails.css';
 
 const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents }) => {
@@ -11,7 +12,7 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
   const [showParticipantList, setShowParticipantList] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [notification, setNotification] = useState({ message: '', type: '' });
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (event.registeredUsers && event.registeredUsers.includes(currentUser.email)) {
@@ -23,7 +24,7 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
     const fetchUserData = async () => {
       try {
         const userQuerySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', currentUser.email)));
-        if (!userQuerySnapshot.empty) {          
+        if (!userQuerySnapshot.empty) {
           const userData = userQuerySnapshot.docs[0].data();
           setIsAdmin(userData.isAdmin || false);
         } else {
@@ -34,7 +35,7 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
         setIsAdmin(false);
       }
     };
-    
+
     fetchUserData();
   }, [event, currentUser, isAdmin]);
 
@@ -47,7 +48,7 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
   };
 
   const handleCancelRegistration = async (eventId) => {
-    if (loading) return; // Prevent multiple clicks
+    if (loading) return;
     setLoading(true);
 
     try {
@@ -60,16 +61,14 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
         await updateDoc(eventRef, { registeredUsers: updatedRegisteredUsers });
         setIsRegistered(false);
       }
-      
-      // Ensure numUsers does not go below 0
-        if (eventData.numUsers > 0) {
-          await updateDoc(eventRef, {
-            numUsers: increment(-1),
-          });
-        }
 
-      updateEvents(); // Call updateEvents to refresh the list in Calendar component
+      if (eventData.numUsers > 0) {
+        await updateDoc(eventRef, {
+          numUsers: increment(-1),
+        });
+      }
 
+      updateEvents();
       setNotification({ message: 'ההרשמה בוטלה בהצלחה!', type: 'success' });
     } catch (error) {
       setNotification({ message: 'אירעה שגיאה בעת ביטול הרישום. בבקשה נסה שוב מאוחר יותר.', type: 'error' });
@@ -144,6 +143,7 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
           <div>
             <p>רשום</p>
             <button onClick={handleRegisterClick}>בטל רישום לאירוע</button>
+            <button className="add-to-calendar-btn" onClick={() => generateICS(event)}>הוסף אירוע ליומן</button> {/* Add to Calendar button */}
           </div>
         ) : (
           <button onClick={handleRegisterClick}>תרשום אותי</button>

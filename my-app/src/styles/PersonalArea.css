@@ -96,6 +96,7 @@
 
 .ql-editor {
   max-height: 250px; /* Adjust the min height if necessary */
+  min-height: 100px;
   direction: rtl;
   text-align: right;
   background-color: #fff; /* Set the editor background to white */

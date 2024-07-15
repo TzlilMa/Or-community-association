@@ -101,3 +101,19 @@
   font-size: 0.9rem;
   text-align: center;
 }
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+  .login-background {
+    padding-right: 20px; /* Reduce padding on mobile */
+  }
+
+  .login-container {
+    width: 80%; /* Increase width on mobile for better fit */
+    padding: 1rem; /* Reduce padding on mobile */
+  }
+
+  .login-form button {
+    width: 100%; /* Full width button on mobile */
+  }
+}
