@@ -139,7 +139,7 @@ const Chat = () => {
         {loading ? (
           <div className="spinner-container">
             <Spinner animation="border" variant="primary" />
-            <p>...טוען הודעות</p>
+            <p>טוען הודעות...</p>
           </div>
         ) : (
           <>
