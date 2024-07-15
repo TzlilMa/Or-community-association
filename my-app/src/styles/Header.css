@@ -44,6 +44,7 @@ header {
 
 .greeting p {
   margin-left: 10px; /* Add margin to the left of the text */
+  margin-top: 15%;
 }
 
 .logout-btn {
