@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, setDoc, doc, db } from "../fireBase/firebase";
-import { v4 as uuidv4 } from 'uuid'; // Importing uuid library for generating unique IDs
 import "../styles/registrationForm.css";
 
 const RegistrationForm = () => {
@@ -45,12 +44,8 @@ const RegistrationForm = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Generate a unique userId
-      const userId = uuidv4();
-
       // Add user details to Firestore
       const userData = {
-        userId, // Add userId to the document
         email,
         firstName,
         lastName,
