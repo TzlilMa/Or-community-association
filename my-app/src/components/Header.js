@@ -5,14 +5,15 @@ import InstagramLogo from '../assets/brand-instagram.png';
 import FacebookLogo from '../assets/brand-facebook.png';
 import userLogo from '../assets/user.png';
 import logoutLogo from '../assets/logout.png';
-import chatIcon from '../assets/chat-icon.png'; // Import the chat icon
+import chatIcon from '../assets/chat-icon.png';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../fireBase/firebase';
 import { useAuth } from '../fireBase/AuthContext';
+import { useUser } from '../context/UserContext'; // Import the context
 import '../styles/Header.css';
 
 const Header = ({ isAdmin }) => {
-  const [firstName, setFirstName] = useState(null);
+  const { user, updateUser } = useUser(); // Get user data and updateUser function from context
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,13 +26,13 @@ const Header = ({ isAdmin }) => {
           return;
         }
 
-        console.log('Fetching user data for email:', currentUser.email); // Debug log
+        console.log('Fetching user data for email:', currentUser.email);
 
         const userDoc = await getDoc(doc(db, 'users', currentUser.email));
         if (userDoc.exists()) {
           const userData = userDoc.data();
-          console.log('User data:', userData); // Debug log
-          setFirstName(userData.firstName);
+          console.log('User data:', userData);
+          updateUser(userData); // Update the context with user data
         } else {
           console.error('User document does not exist for email:', currentUser.email);
         }
@@ -41,7 +42,7 @@ const Header = ({ isAdmin }) => {
     };
 
     fetchUserData();
-  }, [currentUser]);
+  }, [currentUser, updateUser]);
 
   const handleComponentClick = (componentName) => {
     setMenuOpen(false);
@@ -109,11 +110,11 @@ const Header = ({ isAdmin }) => {
               <a href="https://www.instagram.com/kheilator?igsh=N2U5bThhYXJ5aHhs" target="_blank" rel="noopener noreferrer">
                 <img src={InstagramLogo} alt="Instagram" className="header-icon" />
               </a>
-              <img src={chatIcon} alt="Chat" className="header-icon" onClick={() => handleComponentClick('Chat')}/> 
+              <img src={chatIcon} alt="Chat" className="header-icon" onClick={() => handleComponentClick('Chat')} />
             </div>
             <div className="greeting">
               <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')} />
-              <p>שלום {firstName}</p>
+              <p>שלום {user.firstName}</p>
             </div>
             <img src={logoutLogo} alt="exit" className="header-icon logout-icon" onClick={handleSignOut} />
           </div>

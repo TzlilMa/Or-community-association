@@ -143,6 +143,7 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
           <div>
             <p>רשום</p>
             <button onClick={handleRegisterClick}>בטל רישום לאירוע</button>
+            <button className="add-to-calendar-btn" onClick={() => generateICS(event)}>הוסף אירוע ליומן</button> {/* Add to Calendar button */}
           </div>
         ) : (
           <button onClick={handleRegisterClick}>תרשום אותי</button>
@@ -150,7 +151,6 @@ const EventDetails = ({ event, currentUser, handleRegisterForEvent, updateEvents
       ) : (
         <p className="event-past-message">האירוע כבר התרחש</p>
       )}
-      <button className="add-to-calendar-btn" onClick={() => generateICS(event)}>הוסף אירוע ליומן</button> {/* Add to Calendar button */}
       {showParticipantList && (
         <ParticipantList
           event={event}

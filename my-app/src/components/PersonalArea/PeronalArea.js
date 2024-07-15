@@ -92,8 +92,15 @@ const PersonalArea = () => {
   };
 
   const handleStoryChange = (value) => {
-    console.log("Story change detected:", value);
-    setStoryLength(stripHtmlTags(value).length);
+    const strippedValue = stripHtmlTags(value);
+    if (strippedValue.length > MAX_CHARS) {
+      setNotification({
+        message: `הסיפור חייב להיות באורך של עד ${MAX_CHARS} תווים`,
+        type: "error",
+      });
+      return;
+    }
+    setStoryLength(strippedValue.length);
     setUserStory((prevStory) => ({
       ...prevStory,
       personalStory: value,
