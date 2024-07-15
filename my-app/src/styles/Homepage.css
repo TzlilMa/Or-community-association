@@ -1,47 +1,45 @@
+.homepage {
+  position: relative;
+  padding: 1%;
+}
+
 .homepage-main-content {
-  padding: 2%;
+  padding: 1%;
   text-align: center;
-  background-color: white; /* Added white background */
 }
 
 .homepage-section {
-  padding: 2%;
-  margin: 20px 0;
+  padding: 1%;
+  margin: 1% 0;
   opacity: 0;
-  transform: translateY(50px);
+  transform: translateY(5%);
   transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-  background-color: white; /* Added white background */
 }
 
 .title-container {
-  margin: 40px 0; /* Adjust margin for spacing around the title */
-  text-align: center; /* Center align the text */
-  padding: 20px; /* Add padding around the title */
-  background: linear-gradient(
-    120deg,
-    #e0eafc,
-    #cfdef3
-  ); /* Add a gradient background */
-  border-radius: 10px; /* Round the corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  color: #004085; /* Set a consistent text color */
-  font-family: "Rubik", sans-serif; /* Ensure consistent font */
-  background-color: white; /* Added white background */
+  margin: 1% 0;
+  text-align: center;
+  padding: 1%;
+  background: linear-gradient(120deg, #e0eafc, #cfdef3);
+  border-radius: 1%;
+  box-shadow: 0 0.4% 0.8% rgba(0, 0, 0, 0.1);
+  color: #004085;
+  font-family: 'Rubik', sans-serif;
 }
 
 .title-container h1 {
-  font-size: 3rem; /* Adjust font size */
-  font-weight: 700; /* Bold text */
-  margin: 0; /* Remove default margin */
-  color: #004085; /* Ensure title text color is consistent */
-  text-transform: uppercase; /* Make the text uppercase */
-  letter-spacing: 2px; /* Add letter spacing for readability */
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  color: #004085;
+  text-transform: uppercase;
+  letter-spacing: 0.2%;
 }
 
 .title-container p {
-  font-size: 1.5rem; /* Adjust font size for subtitle */
-  margin: 10px 0 0; /* Adjust margin for spacing */
-  color: #004085; /* Set color for subtitle */
+  font-size: 1.5rem;
+  margin: 1% 0 0;
+  color: #004085;
 }
 
 .visible {
@@ -49,36 +47,91 @@
   transform: translateY(0);
 }
 
+.homepage-gradient-background-1 {
+  background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
+  padding: 2%;
+  border-radius: 15px;
+  box-shadow: 0 0.4% 0.8% rgba(0, 0, 0, 0.1);
+}
+
 .homepage-content-container {
-  display: flex; /* Use flexbox layout */
-  justify-content: space-around; /* Distribute space around items */
-  align-items: flex-start; /* Align items to the top */
+  display: flex;
+  justify-content: space-between;
   gap: 2%;
-  background-color: white; /* Added white background */
+  
 }
 
-.homepage-component-container {
-  background: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 1%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.homepage-card-instegram,
+.homepage-card-BulletinBoard,
+.homepage-card-Management {
+  flex: 1;
+  width: 30%; 
+  height: 500px;
+  background: #b46969;
+  border: 0.1% solid #ccc;
+  border-radius: 15px;
+  box-shadow: 0 0.4% 0.8% rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.same-size {
-  width: 30%; /* Adjusted width to fit three components side by side */
-  height: 400px; /* Adjusted height */
+.homepage-card-instegram iframe,
+.homepage-card-instegram .instagram-content {
+  width: 100%;
+  height: 100%;
 }
 
-/* Responsive design */
-@media (max-width: 1200px) {
-  .homepage-content-container {
-    flex-direction: column; /* Stack components vertically on smaller screens */
-    align-items: center;
-  }
+.homepage-card-BulletinBoard .content {
+  padding: 40px; /* Increase padding */
+  font-size: 1.5rem; /* Increase font size */
+  line-height: 1.6; /* Increase line height for readability */
+}
 
-  .same-size {
-    width: 90%; /* Adjusted width for smaller screens */
-    height: auto; /* Adjusted height for smaller screens */
-  }
+.blue-background {
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
+  position: absolute;
+  top: 25%; /* Adjust to position correctly */
+  z-index: -1; /* Ensure it is behind the content */
+}
+
+.manager-section {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* InstagramPhotos.css */
+.instagram-photos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+}
+
+.instagram-photos .photo {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.instagram-photos .photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.instagram-photos .caption {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+  box-sizing: border-box;
 }

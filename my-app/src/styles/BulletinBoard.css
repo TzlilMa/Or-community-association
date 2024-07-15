@@ -1,9 +1,9 @@
 .bulletinboard-container {
-  width: 80%;
-  height: 80%; /* Set the height to match the ImageSlider */
+  width: 96%;
+  height: 90%; /* Set the height to match the ImageSlider */
   direction: rtl; /* Set the text direction to right-to-left */
   text-align: right; /* Align text to the right */
-  background: #f1f0f0;
+  background: #ffffff;
   overflow-y: auto; /* Ensure vertical scrolling */
   position: relative; /* Add relative positioning for the admin button */
   color: #000000; /* Change text color to black */
@@ -27,7 +27,7 @@
 }
 
 .ads li {
-  background-color: #f1f0f0;
+  background-color: #ffffff;
   margin: 1% 0;
   padding: 2%;
   border-radius: 5px;

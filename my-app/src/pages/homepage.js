@@ -9,8 +9,8 @@ import {
   getDocs,
 } from "../fireBase/firebase";
 import BulletinBoard from "../components/NotificationComponent/BulletinBoard";
-import Management from "../components/Management/Management";
 import InstagramPhotos from "../components/InstagramPhotos";
+import Management from "../components/Management/Management";
 import { useAuth } from "../fireBase/AuthContext";
 import "../styles/Homepage.css";
 import "../styles/BulletinBoard.css";
@@ -77,22 +77,21 @@ const Homepage = () => {
         <div className="title-container">
           <h1>"לעיתים צריכים רק אור קטן בשביל לעשות שינוי גדול"</h1>
         </div>
-        <div className="homepage-main-content">
-          <div
-            ref={(el) => (sectionRefs.current[0] = el)}
-            className="homepage-section homepage-gradient-background-1"
-          >
-            <div className="homepage-content-container">
-              <div className="homepage-component-container same-size">
-                <BulletinBoard showEditButtons={showEditButtons} />
-              </div>
-              <div className="homepage-component-container same-size">
-                <Management isAdmin={showEditButtons} />
-              </div>
-              <div className="homepage-component-container same-size">
-                <InstagramPhotos />
-              </div>
-            </div>
+        <div className="blue-background"></div>
+        <div className="homepage-content-container">
+          <div className="homepage-card-BulletinBoard">
+            <BulletinBoard showEditButtons={showEditButtons} />
+          </div>
+          <div className="homepage-card-instegram">
+            <InstagramPhotos />
+          </div>
+        </div>
+        <div
+          ref={(el) => (sectionRefs.current[0] = el)}
+          className="homepage-section homepage-gradient-background-1 manager-section"
+        >
+          <div className="homepage-content-container">
+            <Management isAdmin={showEditButtons} />
           </div>
         </div>
       </div>
