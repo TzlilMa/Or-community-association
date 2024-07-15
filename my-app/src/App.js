@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import Header from "./components/Header";
 import Calendar from "./components/Calendar/Calendar";
 import PersonalArea from "./components/PersonalArea/PeronalArea";
@@ -51,7 +53,12 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // Or a loading spinner
+    return (
+      <div className="spinner-container">
+        <Spinner animation="border" role="status">
+        </Spinner>
+      </div>
+    ); // Or a loading spinner
   }
 
   return (
