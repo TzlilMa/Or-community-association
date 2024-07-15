@@ -57,7 +57,7 @@
 .homepage-content-container {
   display: flex;
   justify-content: space-between;
-  gap: 2%;
+  gap: 10%;
   
 }
 
@@ -65,12 +65,11 @@
 .homepage-card-BulletinBoard,
 .homepage-card-Management {
   flex: 1;
-  width: 30%; 
-  height: 500px;
-  background: #b46969;
-  border: 0.1% solid #ccc;
+  height: 450px;
+  background: #ffffff;
+  border: 0.1% solid #ffffff;
   border-radius: 15px;
-  box-shadow: 0 0.4% 0.8% rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -85,17 +84,17 @@
 }
 
 .homepage-card-BulletinBoard .content {
-  padding: 40px; /* Increase padding */
-  font-size: 1.5rem; /* Increase font size */
-  line-height: 1.6; /* Increase line height for readability */
+  padding: 40px; 
+  font-size: 1.5rem; 
+  line-height: 1.6; 
 }
 
 .blue-background {
   width: 100%;
-  height: 100px;
+  height: 140px;
   background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
   position: absolute;
-  top: 25%; /* Adjust to position correctly */
+  top: 20%; /* Adjust to position correctly */
   z-index: -1; /* Ensure it is behind the content */
 }
 

@@ -1,6 +1,6 @@
 .bulletinboard-container {
-  width: 96%;
-  height: 90%; /* Set the height to match the ImageSlider */
+  width: 100%;
+  height: 100%; /* Set the height to match the ImageSlider */
   direction: rtl; /* Set the text direction to right-to-left */
   text-align: right; /* Align text to the right */
   background: #ffffff;
@@ -8,6 +8,8 @@
   position: relative; /* Add relative positioning for the admin button */
   color: #000000; /* Change text color to black */
   font-size: 1.7rem;
+  border-radius: 15px;
+
 }
 
 .bulletinboard-list h2 {

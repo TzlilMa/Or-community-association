@@ -33,6 +33,7 @@ const Homepage = () => {
         if (userDoc.exists()) {
           const userData = userDoc.data();
           setShowEditButtons(userData.isAdmin);
+          console.log("isAdmin:", userData.isAdmin);
         } else {
           console.error(
             "User document does not exist for email:",

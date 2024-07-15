@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../../styles/Management.css";
 import {
   db,
   collection,
@@ -9,20 +8,24 @@ import {
   deleteDoc,
   doc,
 } from "../../fireBase/firebase";
-import TextCard from "./TextCard";
-import EditModal from "./EditModal";
+import { useAuth } from "../../fireBase/AuthContext";
+import "../../styles/Management.css";
 
 const Management = ({ isAdmin }) => {
   const [texts, setTexts] = useState([]);
   const [newText, setNewText] = useState("");
-  const [editText, setEditText] = useState(null);
+  const [editText, setEditText] = useState("");
   const [editTextId, setEditTextId] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [action, setAction] = useState("add");
 
   useEffect(() => {
     const fetchData = async () => {
       const textsCollection = collection(db, "managerWords");
       const snapshot = await getDocs(textsCollection);
       const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      data.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by date descending
       setTexts(data);
     };
 
@@ -30,39 +33,68 @@ const Management = ({ isAdmin }) => {
   }, []);
 
   const handleAddText = async () => {
-    if (newText.trim()) {
-      const textsCollection = collection(db, "managerWords");
-      await addDoc(textsCollection, { text: newText });
-      setNewText("");
-      const snapshot = await getDocs(textsCollection);
-      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setTexts(data);
+    if (!newText.trim()) {
+      alert("אנא מלא את תוכן הטקסט");
+      return;
     }
+
+    const textsCollection = collection(db, "managerWords");
+    await addDoc(textsCollection, { text: newText, date: new Date().toISOString() });
+    setNewText("");
+    const snapshot = await getDocs(textsCollection);
+    const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    data.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by date descending
+    setTexts(data);
+    setShowModal(false);
   };
 
-  const handleEditText = (id, text) => {
-    setEditText(text);
-    setEditTextId(id);
-  };
+  const handleEditText = async () => {
+    if (!editText.trim()) {
+      alert("אנא מלא את תוכן הטקסט");
+      return;
+    }
 
-  const handleSaveEdit = async (newText) => {
     const textDoc = doc(db, "managerWords", editTextId);
-    await updateDoc(textDoc, { text: newText });
+    await updateDoc(textDoc, { text: editText });
     const textsCollection = collection(db, "managerWords");
     const snapshot = await getDocs(textsCollection);
     const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    data.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by date descending
     setTexts(data);
-    setEditText(null);
+    setEditText("");
     setEditTextId(null);
+    setShowModal(false);
   };
 
-  const handleDeleteText = async (id) => {
-    const textDoc = doc(db, "managerWords", id);
+  const handleDeleteText = async () => {
+    const textDoc = doc(db, "managerWords", editTextId);
     await deleteDoc(textDoc);
     const textsCollection = collection(db, "managerWords");
     const snapshot = await getDocs(textsCollection);
     const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    data.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by date descending
     setTexts(data);
+    setEditTextId(null);
+    setShowModal(false);
+  };
+
+  const handleOpenModal = (action) => {
+    setAction(action);
+    setShowModal(true);
+    if (action === "add") {
+      setNewText("");
+    } else {
+      setEditText("");
+      setSelectedDate("");
+    }
+  };
+
+  const handleSelectDate = (e) => {
+    const date = e.target.value;
+    setSelectedDate(date);
+    const textItem = texts.find((text) => text.date === date);
+    setEditTextId(textItem.id);
+    setEditText(textItem.text);
   };
 
   return (
@@ -70,31 +102,101 @@ const Management = ({ isAdmin }) => {
       <h1>דבר מנהל</h1>
       <div className="text-cards-container">
         {texts.map((textItem) => (
-          <TextCard
-            key={textItem.id}
-            text={textItem.text}
-            onEdit={() => handleEditText(textItem.id, textItem.text)}
-            onDelete={() => handleDeleteText(textItem.id)}
-            className="text-card"
-          />
+          <div key={textItem.id}>
+            <p>עדכון מתאריך: {new Date(textItem.date).toLocaleDateString()}</p>
+            <p>{textItem.text}</p>
+          </div>
         ))}
       </div>
       {isAdmin && (
-        <div className="add-text">
-          <textarea
-            value={newText}
-            onChange={(e) => setNewText(e.target.value)}
-            placeholder="Add new text..."
-          ></textarea>
-          <button onClick={handleAddText}>Add Text</button>
-        </div>
+        <button className="management-manage-button" onClick={() => handleOpenModal("add")}>
+          ניהול
+        </button>
       )}
-      {editText && (
-        <EditModal
-          text={editText}
-          onSave={handleSaveEdit}
-          onClose={() => setEditText(null)}
-        />
+      {showModal && (
+        <div className="management-modal">
+          <div className="management-modal-content">
+            <h2>ניהול טקסט</h2>
+            <hr className="management-underline" />
+            <div className="management-options">
+              <label>
+                <input
+                  type="radio"
+                  value="add"
+                  checked={action === "add"}
+                  onChange={() => handleOpenModal("add")}
+                />
+                הוספת טקסט
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="edit"
+                  checked={action === "edit"}
+                  onChange={() => handleOpenModal("edit")}
+                />
+                עריכת טקסט
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="delete"
+                  checked={action === "delete"}
+                  onChange={() => handleOpenModal("delete")}
+                />
+                מחיקת טקסט
+              </label>
+            </div>
+            {action === "add" && (
+              <div className="management-textbox">
+                <textarea
+                  value={newText}
+                  onChange={(e) => setNewText(e.target.value)}
+                  placeholder="הוסף טקסט חדש..."
+                  className="management-input"
+                ></textarea>
+                <button onClick={handleAddText} className="management-submit-button">
+                  שמור
+                </button>
+              </div>
+            )}
+            {(action === "edit" || action === "delete") && (
+              <div className="management-selection">
+                <label>בחר תאריך:</label>
+                <select value={selectedDate} onChange={handleSelectDate} className="management-input">
+                  <option value="" disabled>
+                    בחר תאריך
+                  </option>
+                  {texts.map((textItem) => (
+                    <option key={textItem.id} value={textItem.date}>
+                      {new Date(textItem.date).toLocaleDateString()}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+            {action === "edit" && selectedDate && (
+              <div className="management-textbox">
+                <textarea
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  className="management-input"
+                ></textarea>
+                <button onClick={handleEditText} className="management-submit-button">
+                  שמור
+                </button>
+              </div>
+            )}
+            {action === "delete" && selectedDate && (
+              <button onClick={handleDeleteText} className="management-submit-button">
+                מחק
+              </button>
+            )}
+            <button className="management-cancel-button" onClick={() => setShowModal(false)}>
+              סגור
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

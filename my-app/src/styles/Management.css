@@ -1,63 +1,140 @@
-/* src/styles/Management.css */
 .management-container {
-  width: 100%; /* Full width */
-  margin-top: 20px; /* Add margin at the top */
+  width: 100%;
+  margin-top: 2%;
   display: flex;
-  justify-content: center; /* Center horizontally */
+  justify-content: center;
   flex-direction: column;
   align-items: center;
 }
 
 .text-cards-container {
-  width: 80%; /* Set the width to 80% of the container */
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f0f0f0; /* Light gray background */
-  padding: 20px; /* Add padding to ensure text isn't too close to the edges */
-  border-radius: 8px; /* Optional: add rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for better visibility */
-  margin-bottom: 20px; /* Add margin at the bottom */
-}
-
-.text-card {
-  white-space: pre-wrap; /* Respect spaces and line breaks */
-  background-color: #fff; /* White background */
-  padding: 10px; /* Padding for text content */
-  border-radius: 4px; /* Rounded corners for text content */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
-  width: 100%; /* Full width within the container */
-}
-
-.add-text {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f0f0f0;
+  padding: 2%;
   border-radius: 8px;
-  padding: 20px;
+  box-shadow: 0 4% 8% rgba(0, 0, 0, 0.1);
+  margin-bottom: 2%;
 }
 
-.add-text textarea {
+.management-manage-button {
+  margin-top: 2%;
+  padding: 1% 2%;
+  background-color: #05a3ba;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.management-manage-button:hover {
+  background-color: #004085;
+}
+
+.management-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding: 10px;
-  border: 1px solid #d3d2d2;
-  border-radius: 4px;
-  resize: vertical;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.add-text button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #28a745;
+.management-modal-content {
+  background: white;
+  padding: 2%;
+  border-radius: 8px;
+  width: 45%;
+  text-align: right;
+  font-family: "Rubik", sans-serif;
+  direction: rtl;
+  font-size: 1.5rem;
+}
+
+.management-underline {
+  border: 0;
+  height: 2px;
+  background-color: #254790;
+  margin-bottom: 2%;
+}
+
+.management-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 4%;
+}
+
+.management-options label {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.management-options input[type="radio"] {
+  margin-left: 10px;
+}
+
+.management-input,
+.management-selection {
+  width: 98%;
+  padding: 1%;
+  margin-bottom: 1.5%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: "Rubik", sans-serif;
+  font-size: 1.5rem;
+  direction: rtl;
+  text-align: right;
+  color: #000000;
+}
+
+.management-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.management-submit-button,
+.management-cancel-button {
+  padding: 0.75rem;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 1.2rem;
 }
 
-.add-text button:hover {
-  background-color: #218838;
+.management-submit-button {
+  background-color: #05a3ba;
+}
+
+.management-submit-button:hover {
+  background-color: #004085;
+}
+
+.management-cancel-button {
+  background-color: #254790;
+}
+
+.management-cancel-button:hover {
+  background-color: #05a3ba;
+}
+
+.error-message {
+  color: red;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.management-modal-content h2 {
+  text-align: right;
+  color: #05a3ba;
 }
