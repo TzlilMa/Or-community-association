@@ -15,6 +15,7 @@ const Header = ({ isAdmin }) => {
   const [firstName, setFirstName] = useState(null);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -43,6 +44,7 @@ const Header = ({ isAdmin }) => {
   }, [currentUser]);
 
   const handleComponentClick = (componentName) => {
+    setMenuOpen(false);
     if (componentName === 'Calendar') {
       navigate('/calendar');
     } else if (componentName === 'Inquiry') {
@@ -82,10 +84,15 @@ const Header = ({ isAdmin }) => {
         <div className="logo-container" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
           <img src={logo} alt="Logo" className="logo-image" />
         </div>
+        <div className="hamburger-icon" onClick={() => setMenuOpen(!menuOpen)}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
       {currentUser && (
         <>
-          <div className="center-section">
+          <div className={`center-section ${menuOpen ? 'open' : ''}`}>
             <button className="nav-btn" onClick={() => handleComponentClick('Inquiry')}>מערכת פניות</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Stories')}>סיפורים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Calendar')}>אירועים</button>
@@ -108,7 +115,7 @@ const Header = ({ isAdmin }) => {
               <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')} />
               <p>שלום {firstName}</p>
             </div>
-            <img src={logoutLogo} alt="exit" className="header-icon" onClick={handleSignOut} />
+            <img src={logoutLogo} alt="exit" className="header-icon logout-icon" onClick={handleSignOut} />
           </div>
         </>
       )}
