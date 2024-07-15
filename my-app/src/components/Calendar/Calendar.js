@@ -5,6 +5,7 @@ import '../../styles/Calendar.css';
 import EventForm from './EventForm';
 import CalendarDay from './CalendarDay';
 import Notification from '../General/Notification';
+import BulletinBoardAdModal from '../General/BulletinBoardAdModal'; // Adjust the import path as needed
 import calendarImage1 from '../../assets/calendar1.png';
 
 const Calendar = () => {
@@ -21,7 +22,9 @@ const Calendar = () => {
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [notification, setNotification] = useState({ message: '', type: '' });
   const [loading, setLoading] = useState(false); // Add loading state
-  
+  const [showAdModal, setShowAdModal] = useState(false);
+  const [defaultAdText, setDefaultAdText] = useState('');
+
   const daysOfWeek = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const Calendar = () => {
     const fetchUserData = async () => {
       try {
         const userQuerySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', currentUser.email)));
-        if (!userQuerySnapshot.empty) {          
+        if (!userQuerySnapshot.empty) {
           const userData = userQuerySnapshot.docs[0].data();
           setIsAdmin(userData.isAdmin || false);
           setFirstName(userData.firstName || '');
@@ -78,6 +81,10 @@ const Calendar = () => {
       setSelectedDate(null);
       setShowEventForm(false);
       setNotification({ message: 'Event added successfully!', type: 'success' });
+
+      // Show the ad modal with a default ad text
+      setDefaultAdText(`אירוע חדש בתאריך ${eventDateTime.toLocaleDateString()} נוסף! בקרו באירועים לפרטים נוספים.`);
+      setShowAdModal(true);
     } catch (error) {
       console.error('Error adding event:', error);
       setNotification({ message: 'An error occurred while adding the event. Please try again later.', type: 'error' });
@@ -326,6 +333,11 @@ const Calendar = () => {
           onClose={() => setNotification({ message: '', type: '' })}
         />
       )}
+      <BulletinBoardAdModal
+        show={showAdModal}
+        handleClose={() => setShowAdModal(false)}
+        defaultAdText={defaultAdText}
+      />
     </div>
   );
 };
