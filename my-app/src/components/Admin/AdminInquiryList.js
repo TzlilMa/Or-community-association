@@ -184,7 +184,7 @@ const AdminInquiryList = () => {
                               <label>כתיבת תגובה:</label>
                               <ReactQuill
                                 value={response}
-                                onChange={(e) => setResponse(e.target.value)}
+                                onChange={setResponse}
                                 required
                               />
                             </div>

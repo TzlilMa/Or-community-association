@@ -8,12 +8,11 @@ body {
 
 .documents-page {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse; /* Reverse the order of items */
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
   padding: 2rem 2rem; /* Adjust the top padding to move the content higher */
-  flex-direction: row-reverse; /* Reverse the order of items */
 }
 
 .documents-image {
@@ -172,4 +171,70 @@ body {
 
 .document-modal .cancel-button:hover {
   background-color: #05a3ba;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+/* Media Queries for Mobile Support */
+@media (max-width: 768px) {
+  .documents-page {
+    flex-direction: column-reverse; /* Stack items vertically */
+    padding: 1rem 1rem;
+  }
+
+  .documents-image {
+    width: 80%;
+    margin-top: 2rem;
+  }
+
+  .documents-container {
+    width: 100%;
+    padding: 1rem;
+    margin-right: 0;
+    box-shadow: none;
+  }
+
+  .documents-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .documents-container h2 {
+    font-size: 1.2rem;
+  }
+
+  .documents-container li a {
+    font-size: 1.1rem;
+  }
+
+  .add-document-button,
+  .remove-document-button {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .disclaimer {
+    font-size: 1rem;
+  }
+
+  .document-modal {
+    width: 90%;
+    top: 20%;
+    transform: translate(-50%, -20%);
+  }
+
+  .document-modal input[type="text"],
+  .document-modal input[type="url"],
+  .document-modal select {
+    width: 95%;
+  }
+
+  .document-modal .confirm-button,
+  .document-modal .cancel-button {
+    font-size: 1rem;
+  }
 }

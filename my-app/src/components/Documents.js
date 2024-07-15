@@ -3,6 +3,8 @@ import { auth, db, collection, getDocs, addDoc, deleteDoc, query, where } from '
 import '../styles/Documents.css';
 import Notification from './General/Notification';
 import documentImage from '../assets/document_pic.png';
+import { Spinner } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
 const Documents = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -16,6 +18,7 @@ const Documents = () => {
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [linkToRemove, setLinkToRemove] = useState({ subject: '', link: '' });
   const [notification, setNotification] = useState({ message: '', type: '' });
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     const fetchUserAndLinks = async () => {
@@ -53,6 +56,7 @@ const Documents = () => {
         linksData[subject].push({ text: name, url: link });
       });
       setData(linksData);
+      setLoading(false); // Set loading to false when data is fetched
     } catch (error) {
       console.error("Error fetching links: ", error);
     }
@@ -137,16 +141,23 @@ const Documents = () => {
       <img src={documentImage} alt="Document" className="documents-image" />
       <div className="documents-container">
         <h1>טפסים ומידע</h1>
-        {Object.entries(data).map(([subject, links]) => (
-          <section key={subject}>
-            <h2>{subject}</h2>
-            <ul>
-              {links.map((link, index) => (
-                <li key={index}><a href={link.url} target="_blank" rel="noopener noreferrer">{link.text}</a></li>
-              ))}
-            </ul>
-          </section>
-        ))}
+        {loading ? (
+          <div className="spinner-container">
+            <Spinner animation="border" role="status">
+            </Spinner>
+          </div>
+        ) : (
+          Object.entries(data).map(([subject, links]) => (
+            <section key={subject}>
+              <h2>{subject}</h2>
+              <ul>
+                {links.map((link, index) => (
+                  <li key={index}><a href={link.url} target="_blank" rel="noopener noreferrer">{link.text}</a></li>
+                ))}
+              </ul>
+            </section>
+          ))
+        )}
         {isAdmin && (
           <div>
             <button className="add-document-button" onClick={() => setShowModal(true)}>הוספת קישור</button>

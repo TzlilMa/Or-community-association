@@ -5,6 +5,8 @@ import { useAuth } from "../../fireBase/AuthContext";
 import "../../styles/InquiryForm.css";
 import Notification from '../General/Notification';
 import brainAndFamily from '../../assets/brain_and_family.jpg'; // Import the image
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const InquiryForm = () => {
   const { currentUser } = useAuth();
@@ -14,6 +16,7 @@ const InquiryForm = () => {
   const [myInquiries, setMyInquiries] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [notification, setNotification] = useState({ message: '', type: '' });
+  const [showResponse, setShowResponse] = useState({}); // State to manage the visibility of responses
 
   const fetchMyInquiries = useCallback(async () => {
     try {
@@ -68,6 +71,13 @@ const InquiryForm = () => {
     setView("newInquiry");
   };
 
+  const handleToggleResponse = (id) => {
+    setShowResponse((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
     return new Date(dateString).toLocaleDateString('he-IL', options);
@@ -88,10 +98,27 @@ const InquiryForm = () => {
                 <p><strong>תאריך הגשה:</strong> {formatDate(inquiry.submitDate)}</p> {/* Format date without seconds */}
                 <p><strong>נושא:</strong> {inquiry.subject}</p>
                 <p><strong>תוכן הפנייה:</strong> {inquiry.content}</p>
-                <p>
+                <div>
                   {inquiry.responseDate && <p><strong>תאריך תגובה:</strong> {formatDate(inquiry.responseDate)}</p>} {/* Format date without seconds */}
-                  <strong>{inquiry.response ? "תגובה:" : "אין תגובה כרגע במערכת"}</strong> {inquiry.response}
-                </p>
+                  {inquiry.response ? (
+                    <div>
+                      <button className="show-response-button" onClick={() => handleToggleResponse(inquiry.id)}>
+                        {showResponse[inquiry.id] ? "הסתר תגובה" : "הצג תגובה"}
+                      </button>
+                      {showResponse[inquiry.id] && (
+                        <div className="quill-response">
+                          <ReactQuill
+                            value={inquiry.response}
+                            readOnly={true}
+                            theme="bubble"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <strong>אין תגובה כרגע במערכת</strong>
+                  )}
+                </div>
               </div>
             ))
           ) : (
