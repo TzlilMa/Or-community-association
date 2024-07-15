@@ -1,44 +1,15 @@
-// src/PrivateRoute.js
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { auth, db } from './fireBase/firebase';
-import { query, collection, where, getDocs } from 'firebase/firestore';
+import { useUser } from './UserContext';
 
-const PrivateRoute = ({ children, adminOnly = false, passwordProtected = false }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);
+const PrivateRoute = ({ children, adminOnly = false }) => {
+  const { user } = useUser();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        setCurrentUser(user);
-        const userQuerySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', user.email)));
-        if (!userQuerySnapshot.empty) {
-          const userData = userQuerySnapshot.docs[0].data();
-          setIsAdmin(userData.isAdmin || false);
-        } else {
-          setIsAdmin(false);
-        }
-      } else {
-        setCurrentUser(null);
-        setIsAdmin(false);
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>; // or some kind of loading spinner
-  }
-
-  if (!currentUser) {
+  if (!user) {
     return <Navigate to="/login" />;
   }
 
-  if (adminOnly && !isAdmin) {
+  if (adminOnly && !user.isAdmin) {
     return <Navigate to="/" />;
   }
 

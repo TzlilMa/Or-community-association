@@ -31,14 +31,17 @@ const App = () => {
       if (user) {
         const userDoc = await getDoc(doc(db, "users", user.email));
         if (userDoc.exists() && !userDoc.data().disabled) {
+          console.log('User authenticated', userDoc.data());
           setIsAuthenticated(true);
           setIsAdmin(userDoc.data().isAdmin);
         } else {
+          console.log('User not authenticated or disabled');
           setIsAuthenticated(false);
           setIsAdmin(false);
           await auth.signOut(); // Ensure the user is signed out if they are disabled
         }
       } else {
+        console.log('No user signed in');
         setIsAuthenticated(false);
         setIsAdmin(false);
       }
@@ -53,72 +56,72 @@ const App = () => {
 
   return (
     <UserProvider>
-    <div className="App">
-      <Header isAdmin={isAdmin} />
-      <main>
-        <Routes>
-          {isAuthenticated ? (
-            <>
-              <Route path="/" element={<Homepage />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/profile" element={<PersonalArea />} />
-              <Route path="/chat" element={<Chat />} />
-              <Route path="/documents" element={<Documents />} />
-              <Route path="/stories" element={<CardGrid />} />
-              {isAdmin ? (
-                <>
-                  <Route
-                    path="/admin-inquiries"
-                    element={
-                      <PrivateRoute adminOnly={true}>
-                        <AdminInquiryList />
-                      </PrivateRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports"
-                    element={
-                      <PrivateRoute adminOnly={true}>
-                        <Reports />
-                      </PrivateRoute>
-                    }
-                  />
-                  <Route
-                    path="/accountspanel"
-                    element={
-                      <PrivateRoute adminOnly={true} passwordProtected={true}>
-                        <UserManagement />
-                      </PrivateRoute>
-                    }
-                  />
-                  <Route
-                    path="/chat-log/:email"
-                    element={
-                      <PrivateRoute adminOnly={true}>
-                        <ChatLogPage />
-                      </PrivateRoute>
-                    }
-                  />
-                  <Route path="*" element={<Navigate to="/accountspanel" />} />
-                </>
-              ) : (
-                <>
-                  <Route path="/inquiry" element={<InquiryForm />} />
-                  <Route path="*" element={<Navigate to="/" />} />
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/registrationForm" element={<RegistrationForm />} />
-              <Route path="/resetPassword" element={<ResetPassword />} />
-              <Route path="*" element={<Navigate to="/login" />} />
-            </>
-          )}
-        </Routes>
-      </main>
-    </div>
+      <div className="App">
+        <Header isAdmin={isAdmin} />
+        <main>
+          <Routes>
+            {isAuthenticated ? (
+              <>
+                <Route path="/" element={<Homepage />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/profile" element={<PersonalArea />} />
+                <Route path="/chat" element={<Chat />} />
+                <Route path="/documents" element={<Documents />} />
+                <Route path="/stories" element={<CardGrid />} />
+                {isAdmin ? (
+                  <>
+                    <Route
+                      path="/admin-inquiries"
+                      element={
+                        <PrivateRoute adminOnly={true}>
+                          <AdminInquiryList />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports"
+                      element={
+                        <PrivateRoute adminOnly={true}>
+                          <Reports />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/accountspanel"
+                      element={
+                        <PrivateRoute adminOnly={true} passwordProtected={true}>
+                          <UserManagement />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/chat-log/:email"
+                      element={
+                        <PrivateRoute adminOnly={true}>
+                          <ChatLogPage />
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route path="*" element={<Navigate to="/accountspanel" />} />
+                  </>
+                ) : (
+                  <>
+                    <Route path="/inquiry" element={<InquiryForm />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/registrationForm" element={<RegistrationForm />} />
+                <Route path="/resetPassword" element={<ResetPassword />} />
+                <Route path="*" element={<Navigate to="/login" />} />
+              </>
+            )}
+          </Routes>
+        </main>
+      </div>
     </UserProvider>
   );
 };

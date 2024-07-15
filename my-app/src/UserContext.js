@@ -7,12 +7,11 @@ const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({ firstName: '' });
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const currentUser = auth.currentUser;
+    const fetchUserData = async (currentUser) => {
       if (currentUser) {
         const userDoc = await getDoc(doc(db, 'users', currentUser.email));
         if (userDoc.exists()) {
@@ -24,9 +23,9 @@ export const UserProvider = ({ children }) => {
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        fetchUserData();
+        fetchUserData(user);
       } else {
-        setUser({ firstName: '' });
+        setUser(null);
         setLoading(false);
       }
     });
