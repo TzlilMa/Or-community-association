@@ -58,7 +58,6 @@
   display: flex;
   justify-content: space-between;
   gap: 6%;
-  
 }
 
 .homepage-card-instegram,
@@ -86,9 +85,9 @@
 }
 
 .homepage-card-BulletinBoard .content {
-  padding: 40px; 
-  font-size: 1.5rem; 
-  line-height: 1.6; 
+  padding: 40px;
+  font-size: 1.5rem;
+  line-height: 1.6;
 }
 
 .blue-background {
@@ -96,8 +95,8 @@
   height: 140px;
   background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
   position: absolute;
-  top: 20%; /* Adjust to position correctly */
-  z-index: -1; /* Ensure it is behind the content */
+  top: 20%;
+  z-index: -1;
 }
 
 .manager-section {
@@ -135,4 +134,48 @@
   text-align: center;
   padding: 5px;
   box-sizing: border-box;
+}
+
+/* Media Queries for Mobile Support */
+@media (max-width: 768px) {
+  .title-container h1 {
+    font-size: 2rem;
+  }
+
+  .title-container p {
+    font-size: 1rem;
+  }
+
+  .homepage-content-container {
+    flex-direction: column;
+    gap: 2%;
+  }
+
+  .homepage-card-instegram,
+  .homepage-card-BulletinBoard,
+  .homepage-card-Management {
+    margin: 1rem 0;
+    height: auto;
+    width: 100%;
+  }
+
+  .homepage-card-BulletinBoard .content {
+    padding: 20px;
+    font-size: 1.2rem;
+  }
+
+  .blue-background {
+    top: 25%;
+    height: 100px;
+  }
+
+  .instagram-photos {
+    height: auto;
+    flex-direction: column;
+  }
+
+  .instagram-photos .photo {
+    height: auto;
+    margin-bottom: 1rem;
+  }
 }
