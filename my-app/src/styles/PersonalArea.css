@@ -85,22 +85,38 @@
   height: 200px; /* Adjust the height as needed */
 }
 
-.ql-container {
+/* Ensure the entire Quill container has a white background */
+.quill-container .ql-container {
+  background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
+  padding: 0;
+  margin: 0;
 }
 
-.ql-toolbar {
+/* Ensure the toolbar also has a white background */
+.quill-container .ql-toolbar {
+  background-color: #fff;
   border-radius: 4px 4px 0 0;
+  border: 1px solid #ccc;
+  border-bottom: none; /* Remove bottom border to connect with the editor */
+  padding: 0;
+  margin: 0;
 }
 
-.ql-editor {
-  max-height: 250px; /* Adjust the min height if necessary */
+/* Ensure the editor itself has a white background and no extra margin/padding */
+.quill-container .ql-editor {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0 0 4px 4px;
+  max-height: 250px;
   min-height: 100px;
   direction: rtl;
   text-align: right;
-  background-color: #fff; /* Set the editor background to white */
+  padding: 0.5rem; /* Adjust padding as needed */
+  margin: 0;
 }
+
 
 .checkbox-label {
   display: flex;

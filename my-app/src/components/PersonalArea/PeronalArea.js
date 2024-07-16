@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { db, doc, getDoc, setDoc, auth } from "../../fireBase/firebase";
 import {
   reauthenticateWithCredential,
@@ -39,6 +39,12 @@ const PersonalArea = () => {
   const MAX_CHARS = 5000;
 
   const changePasswordRef = useRef(null); // Ref for the "Change Password" section
+
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'link']
+    ],
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -316,7 +322,7 @@ const PersonalArea = () => {
           </div>
         </form>
       </div>
-      <div className="personal-story-section">
+      <div className="personal-story-section quill-container">
         <h2>הסיפור שלי</h2>
         <p>
           קהילת אור מאפשרת לחברי הקהילה לשתף את הסיפור האישי שלהם. כאן זה המקום
@@ -325,6 +331,7 @@ const PersonalArea = () => {
         <ReactQuill
           value={userStory.personalStory}
           onChange={handleStoryChange}
+          modules={modules}
         />
         <div className="story-footer">
           <p>
