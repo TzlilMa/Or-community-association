@@ -3,6 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../fireBase/firebase'; // Adjust the import path as needed
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../styles/BulletinBoardAdModal.css'; // Importing the new CSS
 
 const BulletinBoardAdModal = ({ show, handleClose, defaultAdText }) => {
   const [adText, setAdText] = useState('');
@@ -31,26 +32,27 @@ const BulletinBoardAdModal = ({ show, handleClose, defaultAdText }) => {
 
   return (
     <Modal show={show} onHide={handleClose} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>הוסף מודעה ללוח מודעות</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
+      <div className="BulletinBoardAdModal-modal-content">
+        <h2>הוסף מודעה ללוח מודעות</h2>
+        <hr className="BulletinBoardAdModal-underline" />
         <Form>
           <Form.Group controlId="formAdText">
-            <Form.Label>מודעה:</Form.Label>
+            <Form.Label className="BulletinBoardAdModal-label">מודעה:</Form.Label>
             <Form.Control
               as="textarea"
               rows={3}
               value={adText}
               onChange={(e) => setAdText(e.target.value)}
+              className="BulletinBoardAdModal-textarea"
             />
           </Form.Group>
           <Form.Group controlId="formDaysToPresent">
-            <Form.Label>מספר ימים להצגה:</Form.Label>
+            <Form.Label className="BulletinBoardAdModal-label">מספר ימים להצגה:</Form.Label>
             <Form.Control
               as="select"
               value={daysToPresent}
               onChange={(e) => setDaysToPresent(Number(e.target.value))}
+              className="BulletinBoardAdModal-input"
             >
               {[...Array(7).keys()].map((day) => (
                 <option key={day + 1} value={day + 1}>
@@ -60,15 +62,15 @@ const BulletinBoardAdModal = ({ show, handleClose, defaultAdText }) => {
             </Form.Control>
           </Form.Group>
         </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          ביטול
-        </Button>
-        <Button variant="primary" onClick={handleSubmit}>
-          אישור
-        </Button>
-      </Modal.Footer>
+        <div className="BulletinBoardAdModal-buttons">
+          <Button variant="secondary" onClick={handleClose} className="BulletinBoardAdModal-cancel-button">
+            ביטול
+          </Button>
+          <Button variant="primary" onClick={handleSubmit} className="BulletinBoardAdModal-submit-button">
+            אישור
+          </Button>
+        </div>
+      </div>
     </Modal>
   );
 };
