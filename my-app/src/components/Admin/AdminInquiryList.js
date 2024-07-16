@@ -21,14 +21,22 @@ const AdminInquiryList = () => {
   const [editSubject, setEditSubject] = useState(null);
   const [notification, setNotification] = useState({ message: '', type: '' });
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     const fetchSubjects = async () => {
+      setLoading(true); // Start loading
       if (currentUser) {
-        const q = query(collection(db, "inquirySubject"));
-        const querySnapshot = await getDocs(q);
-        const subjectsList = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        setSubjects(subjectsList);
+        try {
+          const q = query(collection(db, "inquirySubject"));
+          const querySnapshot = await getDocs(q);
+          const subjectsList = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+          setSubjects(subjectsList);
+        } catch (error) {
+          console.error("Error fetching subjects: ", error);
+        } finally {
+          setLoading(false); // Stop loading
+        }
       }
     };
 
@@ -36,28 +44,35 @@ const AdminInquiryList = () => {
   }, [currentUser]);
 
   const fetchInquiries = async (subject) => {
+    setLoading(true); // Start loading
     if (currentUser) {
-      const q = query(collection(db, "inquiry"), where("subject", "==", subject.name));
-      const querySnapshot = await getDocs(q);
-      const inquiriesData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      try {
+        const q = query(collection(db, "inquiry"), where("subject", "==", subject.name));
+        const querySnapshot = await getDocs(q);
+        const inquiriesData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-      // Fetch user details for each inquiry
-      const inquiriesWithUserDetails = await Promise.all(
-        inquiriesData.map(async (inquiry) => {
-          const userQuery = query(collection(db, "users"), where("email", "==", inquiry.email));
-          const userQuerySnapshot = await getDocs(userQuery);
-          const userData = userQuerySnapshot.docs[0]?.data();
-          return {
-            ...inquiry,
-            firstName: userData?.firstName || "Unknown",
-            lastName: userData?.lastName || "Unknown",
-          };
-        })
-      );
+        // Fetch user details for each inquiry
+        const inquiriesWithUserDetails = await Promise.all(
+          inquiriesData.map(async (inquiry) => {
+            const userQuery = query(collection(db, "users"), where("email", "==", inquiry.email));
+            const userQuerySnapshot = await getDocs(userQuery);
+            const userData = userQuerySnapshot.docs[0]?.data();
+            return {
+              ...inquiry,
+              firstName: userData?.firstName || "Unknown",
+              lastName: userData?.lastName || "Unknown",
+            };
+          })
+        );
 
-      inquiriesWithUserDetails.sort((a, b) => (a.response ? 1 : -1)); // Sort with no response first
-      setInquiries(inquiriesWithUserDetails);
-      setSelectedSubject(subject);
+        inquiriesWithUserDetails.sort((a, b) => (a.response ? 1 : -1)); // Sort with no response first
+        setInquiries(inquiriesWithUserDetails);
+        setSelectedSubject(subject);
+      } catch (error) {
+        console.error("Error fetching inquiries: ", error);
+      } finally {
+        setLoading(false); // Stop loading
+      }
     }
   };
 
@@ -71,6 +86,7 @@ const AdminInquiryList = () => {
 
   const handleResponseSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
     try {
       const inquiryRef = doc(db, "inquiry", selectedInquiry.id);
       await updateDoc(inquiryRef, {
@@ -84,6 +100,8 @@ const AdminInquiryList = () => {
     } catch (error) {
       console.error("Error submitting response: ", error);
       setNotification({ message: 'תגובתך לא התקבלה במערכת', type: 'error' });
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -98,6 +116,7 @@ const AdminInquiryList = () => {
       return;
     }
 
+    setLoading(true); // Start loading
     try {
       if (subjectAction === "add") {
         await addDoc(collection(db, "inquirySubject"), { name: newSubject });
@@ -119,8 +138,18 @@ const AdminInquiryList = () => {
     } catch (error) {
       console.error("Error managing subject: ", error);
       setNotification({ message: 'שגיאה בניהול הנושא. נסה שוב.', type: 'error' });
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
+
+  if (loading) {
+    return (
+      <div className="spinner-container">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-inquiry-system">

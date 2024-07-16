@@ -13,6 +13,7 @@ const Reports = () => {
   const [inquiryWithResponseData, setInquiryWithResponseData] = useState(null);
   const [averageResponseTimeData, setAverageResponseTimeData] = useState(null);
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -127,6 +128,8 @@ const Reports = () => {
         setEvents(eventList);
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
@@ -203,49 +206,55 @@ const Reports = () => {
 
   return (
     <div className="reports-container">
-      <div className="charts-container">
-        <div className="chart">
-          {inquiryWithoutResponseData ? <Bar data={inquiryWithoutResponseData} options={optionsWithoutResponse} /> : <p>Loading inquiry data...</p>}
-        </div>
-        <div className="chart">
-          {ageData ? <Bar data={ageData} options={optionsAge} /> : <p>Loading age data...</p>}
-        </div>
-        <div className="chart">
-          {inquiryWithResponseData ? <Bar data={inquiryWithResponseData} options={optionsWithResponse} /> : <p>Loading inquiry data...</p>}
-        </div>
-        <div className="chart">
-          {averageResponseTimeData ? <Bar data={averageResponseTimeData} options={optionsAverageResponseTime} /> : <p>Loading average response time data...</p>}
-        </div>
-        <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>שם אירוע</th>
-                <th>תאריך אירוע</th>
-                <th>מספר משתתפים</th>
-              </tr>
-            </thead>
-            <tbody>
-              {events.length > 0 ? (
-                events.map((event, index) => (
-                  <tr key={index}>
-                    <td>{event.name}</td>
-                    <td>{event.date}</td>
-                    <td>{event.registrations}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="3">לא נמצאו אירועים</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="button-container">
+                <div className="button-container">
         <button className="fetch-users-button" onClick={handleFetchUsersClick}>ניהול משתמשים</button>
       </div>
+      {loading ? (
+        <div className="spinner-container">
+          <div className="spinner"></div>
+        </div>
+      ) : (
+        <div className="charts-container">
+          <div className="chart">
+            {inquiryWithoutResponseData ? <Bar data={inquiryWithoutResponseData} options={optionsWithoutResponse} /> : <p>Loading inquiry data...</p>}
+          </div>
+          <div className="chart">
+            {ageData ? <Bar data={ageData} options={optionsAge} /> : <p>Loading age data...</p>}
+          </div>
+          <div className="chart">
+            {inquiryWithResponseData ? <Bar data={inquiryWithResponseData} options={optionsWithResponse} /> : <p>Loading inquiry data...</p>}
+          </div>
+          <div className="chart">
+            {averageResponseTimeData ? <Bar data={averageResponseTimeData} options={optionsAverageResponseTime} /> : <p>Loading average response time data...</p>}
+          </div>
+          <div className="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>שם אירוע</th>
+                  <th>תאריך אירוע</th>
+                  <th>מספר משתתפים</th>
+                </tr>
+              </thead>
+              <tbody>
+                {events.length > 0 ? (
+                  events.map((event, index) => (
+                    <tr key={index}>
+                      <td>{event.name}</td>
+                      <td>{event.date}</td>
+                      <td>{event.registrations}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="3">לא נמצאו אירועים</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

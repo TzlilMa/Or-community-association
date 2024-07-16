@@ -17,8 +17,10 @@ const InquiryForm = () => {
   const [subjects, setSubjects] = useState([]);
   const [notification, setNotification] = useState({ message: '', type: '' });
   const [showResponse, setShowResponse] = useState({}); // State to manage the visibility of responses
+  const [loading, setLoading] = useState(true); // Loading state
 
   const fetchMyInquiries = useCallback(async () => {
+    setLoading(true); // Start loading
     try {
       const q = query(collection(db, "inquiry"), where("email", "==", currentUser.email));
       const querySnapshot = await getDocs(q);
@@ -26,6 +28,8 @@ const InquiryForm = () => {
     } catch (error) {
       console.error("Error fetching inquiries: ", error);
       setMyInquiries([]);
+    } finally {
+      setLoading(false); // Stop loading
     }
   }, [currentUser]);
 
@@ -37,17 +41,21 @@ const InquiryForm = () => {
   }, [currentUser, fetchMyInquiries]);
 
   const fetchSubjects = async () => {
+    setLoading(true); // Start loading
     try {
       const q = query(collection(db, "inquirySubject"));
       const querySnapshot = await getDocs(q);
       setSubjects(querySnapshot.docs.map((doc) => doc.data().name));
     } catch (error) {
       console.error("Error fetching subjects: ", error);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
     try {
       await addDoc(collection(db, "inquiry"), {
         email: currentUser.email,
@@ -64,6 +72,8 @@ const InquiryForm = () => {
     } catch (error) {
       console.error("Error submitting inquiry: ", error);
       setNotification({ message: 'הגשת הפנייה נכשלה, אנא נסה שוב', type: 'error' });
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -83,8 +93,12 @@ const InquiryForm = () => {
     return new Date(dateString).toLocaleDateString('he-IL', options);
   };
 
-  if (!currentUser) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="spinner-container">
+        <div className="spinner"></div>
+      </div>
+    );
   }
 
   return (

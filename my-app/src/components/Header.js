@@ -54,19 +54,12 @@ const Header = ({ isAdmin }) => {
 
   return (
     <header>
-      <div className="right-section">
-        <div className="logo-container" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
-          <img src={logo} alt="Logo" className="logo-image" />
-        </div>
-        <div className="hamburger-icon" onClick={() => setMenuOpen(!menuOpen)}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+      <div className="logo-container" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
+        <img src={logo} alt="Logo" className="logo-image" />
       </div>
-      {currentUser && (
-        <>
-          <div className={`center-section ${menuOpen ? 'open' : ''}`}>
+      <div className={`center-section ${menuOpen ? 'open' : ''}`}>
+        {currentUser && (
+          <>
             <button className="nav-btn" onClick={() => handleComponentClick('Inquiry')}>מערכת פניות</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Stories')}>סיפורים</button>
             <button className="nav-btn" onClick={() => handleComponentClick('Calendar')}>אירועים</button>
@@ -74,25 +67,30 @@ const Header = ({ isAdmin }) => {
             {isAdmin && (
               <button className="nav-btn" onClick={() => handleComponentClick('Reports')}>דוחות וניהול</button>
             )}
-          </div>
-          <div className="left-section">
-            <div className="social-icons">
-              <a href="https://www.facebook.com/share/46HcXMT56FM73K8j/?mibextid=K35XfP" target="_blank" rel="noopener noreferrer">
-                <img src={FacebookLogo} alt="Facebook" className="header-icon" />
-              </a>
-              <a href="https://www.instagram.com/kheilator?igsh=N2U5bThhYXJ5aHhs" target="_blank" rel="noopener noreferrer">
-                <img src={InstagramLogo} alt="Instagram" className="header-icon" />
-              </a>
-              <img src={chatIcon} alt="Chat" className="header-icon" onClick={() => handleComponentClick('Chat')}/> 
-            </div>
-            <div className="greeting">
-              <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')} />
-              <p>שלום {user.firstName}</p>
-            </div>
-            <img src={logoutLogo} alt="exit" className="header-icon logout-icon" onClick={handleSignOut} />
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
+      <div className="right-section">
+        <div className="social-icons">
+          <a href="https://www.facebook.com/share/46HcXMT56FM73K8j/?mibextid=K35XfP" target="_blank" rel="noopener noreferrer">
+            <img src={FacebookLogo} alt="Facebook" className="header-icon" />
+          </a>
+          <a href="https://www.instagram.com/kheilator?igsh=N2U5bThhYXJ5aHhs" target="_blank" rel="noopener noreferrer">
+            <img src={InstagramLogo} alt="Instagram" className="header-icon" />
+          </a>
+          <img src={chatIcon} alt="Chat" className="header-icon" onClick={() => handleComponentClick('Chat')}/>
+        </div>
+        <div className="greeting">
+          <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')} />
+          <p>שלום {user.firstName}</p>
+        </div>
+        <img src={logoutLogo} alt="exit" className="header-icon logout-icon" onClick={handleSignOut} />
+        <div className="hamburger-icon" onClick={() => setMenuOpen(!menuOpen)}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
     </header>
   );
 };
