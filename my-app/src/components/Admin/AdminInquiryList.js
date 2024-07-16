@@ -93,11 +93,18 @@ const AdminInquiryList = () => {
 
   const handleResponseSubmit = async (e) => {
     e.preventDefault();
+    const trimmedResponse = response.trim(); // Trim the response
+
+    if (!trimmedResponse) {
+      setNotification({ message: 'לא ניתן לשלוח תגובה ריקה', type: 'error' });
+      return;
+    }
+
     setLoading(true); // Start loading
     try {
       const inquiryRef = doc(db, "inquiry", selectedInquiry.id);
       await updateDoc(inquiryRef, {
-        response: response,
+        response: trimmedResponse,
         responseDate: new Date().toISOString(), // Add response date
       });
       setNotification({ message: 'תגובה נשלחה בהצלחה', type: 'success' });
