@@ -51,7 +51,7 @@ const AdminInquiryList = () => {
   }, [currentUser]);
 
   const fetchInquiries = async (subject) => {
-    setLoading(true); // Start loading
+    
     if (currentUser) {
       try {
         const q = query(collection(db, "inquiry"), where("subject", "==", subject.name));
@@ -77,8 +77,6 @@ const AdminInquiryList = () => {
         setSelectedSubject(subject);
       } catch (error) {
         console.error("Error fetching inquiries: ", error);
-      } finally {
-        setLoading(false); // Stop loading
       }
     }
   };
