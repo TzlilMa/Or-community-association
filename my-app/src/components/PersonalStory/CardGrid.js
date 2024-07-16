@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { collection, getDocs, query, where } from "firebase/firestore"; // Import Firestore functions
-import "../../styles/CardGrid.css";
-import { db } from "../../fireBase/firebase"; // Import your Firebase config
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../fireBase/firebase";
 import StoryCard from "./StoryCard";
 import DOMPurify from "dompurify";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import "../../styles/CardGrid.css";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -13,6 +15,7 @@ const useQuery = () => {
 const CardGrid = () => {
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
   const [cards, setCards] = useState([]);
+  const [fontSize, setFontSize] = useState(16);
   const expandedCardRef = useRef(null);
   const queryParam = useQuery();
   const storyId = queryParam.get("id");
@@ -29,7 +32,6 @@ const CardGrid = () => {
       }));
       setCards(cardData);
 
-      // Expand the story if id is present in the query
       if (storyId) {
         const index = cardData.findIndex((card) => card.userId === storyId);
         if (index !== -1) {
@@ -50,6 +52,14 @@ const CardGrid = () => {
     }
   }, [expandedCardIndex]);
 
+  const increaseFontSize = () => {
+    setFontSize((prevSize) => Math.min(prevSize + 2, 24));
+  };
+
+  const decreaseFontSize = () => {
+    setFontSize((prevSize) => Math.max(prevSize - 2, 12));
+  };
+
   return (
     <div className="card-grid-container">
       <div className="card-grid">
@@ -59,19 +69,24 @@ const CardGrid = () => {
       </div>
       {expandedCardIndex !== null && (
         <div className="expanded-card-container">
+          <div className="expanded-backdrop" onClick={() => setExpandedCardIndex(null)}></div>
           <div className="expanded-card" ref={expandedCardRef}>
             <h2 className="expanded-card-title">הסיפור של {cards[expandedCardIndex].name}</h2>
+            <div className="font-size-controls">
+              <button onClick={decreaseFontSize}><FontAwesomeIcon icon={faMinus} /></button>
+              <button onClick={increaseFontSize}><FontAwesomeIcon icon={faPlus} /></button>
+            </div>
             <div className="expanded-card-full-view">
               <div
                 className="expanded-story-text"
+                style={{ fontSize: `${fontSize}px` }}
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(cards[expandedCardIndex].story),
                 }}
               />
-              <button onClick={() => setExpandedCardIndex(null)}>Close</button>
+              <button onClick={() => setExpandedCardIndex(null)}>סגירה</button>
             </div>
           </div>
-          <div className="expanded-backdrop" onClick={() => setExpandedCardIndex(null)}></div>
         </div>
       )}
     </div>
