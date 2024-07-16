@@ -23,6 +23,13 @@ const AdminInquiryList = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true); // Loading state
 
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'link'],
+      [{header: '1'}]
+    ],
+  };
+
   useEffect(() => {
     const fetchSubjects = async () => {
       setLoading(true); // Start loading
@@ -209,12 +216,13 @@ const AdminInquiryList = () => {
                           </>
                         ) : (
                           <form onSubmit={handleResponseSubmit}>
-                            <div>
+                            <div className="admin-inquiry-list quill-container">
                               <label>כתיבת תגובה:</label>
                               <ReactQuill
                                 value={response}
                                 onChange={setResponse}
                                 required
+                                modules={modules}
                               />
                             </div>
                             <button type="submit">שליחת תגובה</button>
