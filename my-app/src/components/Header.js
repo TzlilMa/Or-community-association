@@ -78,13 +78,23 @@ const Header = ({ isAdmin }) => {
           <a href="https://www.instagram.com/kheilator?igsh=N2U5bThhYXJ5aHhs" target="_blank" rel="noopener noreferrer">
             <img src={InstagramLogo} alt="Instagram" className="header-icon" />
           </a>
-          <img src={chatIcon} alt="Chat" className="header-icon" onClick={() => handleComponentClick('Chat')}/>
+          {currentUser && (
+            <img src={chatIcon} alt="Chat" className="header-icon" onClick={() => handleComponentClick('Chat')}/>
+          )}
         </div>
-        <div className="greeting">
-          <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')} />
-          <p>שלום {user.firstName}</p>
-        </div>
-        <img src={logoutLogo} alt="exit" className="header-icon logout-icon" onClick={handleSignOut} />
+        {currentUser ? (
+          <>
+            <div className="greeting">
+              <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')} />
+              <p>שלום {user ? user.firstName : 'Loading...'}</p>
+            </div>
+            <img src={logoutLogo} alt="exit" className="header-icon logout-icon" onClick={handleSignOut} />
+          </>
+        ) : (
+          <div className="guest-greeting">
+            <p>שלום אורח</p>
+          </div>
+        )}
         <div className="hamburger-icon" onClick={() => setMenuOpen(!menuOpen)}>
           <span></span>
           <span></span>
