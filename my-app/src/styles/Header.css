@@ -49,7 +49,7 @@ header {
 
 .guest-greeting {
   margin-right: 30px;
-  margin-top: 7%;
+  margin-top: 15px;
   display: flex;
   align-items: center;
   font-size: 16px; /* Adjust font size as needed */
@@ -136,6 +136,10 @@ header {
   .logout-icon {
     display: none; /* Hide logout icon on mobile screens */
   }
+
+  .guest-greeting {
+    display: none; /* Hide guest greeting on mobile screens */
+  }
   
   header {
     flex-direction: column;
@@ -182,5 +186,9 @@ header {
     display: block; /* Show hamburger icon on mobile */
     order: 1;
     margin-right: 0;
+  }
+
+  .hamburger-icon.logged-out {
+    display: none; /* Hide hamburger icon on mobile when logged out */
   }
 }

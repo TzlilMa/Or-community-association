@@ -95,11 +95,13 @@ const Header = ({ isAdmin }) => {
             <p>שלום אורח</p>
           </div>
         )}
-        <div className="hamburger-icon" onClick={() => setMenuOpen(!menuOpen)}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+        {currentUser && (
+          <div className="hamburger-icon" onClick={() => setMenuOpen(!menuOpen)}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        )}
       </div>
     </header>
   );
