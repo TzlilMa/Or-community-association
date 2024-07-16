@@ -1,12 +1,12 @@
 header {
-  width: 100%; /* Ensure the header spans the full width of the viewport */
-  z-index: 9999; /* Set a high z-index to ensure the header is on top of other content */
-  background-color: #ffffff; /* Add background color as needed */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for visual separation */
+  width: 100%;
+  z-index: 9999;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px; /* Add padding to the header */
+  padding: 10px;
 }
 
 .right-section {
@@ -18,20 +18,20 @@ header {
 .left-section {
   display: flex;
   align-items: center;
-  padding-right: 20px; /* Add padding to separate from other elements */
-  margin-left: 20px; /* Add margin to the left of the section */
+  padding-right: 20px;
+  margin-left: 20px;
 }
 
 .social-icons {
   display: flex;
   align-items: center;
-  margin-right: 30px; /* Increase margin for more space */
+  margin-right: 30px;
 }
 
 .header-icon {
-  width: 30px; /* Adjust size as needed */
-  height: 30px; /* Adjust size as needed */
-  margin-right: 15px; /* Increase margin for more space */
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
   cursor: pointer;
 }
 
@@ -39,11 +39,12 @@ header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-right: 30px; /* Increase margin for more space */
+  margin-right: 30px;
+  cursor: pointer;
 }
 
 .greeting p {
-  margin-left: 10px; /* Add margin to the left of the text */
+  margin-left: 10px;
   margin-top: 15%;
 }
 
@@ -52,70 +53,70 @@ header {
   margin-top: 15px;
   display: flex;
   align-items: center;
-  font-size: 16px; /* Adjust font size as needed */
+  font-size: 16px;
 }
 
 .logout-btn {
-  color: #333; /* Change text color to black */
-  background-color: transparent; /* Keep background transparent */
-  border: 2px solid #333; /* Add border */
+  color: #333;
+  background-color: transparent;
+  border: 2px solid #333;
   cursor: pointer;
   font-size: 16px;
-  padding: 8px 16px; /* Add padding for better spacing */
-  transition: all 0.3s ease; /* Add transition for smooth hover effect */
+  padding: 8px 16px;
+  transition: all 0.3s ease;
 }
 
 .logout-btn:hover {
-  background-color: #333; /* Change background color on hover */
-  color: #fff; /* Change text color on hover */
+  background-color: #333;
+  color: #fff;
 }
 
 .nav-btn {
-  color: black; /* Change text color to black */
-  background-color: transparent; /* Keep background transparent */
-  border: 2px solid #ffffff; /* Add border */
+  color: black;
+  background-color: transparent;
+  border: 2px solid #ffffff;
   cursor: pointer;
   font-size: 20px;
   font-family: "Rubik";
-  padding: 8px 16px; /* Add padding for better spacing */
-  margin-bottom: 10px; /* Add margin between buttons */
-  margin-left: 10px; /* Add margin between buttons */
-  transition: all 0.3s ease; /* Add transition for smooth hover effect */
+  padding: 8px 16px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  transition: all 0.3s ease;
   border-radius: 8px;
   background-color: white;
 }
 
 .nav-btn:first-child {
-  margin-left: 0; /* Remove margin from the first button */
+  margin-left: 0;
 }
 
 .nav-btn:hover {
-  background: linear-gradient(
-    90deg,
-    #0267c0 0%,
-    #034b9c 100%
-  ); /* Gradient background color on hover */
-  color: white; /* Change text color on hover */
+  background: linear-gradient(90deg, #0267c0 0%, #034b9c 100%);
+  color: white;
   border-radius: 20px;
 }
 
+.logout-btn-mobile {
+  display: none; /* Hide logout button by default */
+}
+
 .logo-container {
-  display: flex; /* Ensure logo container stays in line */
-  align-items: center; /* Vertically center logo and text */
+  display: flex;
+  align-items: center;
   margin-right: 25px;
 }
 
 .logo-image {
-  width: 100px; /* Adjust size as needed */
-  cursor: pointer; /* Set cursor to pointer when hovering over the logo */
+  width: 80px; /* Adjusted size */
+  cursor: pointer;
 }
 
 .hamburger-icon {
   display: none;
-  width: 30px; /* Adjust size as needed */
-  height: 30px; /* Adjust size as needed */
+  width: 30px;
+  height: 30px;
   cursor: pointer;
-  margin-left: 20px; /* Add margin to separate from the greeting section */
+  margin-left: 20px;
 }
 
 .hamburger-icon span {
@@ -134,40 +135,40 @@ header {
 
 @media (max-width: 768px) {
   .logout-icon {
-    display: none; /* Hide logout icon on mobile screens */
+    display: none;
   }
 
   .guest-greeting {
-    display: none; /* Hide guest greeting on mobile screens */
+    display: none;
   }
   
   header {
     flex-direction: column;
     align-items: center;
-    padding: 10px; /* Reduce padding for smaller screens */
+    padding: 10px;
   }
 
   .logo-container {
     order: 1;
-    margin-bottom: 10px; /* Space between logo and other items */
+    margin-bottom: 10px;
   }
 
   .center-section {
-    width: 100%; /* Make center section full width on smaller screens */
+    width: 100%;
     order: 2;
-    display: none; /* Hide menu by default on mobile */
+    display: none;
   }
 
   .center-section.open {
-    display: flex; /* Show menu when open on mobile */
-    flex-direction: column; /* Stack items vertically */
+    display: flex;
+    flex-direction: column;
   }
 
   .right-section {
     order: 3;
     width: 100%;
     justify-content: center;
-    flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+    flex-wrap: wrap;
   }
 
   .social-icons {
@@ -183,12 +184,31 @@ header {
   }
 
   .hamburger-icon {
-    display: block; /* Show hamburger icon on mobile */
+    display: block;
     order: 1;
     margin-right: 0;
   }
 
   .hamburger-icon.logged-out {
-    display: none; /* Hide hamburger icon on mobile when logged out */
+    display: none;
+  }
+
+  .logout-btn-mobile {
+    display: block; /* Show logout button only on mobile */
+    color: black;
+    background-color: transparent;
+    border: 2px solid #ffffff;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: "Rubik";
+    padding: 8px 16px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    background-color: white;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 0; /* Center the button */
   }
 }

@@ -67,6 +67,7 @@ const Header = ({ isAdmin }) => {
             {isAdmin && (
               <button className="nav-btn" onClick={() => handleComponentClick('Reports')}>דוחות וניהול</button>
             )}
+            <button className="nav-btn logout-btn-mobile" onClick={handleSignOut}>התנתק</button>
           </>
         )}
       </div>
@@ -86,7 +87,7 @@ const Header = ({ isAdmin }) => {
           <>
             <div className="greeting">
               <img src={userLogo} alt="personal area" className="header-icon" onClick={() => handleComponentClick('personalArea')} />
-              <p>שלום {user ? user.firstName : 'Loading...'}</p>
+              <p onClick={() => handleComponentClick('personalArea')}>שלום {user ? user.firstName : 'Loading...'}</p>
             </div>
             <img src={logoutLogo} alt="exit" className="header-icon logout-icon" onClick={handleSignOut} />
           </>
