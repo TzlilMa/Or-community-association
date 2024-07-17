@@ -5,6 +5,7 @@ import Notification from './General/Notification';
 import documentImage from '../assets/document_pic.png';
 import { Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import BulletinBoardAdModal from './General/BulletinBoardAdModal';
 
 const Documents = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -18,6 +19,8 @@ const Documents = () => {
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [linkToRemove, setLinkToRemove] = useState({ subject: '', link: '' });
   const [notification, setNotification] = useState({ message: '', type: '' });
+  const [showAdModal, setShowAdModal] = useState(false);
+  const [defaultAdText, setDefaultAdText] = useState('');
   const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
@@ -108,6 +111,8 @@ const Documents = () => {
       setNewLinkUrl('');
       setSelectedSubject('');
       setNotification({ message: 'הקישור נוסף בהצלחה!', type: 'success' });
+      setDefaultAdText(`מסמך חדש בנושא ${subject} נוסף! בקרו בטפסים ומידע לפרטים.`);
+      setShowAdModal(true);
     } catch (error) {
       console.error("Error adding link: ", error);
     }
@@ -246,6 +251,11 @@ const Documents = () => {
         {notification.message && (
           <Notification message={notification.message} type={notification.type} onClose={() => setNotification({ message: '', type: '' })} />
         )}
+        <BulletinBoardAdModal
+          show={showAdModal}
+          handleClose={() => setShowAdModal(false)}
+          defaultAdText={defaultAdText}
+      />
       </div>
     </div>
   );

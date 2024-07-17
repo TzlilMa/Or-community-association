@@ -23,6 +23,13 @@ const AdminInquiryList = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true); // Loading state
 
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'link'],
+      [{header: '1'}]
+    ],
+  };
+
   useEffect(() => {
     const fetchSubjects = async () => {
       setLoading(true); // Start loading
@@ -44,7 +51,7 @@ const AdminInquiryList = () => {
   }, [currentUser]);
 
   const fetchInquiries = async (subject) => {
-    setLoading(true); // Start loading
+    
     if (currentUser) {
       try {
         const q = query(collection(db, "inquiry"), where("subject", "==", subject.name));
@@ -70,8 +77,6 @@ const AdminInquiryList = () => {
         setSelectedSubject(subject);
       } catch (error) {
         console.error("Error fetching inquiries: ", error);
-      } finally {
-        setLoading(false); // Stop loading
       }
     }
   };
@@ -86,11 +91,18 @@ const AdminInquiryList = () => {
 
   const handleResponseSubmit = async (e) => {
     e.preventDefault();
+    const trimmedResponse = response.trim(); // Trim the response
+
+    if (!trimmedResponse) {
+      setNotification({ message: 'לא ניתן לשלוח תגובה ריקה', type: 'error' });
+      return;
+    }
+
     setLoading(true); // Start loading
     try {
       const inquiryRef = doc(db, "inquiry", selectedInquiry.id);
       await updateDoc(inquiryRef, {
-        response: response,
+        response: trimmedResponse,
         responseDate: new Date().toISOString(), // Add response date
       });
       setNotification({ message: 'תגובה נשלחה בהצלחה', type: 'success' });
@@ -209,12 +221,13 @@ const AdminInquiryList = () => {
                           </>
                         ) : (
                           <form onSubmit={handleResponseSubmit}>
-                            <div>
+                            <div className="admin-inquiry-list quill-container">
                               <label>כתיבת תגובה:</label>
                               <ReactQuill
                                 value={response}
                                 onChange={setResponse}
                                 required
+                                modules={modules}
                               />
                             </div>
                             <button type="submit">שליחת תגובה</button>

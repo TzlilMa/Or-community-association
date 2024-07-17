@@ -206,7 +206,7 @@ const Reports = () => {
 
   return (
     <div className="reports-container">
-                <div className="button-container">
+      <div className="button-container">
         <button className="fetch-users-button" onClick={handleFetchUsersClick}>ניהול משתמשים</button>
       </div>
       {loading ? (
@@ -216,10 +216,10 @@ const Reports = () => {
       ) : (
         <div className="charts-container">
           <div className="chart">
-            {inquiryWithoutResponseData ? <Bar data={inquiryWithoutResponseData} options={optionsWithoutResponse} /> : <p>Loading inquiry data...</p>}
+            {ageData ? <Bar data={ageData} options={optionsAge} /> : <p>Loading age data...</p>}
           </div>
           <div className="chart">
-            {ageData ? <Bar data={ageData} options={optionsAge} /> : <p>Loading age data...</p>}
+            {inquiryWithoutResponseData ? <Bar data={inquiryWithoutResponseData} options={optionsWithoutResponse} /> : <p>Loading inquiry data...</p>}
           </div>
           <div className="chart">
             {inquiryWithResponseData ? <Bar data={inquiryWithResponseData} options={optionsWithResponse} /> : <p>Loading inquiry data...</p>}
