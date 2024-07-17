@@ -87,9 +87,10 @@ const Homepage = () => {
             <InstagramPhotos />
           </div>
         </div>
+        <div className="green-background"></div>
         <div
           ref={(el) => (sectionRefs.current[0] = el)}
-          className="homepage-section homepage-gradient-background-1 manager-section"
+          className="homepage-section manager-section"
         >
           <div className="homepage-content-container">
             <Management isAdmin={showEditButtons} />

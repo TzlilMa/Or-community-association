@@ -7,13 +7,13 @@
   width: 100%;
   text-align: center;
   margin: 20px 0;
+  z-index: 10; /* Ensure it's lower than the modal */
 }
 
 .instagram-photos .photo {
   width: 90%; /* Increase width to 90% of the container */
   max-width: 800px; /* Increase maximum width */
   aspect-ratio: 1; /* Maintain a square aspect ratio */
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,6 +23,9 @@
   padding: 20px; /* Add space inside the frame */
   background-color: #fff; /* Optional: add a background color for better contrast */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for better visibility */
+  position: relative;
+  overflow: hidden;
+  z-index: 11; /* Ensure it's lower than the modal */
 }
 
 .instagram-photos .photo img {

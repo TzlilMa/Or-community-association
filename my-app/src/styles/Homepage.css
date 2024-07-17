@@ -1,30 +1,31 @@
 .homepage {
   position: relative;
-  padding: 1%;
+  padding: 2%;
 }
 
 .homepage-main-content {
-  padding: 1%;
+  padding: 2%;
   text-align: center;
 }
 
 .homepage-section {
-  padding: 1%;
-  margin: 1% 0;
+  padding: 2%;
+  margin: 2% 0;
   opacity: 0;
   transform: translateY(5%);
   transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
 }
 
 .title-container {
-  margin: 1% 0;
+  margin-bottom: 2%;
+  margin-top: -1%;
   text-align: center;
-  padding: 1%;
-  background: linear-gradient(120deg, #e0eafc, #cfdef3);
-  border-radius: 1%;
-  box-shadow: 0 0.4% 0.8% rgba(0, 0, 0, 0.1);
+  background: transparent; /* Remove background color */
+  border-radius: 2%;
+  box-shadow: none; /* Remove box shadow */
   color: #004085;
   font-family: 'Rubik', sans-serif;
+  position: relative;
 }
 
 .title-container h1 {
@@ -34,12 +35,6 @@
   color: #004085;
   text-transform: uppercase;
   letter-spacing: 0.2%;
-}
-
-.title-container p {
-  font-size: 1.5rem;
-  margin: 1% 0 0;
-  color: #004085;
 }
 
 .visible {
@@ -55,9 +50,11 @@
 }
 
 .homepage-content-container {
+  margin-top: -2%;
   display: flex;
   justify-content: space-between;
   gap: 6%;
+  position: relative;
 }
 
 .homepage-card-instegram,
@@ -74,69 +71,48 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 3%;
-  margin-right: 3%;
+  margin: 3%;
 }
 
-.homepage-card-instegram iframe,
-.homepage-card-instegram .instagram-content {
-  width: 100%;
-  height: 100%;
-}
-
-.homepage-card-BulletinBoard .content {
-  padding: 40px;
-  font-size: 1.5rem;
-  line-height: 1.6;
+.homepage-card-Management {
+  width: 90%; /* Make the manager card wider */
 }
 
 .blue-background {
   width: 100%;
-  height: 140px;
+  height: 8%;
   background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
   position: absolute;
   top: 20%;
   z-index: -1;
+  margin-right: -2%;
+}
+
+.green-background {
+  width: 100%;
+  height: 10%;
+  background: linear-gradient(90deg, #05A3BA 0%, #254790 100%);
+  position: absolute;
+  top: 60%;
+  z-index: -1;
+  margin-right: -2%;
 }
 
 .manager-section {
-  width: 100%;
+  width: 70%;
   margin-top: 20px;
-}
-
-/* InstagramPhotos.css */
-.instagram-photos {
+  background: #ffffff;
+  border: 0.1% solid #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90%;
+  margin: auto; /* Center the card */
 }
 
-.instagram-photos .photo {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.instagram-photos .photo img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.instagram-photos .caption {
-  position: absolute;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
-  width: 100%;
-  text-align: center;
-  padding: 5px;
-  box-sizing: border-box;
-}
-
-/* Media Queries for Mobile Support */
 @media (max-width: 768px) {
   .title-container h1 {
     font-size: 2rem;
@@ -149,6 +125,7 @@
   .homepage-content-container {
     flex-direction: column;
     gap: 2%;
+    top: 0; /* Adjust top for mobile */
   }
 
   .homepage-card-instegram,
@@ -159,14 +136,14 @@
     width: 100%;
   }
 
-  .homepage-card-BulletinBoard .content {
-    padding: 20px;
-    font-size: 1.2rem;
-  }
-
   .blue-background {
     top: 25%;
-    height: 100px;
+    height: 10%;
+  }
+
+  .green-background {
+    top: 55%;
+    height: 10%;
   }
 
   .instagram-photos {

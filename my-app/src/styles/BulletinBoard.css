@@ -53,7 +53,6 @@
   background-color: #004085;
 }
 
-/* Modal styling */
 .bulletinboard-modal {
   position: fixed;
   top: 0;
@@ -64,18 +63,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000; /* Ensure the modal is on top */
 }
 
 .bulletinboard-modal-content {
   background: white;
   padding: 2%;
   border-radius: 8px;
-  width: 45%; /* Adjust width as needed */
+  width: 45%;
   text-align: right;
-  font-family: "Rubik", sans-serif; /* Apply Rubik font */
-  direction: rtl; /* Set text direction to right-to-left */
+  font-family: "Rubik", sans-serif;
+  direction: rtl;
   font-size: 1.5rem;
+  z-index: 1001; /* Ensure the modal content is on top */
 }
+
 
 .bulletinboard-underline {
   border: 0;
