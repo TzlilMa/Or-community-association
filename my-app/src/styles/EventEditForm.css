@@ -64,6 +64,7 @@
 .event-edit-form-modal form textarea {
   resize: vertical;
   min-height: 80px;
+  max-height: 150px;
 }
 
 .event-edit-form-actions-container {

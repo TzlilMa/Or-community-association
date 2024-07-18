@@ -82,7 +82,6 @@ const Calendar = () => {
       setNewEvent({ name: '', location: '', description: '', numUsers: 0, time: '' });
       setSelectedDate(null);
       setShowEventForm(false);
-      setNotification({ message: 'Event added successfully!', type: 'success' });
 
       // Show the ad modal with a default ad text
       setDefaultAdText(`אירוע חדש בתאריך ${eventDateTime.toLocaleDateString()} נוסף! בקרו באירועים לפרטים נוספים.`);

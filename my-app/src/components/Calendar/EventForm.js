@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../styles/EventForm.css';
 
 const EventForm = ({ selectedDate, handleAddEvent, newEvent, setNewEvent, setShowEventForm }) => {
+  const [error, setError] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!newEvent.name || !newEvent.location || !newEvent.description || !newEvent.time) {
+      setError('כל השדות הן חובה');
+      return;
+    }
+
+    const [hours, minutes] = newEvent.time.split(':').map(Number);
+    if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours >= 24 || minutes < 0 || minutes >= 60) {
+      setError('אנא הזן זמן חוקי בפורמט 24 שעות.');
+      return;
+    }
+
+    setError('');
+    handleAddEvent();
+  };
+
   return (
     <div className="event-edit-form-overlay">
       <div className="event-edit-form-modal">
         <h3>הוסף אירוע ל-{selectedDate.toLocaleDateString()}</h3>
-        <form>
+        <form onSubmit={handleSubmit}>
+          {error && <p className="error-message">{error}</p>}
           <div>
             <input
               type="text"
@@ -24,8 +45,7 @@ const EventForm = ({ selectedDate, handleAddEvent, newEvent, setNewEvent, setSho
             />
           </div>
           <div>
-            <input
-              type="text"
+            <textarea
               placeholder="הוסף תיאור"
               value={newEvent.description}
               onChange={e => setNewEvent({ ...newEvent, description: e.target.value })}
@@ -40,7 +60,7 @@ const EventForm = ({ selectedDate, handleAddEvent, newEvent, setNewEvent, setSho
             />
           </div>
           <div className="event-edit-form-actions-container">
-            <button type="button" className="event-edit-form-actions" onClick={handleAddEvent}>הוסף אירוע</button>
+            <button type="submit" className="event-edit-form-actions">הוסף אירוע</button>
             <button type="button" className="button-cancel" onClick={() => setNewEvent({ name: '', location: '', description: '', time: '' }, setShowEventForm(false))}>ביטול</button>
           </div>
         </form>
