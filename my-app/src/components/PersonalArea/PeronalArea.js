@@ -273,7 +273,7 @@ const PersonalArea = () => {
               {initialFirstName}, איזה כיף{" "}
               {userDetails.gender === "male" ? "שאתה פה" : "שאת פה"}!
             </h1>
-            <h3>הינה הפרטים שלך כפי שהם מעודכנים במערכת</h3>
+            <h3>הנה הפרטים שלך כפי שהם מעודכנים במערכת</h3>
             <form onSubmit={handleDetailsSubmit} className="personal-area-form">
               <label className="form-label">
                 שם פרטי:

@@ -238,6 +238,11 @@
     align-items: stretch;
   }
 
+  .personal-area-navigation button {
+    width: 100%; /* Make buttons full width */
+    margin: 0.25rem 0; /* Add margin between buttons */
+  }
+
   .personal-area,
   .personal-story-section,
   .change-password-section {
