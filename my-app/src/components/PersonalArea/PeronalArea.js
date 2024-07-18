@@ -40,6 +40,10 @@ const PersonalArea = () => {
   const MAX_CHARS = 5000;
 
   const changePasswordRef = useRef(null); // Ref for the "Change Password" section
+  const personalDetailsRef = useRef(null); // Ref for the "Personal Details" section
+  const personalStoryRef = useRef(null); // Ref for the "Personal Story" section
+
+  const [currentSection, setCurrentSection] = useState('details'); // State to track the current section
 
   const modules = {
     toolbar: [
@@ -153,9 +157,19 @@ const PersonalArea = () => {
   const handleDetailsSubmit = async (event) => {
     event.preventDefault();
 
+    const hebrewRegex = /^[\u0590-\u05FF\s]+$/;
+
     if (!userDetails.firstName.trim() || !userDetails.lastName.trim()) {
       setNotification({
         message: "שם פרטי ושם משפחה הינם שדות חובה",
+        type: "error",
+      });
+      return;
+    }
+
+    if (!hebrewRegex.test(userDetails.firstName) || !hebrewRegex.test(userDetails.lastName)) {
+      setNotification({
+        message: "שם פרטי ושם משפחה חייבים להיות באותיות עבריות בלבד",
         type: "error",
       });
       return;
@@ -250,8 +264,156 @@ const PersonalArea = () => {
     }
   };
 
-  const scrollToChangePassword = () => {
-    changePasswordRef.current.scrollIntoView({ behavior: "smooth" });
+  const renderSection = () => {
+    switch (currentSection) {
+      case 'details':
+        return (
+          <div className="personal-area" ref={personalDetailsRef}>
+            <h1>
+              {initialFirstName}, איזה כיף{" "}
+              {userDetails.gender === "male" ? "שאתה פה" : "שאת פה"}!
+            </h1>
+            <h3>הינה הפרטים שלך כפי שהם מעודכנים במערכת</h3>
+            <form onSubmit={handleDetailsSubmit} className="personal-area-form">
+              <label className="form-label">
+                שם פרטי:
+                <input
+                  type="text"
+                  name="firstName"
+                  value={userDetails.firstName}
+                  onChange={handleDetailsChange}
+                  className="input"
+                />
+              </label>
+              <label className="form-label">
+                שם משפחה:
+                <input
+                  type="text"
+                  name="lastName"
+                  value={userDetails.lastName}
+                  onChange={handleDetailsChange}
+                  className="input"
+                />
+              </label>
+              <label className="form-label">
+                תפנו אליי בלשון:
+                <select
+                  name="gender"
+                  value={userDetails.gender}
+                  onChange={handleDetailsChange}
+                  className="input"
+                >
+                  <option value="male">זכר</option>
+                  <option value="female">נקבה</option>
+                </select>
+              </label>
+              <label className="form-label">
+                כתובת מייל:
+                <input
+                  type="email"
+                  name="email"
+                  value={auth.currentUser.email}
+                  readOnly
+                  className="input read-only"
+                />
+              </label>
+              <div className="btns-personal-area">
+                <button type="submit" className="submit-btn">
+                  שמור
+                </button>
+              </div>
+            </form>
+          </div>
+        );
+      case 'story':
+        return (
+          <div className="personal-story-section quill-container" ref={personalStoryRef}>
+            <h2>הסיפור שלי</h2>
+            <p>
+              קהילת אור מאפשרת לחברי הקהילה לשתף את הסיפור האישי שלהם. כאן זה המקום
+              לעשות זאת!
+            </p>
+            <ReactQuill
+              value={userStory.personalStory}
+              onChange={handleStoryChange}
+              modules={modules}
+            />
+            <div className="story-footer">
+              <p>
+                {storyLength}/{MAX_CHARS}
+              </p>
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  name="isStoryPublic"
+                  checked={userStory.isStoryPublic}
+                  onChange={handleCheckboxChange}
+                  className="checkbox-input"
+                />
+                אני מאשר/ת שהסיפור שלי ישותף עם חברי הקהילה
+              </label>
+            </div>
+            <div className="btns-personal-area">
+              <button
+                type="button"
+                className="submit-btn"
+                onClick={handleStorySubmit}
+              >
+                שמור
+              </button>
+            </div>
+          </div>
+        );
+      case 'password':
+        return (
+          <div className="change-password-section" ref={changePasswordRef}>
+            <h2>שינוי סיסמה</h2>
+            <label className="form-label">
+              סיסמה נוכחית:
+              <input
+                type="password"
+                name="currentPassword"
+                value={passwordData.currentPassword}
+                onChange={handlePasswordChangeInput}
+                className="input"
+              />
+            </label>
+            <label className="form-label">
+              סיסמה חדשה:
+              <input
+                type="password"
+                name="newPassword"
+                value={passwordData.newPassword}
+                onChange={handlePasswordChangeInput}
+                className="input"
+              />
+            </label>
+            {isPasswordTooShort && (
+              <p className="password-length-warning">קצר מידי</p>
+            )}
+            <label className="form-label">
+              אשר סיסמה חדשה:
+              <input
+                type="password"
+                name="confirmPassword"
+                value={passwordData.confirmPassword}
+                onChange={handlePasswordChangeInput}
+                className="input"
+              />
+            </label>
+            {passwordError && <p className="error">{passwordError}</p>}
+            <button
+              type="button"
+              className="change-password-btn"
+              onClick={handleChangePassword}
+            >
+              שנה סיסמה
+            </button>
+          </div>
+        );
+      default:
+        return null;
+    }
   };
 
   if (loading) {
@@ -264,149 +426,27 @@ const PersonalArea = () => {
 
   return (
     <div className="personal-area-container">
-      <div className="personal-area">
-        <h1>
-          {initialFirstName}, איזה כיף{" "}
-          {userDetails.gender === "male" ? "שאתה פה" : "שאת פה"}!
-        </h1>
-        <h3>הינה הפרטים שלך כפי שהם מעודכנים במערכת</h3>
-        <form onSubmit={handleDetailsSubmit} className="personal-area-form">
-          <label className="form-label">
-            שם פרטי:
-            <input
-              type="text"
-              name="firstName"
-              value={userDetails.firstName}
-              onChange={handleDetailsChange}
-              className="input"
-            />
-          </label>
-          <label className="form-label">
-            שם משפחה:
-            <input
-              type="text"
-              name="lastName"
-              value={userDetails.lastName}
-              onChange={handleDetailsChange}
-              className="input"
-            />
-          </label>
-          <label className="form-label">
-            תפנו אליי בלשון:
-            <select
-              name="gender"
-              value={userDetails.gender}
-              onChange={handleDetailsChange}
-              className="input"
-            >
-              <option value="male">זכר</option>
-              <option value="female">נקבה</option>
-            </select>
-          </label>
-          <label className="form-label">
-            כתובת מייל:
-            <input
-              type="email"
-              name="email"
-              value={auth.currentUser.email}
-              readOnly
-              className="input read-only"
-            />
-          </label>
-          <div className="btns-personal-area">
-            <button type="submit" className="submit-btn">
-              שמור
-            </button>
-            <button
-              type="button"
-              className="scroll-change-pwd-btn"
-              onClick={scrollToChangePassword}
-            >
-              שנה סיסמא
-            </button>
-          </div>
-        </form>
-      </div>
-      <div className="personal-story-section quill-container">
-        <h2>הסיפור שלי</h2>
-        <p>
-          קהילת אור מאפשרת לחברי הקהילה לשתף את הסיפור האישי שלהם. כאן זה המקום
-          לעשות זאת!
-        </p>
-        <ReactQuill
-          value={userStory.personalStory}
-          onChange={handleStoryChange}
-          modules={modules}
-        />
-        <div className="story-footer">
-          <p>
-            {storyLength}/{MAX_CHARS}
-          </p>
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              name="isStoryPublic"
-              checked={userStory.isStoryPublic}
-              onChange={handleCheckboxChange}
-              className="checkbox-input"
-            />
-            אני מאשר/ת שהסיפור שלי ישותף עם חברי הקהילה
-          </label>
-        </div>
-        <div className="btns-personal-area">
-          <button
-            type="button"
-            className="submit-btn"
-            onClick={handleStorySubmit}
-          >
-            שמור
-          </button>
-        </div>
-      </div>
-      <div className="change-password-section" ref={changePasswordRef}>
-        <h2>שינוי סיסמה</h2>
-        <label className="form-label">
-          סיסמה נוכחית:
-          <input
-            type="password"
-            name="currentPassword"
-            value={passwordData.currentPassword}
-            onChange={handlePasswordChangeInput}
-            className="input"
-          />
-        </label>
-        <label className="form-label">
-          סיסמה חדשה:
-          <input
-            type="password"
-            name="newPassword"
-            value={passwordData.newPassword}
-            onChange={handlePasswordChangeInput}
-            className="input"
-          />
-        </label>
-        {isPasswordTooShort && (
-          <p className="password-length-warning">קצר מידי</p>
-        )}
-        <label className="form-label">
-          אשר סיסמה חדשה:
-          <input
-            type="password"
-            name="confirmPassword"
-            value={passwordData.confirmPassword}
-            onChange={handlePasswordChangeInput}
-            className="input"
-          />
-        </label>
-        {passwordError && <p className="error">{passwordError}</p>}
+      <div className="personal-area-navigation">
         <button
-          type="button"
-          className="change-password-btn"
-          onClick={handleChangePassword}
+          onClick={() => setCurrentSection('details')}
+          className={currentSection === 'details' ? 'active' : ''}
         >
-          שנה סיסמה
+          הפרטים שלי
+        </button>
+        <button
+          onClick={() => setCurrentSection('story')}
+          className={currentSection === 'story' ? 'active' : ''}
+        >
+          הסיפור שלי
+        </button>
+        <button
+          onClick={() => setCurrentSection('password')}
+          className={currentSection === 'password' ? 'active' : ''}
+        >
+          שינוי סיסמא
         </button>
       </div>
+      {renderSection()}
       {notification.message && (
         <Notification
           message={notification.message}
