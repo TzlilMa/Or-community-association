@@ -47,15 +47,18 @@
 }
 
 .management-manage-button {
-  margin-top: 2%;
-  padding: 1% 2%;
-  background-color: #05a3ba;
+  position: absolute;
+  top: 10px; /* Adjust top position as needed */
+  left: 10px; /* Adjust left position as needed */
+  background-color: #05a3ba; /* Green background color */
   color: white;
   border: none;
   border-radius: 5px;
+  padding: 10px 20px;
   font-size: 1.5rem;
   cursor: pointer;
   font-family: 'Rubik', sans-serif;
+
 }
 
 .management-manage-button:hover {
@@ -169,3 +172,4 @@
   text-align: right;
   color: #05a3ba;
 }
+
