@@ -15,6 +15,7 @@ const RegistrationForm = () => {
   const [gender, setGender] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false); // Loading state
 
   useEffect(() => {
     if (dateOfBirth) {
@@ -32,26 +33,34 @@ const RegistrationForm = () => {
 
   const handleRegistration = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
+
     try {
       const currentDate = new Date();
       const birthDate = new Date(dateOfBirth);
+      const hebrewRegex = /^[\u0590-\u05FF\s]+$/;
+
       if (birthDate >= currentDate) {
         setError("אופס... תאריך הלידה לא תקין");
+        setLoading(false); // Stop loading
         return;
       }
 
       if (password.length < 6) {
         setError("הסיסמא חייבת להכיל לפחות 6 תווים");
+        setLoading(false); // Stop loading
         return;
       }
 
-      if (!firstName.trim() || firstName.length < 2) {
-        setError("שם פרטי הוא שדה חובה - אנא הזן 2 תווים לפחות");
+      if (!firstName.trim() || !hebrewRegex.test(firstName)) {
+        setError("שם פרטי הוא שדה חובה ויכול להכיל רק תווים בעברית");
+        setLoading(false); // Stop loading
         return;
       }
 
-      if (!lastName.trim() || lastName.length < 2) {
-        setError("שם משפחה הוא שדה חובה -  אנא הזן 2 תווים לפחות");
+      if (!lastName.trim() || !hebrewRegex.test(lastName)) {
+        setError("שם משפחה הוא שדה חובה ויכול להכיל רק תווים בעברית");
+        setLoading(false); // Stop loading
         return;
       }
 
@@ -88,8 +97,10 @@ const RegistrationForm = () => {
       setGender("");
       setIsAdmin(false);
       setError(null);
+      setLoading(false); // Stop loading
     } catch (error) {
       setError("אופס... משהו השתבש, אנא נסה שוב");
+      setLoading(false); // Stop loading
     }
   };
 
@@ -141,7 +152,13 @@ const RegistrationForm = () => {
             <option value="male">זכר</option>
             <option value="female">נקבה</option>
           </select>
-          <button type="submit">להרשמה</button>
+          <button type="submit" disabled={loading}>
+            {loading ? (
+              <div className="registred-spinner"></div>
+            ) : (
+              "להרשמה"
+            )}
+          </button>
         </form>
       </div>
     </div>

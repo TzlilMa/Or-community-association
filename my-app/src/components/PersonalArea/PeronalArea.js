@@ -13,6 +13,7 @@ import { useUser } from '../../UserContext'; // Import useUser
 
 const PersonalArea = () => {
   const { user, updateUser } = useUser(); // Use the UserContext
+  const [initialFirstName, setInitialFirstName] = useState(''); // State to store initial first name
   const [userDetails, setUserDetails] = useState({
     firstName: user.firstName,
     lastName: "",
@@ -47,6 +48,10 @@ const PersonalArea = () => {
   };
 
   useEffect(() => {
+    if (user) {
+      setInitialFirstName(user.firstName); // Store the initial first name
+    }
+
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         const fetchUserData = async () => {
@@ -83,7 +88,7 @@ const PersonalArea = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   const handleDetailsChange = (event) => {
     const { name, value } = event.target;
@@ -261,7 +266,7 @@ const PersonalArea = () => {
     <div className="personal-area-container">
       <div className="personal-area">
         <h1>
-          {userDetails.firstName}, איזה כיף{" "}
+          {initialFirstName}, איזה כיף{" "}
           {userDetails.gender === "male" ? "שאתה פה" : "שאת פה"}!
         </h1>
         <h3>הינה הפרטים שלך כפי שהם מעודכנים במערכת</h3>

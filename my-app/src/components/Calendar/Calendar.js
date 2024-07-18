@@ -17,6 +17,7 @@ const Calendar = () => {
   const [newEvent, setNewEvent] = useState({ name: '', location: '', description: '', numUsers: 0, time: '' });
   const [isAdmin, setIsAdmin] = useState(false);
   const [firstName, setFirstName] = useState('');
+  const [gender, setGender] = useState(''); // Add state for gender
   const [showEventForm, setShowEventForm] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
@@ -41,6 +42,7 @@ const Calendar = () => {
           const userData = userQuerySnapshot.docs[0].data();
           setIsAdmin(userData.isAdmin || false);
           setFirstName(userData.firstName || '');
+          setGender(userData.gender || ''); // Set gender
         } else {
           setIsAdmin(false);
         }
@@ -255,7 +257,7 @@ const Calendar = () => {
     <div className="calendar-container">
       <div className="calendar-right-side">
       <div className="registered-events">
-        <h3>{firstName}, הינה האירועים שהינך רשום אליהם:</h3>
+        <h3>{firstName}, הנה האירועים שהינך {gender==='female' ? 'רשומה':'רשום'} אליהם:</h3>
         {userRegisteredEvents.length > 0 ? (
           <ul>
             {userRegisteredEvents.map((event) => (
@@ -265,7 +267,7 @@ const Calendar = () => {
             ))}
           </ul>
         ) : (
-          <p>לא מצאנו אירועים שהינך רשום! זה הזמן לעבור על הלוח אירועים ולהרשם</p>
+          <p>לא מצאנו אירועים! זה הזמן לעבור על הלוח אירועים ולהרשם</p>
         )}
       </div>
       <img src={calendarImage1} alt='' className="calendar-image" />
