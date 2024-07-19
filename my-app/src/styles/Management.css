@@ -82,7 +82,7 @@
   background: white;
   padding: 2%;
   border-radius: 8px;
-  width: 45%;
+  width: 60%;
   text-align: right;
   font-family: "Rubik", sans-serif;
   direction: rtl;
@@ -93,14 +93,13 @@
   border: 0;
   height: 2px;
   background-color: #254790;
-  margin-bottom: 2%;
 }
 
 .management-options {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 4%;
+  margin-bottom: 1%;
 }
 
 .management-options label {
@@ -108,7 +107,6 @@
   align-items: center;
   font-size: 1.5rem;
   color: #000000;
-  margin-bottom: 1rem;
 }
 
 .management-options input[type="radio"] {
@@ -117,13 +115,25 @@
 
 .management-input,
 .management-selection {
-  width: 98%;
+  width: 70%;
   padding: 1%;
-  margin-bottom: 1.5%;
-  border: 1px solid #ccc;
+  margin-bottom: 1%;
   border-radius: 5px;
   font-family: "Rubik", sans-serif;
   font-size: 1.5rem;
+  direction: rtl;
+  text-align: right;
+  color: #000000;
+}
+
+.management-textbox textarea {
+  width: 98%;
+  height: 150px; /* Increase the height of the text area */
+  padding: 1%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: "Rubik", sans-serif;
+  font-size: 1.3rem;
   direction: rtl;
   text-align: right;
   color: #000000;

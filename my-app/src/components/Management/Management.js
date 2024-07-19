@@ -211,7 +211,6 @@ const Management = ({ isAdmin }) => {
               {action === "edit" && (
                 <>
                   <div className="management-selection">
-                    <label>בחר תאריך:</label>
                     <select value={selectedDate} onChange={handleSelectDate} className="management-input">
                       <option value="" disabled>
                         בחר תאריך
