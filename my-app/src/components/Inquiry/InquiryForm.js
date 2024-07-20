@@ -120,11 +120,12 @@ const InquiryForm = () => {
                         {showResponse[inquiry.id] ? "הסתר תגובה" : "הצג תגובה"}
                       </button>
                       {showResponse[inquiry.id] && (
-                        <div className="quill-response">
+                        <div className="response-box">
                           <ReactQuill
                             value={inquiry.response}
                             readOnly={true}
                             theme="bubble"
+                            className="rtl-quill"
                           />
                         </div>
                       )}

@@ -24,10 +24,7 @@ const AdminInquiryList = () => {
   const [loading, setLoading] = useState(true); // Loading state
 
   const modules = {
-    toolbar: [
-      ['bold', 'italic', 'underline', 'link'],
-      [{header: '1'}]
-    ],
+    toolbar: false // Disable toolbar for read-only mode
   };
 
   useEffect(() => {
@@ -51,7 +48,6 @@ const AdminInquiryList = () => {
   }, [currentUser]);
 
   const fetchInquiries = async (subject) => {
-    
     if (currentUser) {
       try {
         const q = query(collection(db, "inquiry"), where("subject", "==", subject.name));
@@ -216,7 +212,16 @@ const AdminInquiryList = () => {
                         <p><strong>תאריך הגשה:</strong> {new Date(selectedInquiry.submitDate).toLocaleString()}</p> {/* Display submit date */} 
                         {selectedInquiry.response ? (
                           <>
-                            <p><strong>תגובה:</strong> {selectedInquiry.response}</p>
+                            <p><strong>תגובה:</strong></p>
+                            <div className="response-box">
+                              <ReactQuill
+                                value={selectedInquiry.response}
+                                readOnly={true}
+                                theme="bubble"
+                                modules={modules}
+                                className="rtl-quill"
+                              />
+                            </div>
                             <p><strong>תאריך תגובה:</strong> {new Date(selectedInquiry.responseDate).toLocaleString()}</p> {/* Display response date */}
                           </>
                         ) : (
@@ -227,7 +232,13 @@ const AdminInquiryList = () => {
                                 value={response}
                                 onChange={setResponse}
                                 required
-                                modules={modules}
+                                modules={{
+                                  toolbar: [
+                                    ['bold', 'italic', 'underline', 'link'],
+                                    [{header: '1'}]
+                                  ],
+                                }}
+                                className="rtl-quill"
                               />
                             </div>
                             <button type="submit">שליחת תגובה</button>

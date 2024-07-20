@@ -90,6 +90,7 @@ body {
 .quill {
   margin: 1rem 0 2rem 0;
 }
+
 .admin-inquiry-list .inquiry-item {
   background: #fff;
   border: 1px solid #ccc;
@@ -122,6 +123,21 @@ body {
 
 .admin-inquiry-detail p {
   font-size: 1.2rem;
+}
+
+.admin-inquiry-detail .response-box {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 1rem;
+  max-height: 200px; /* Adjust the height as needed */
+  overflow-y: auto; /* Add vertical scroll if content overflows */
+  background: #fff; /* Background color for the text box */
+  margin-bottom: 1rem;
+}
+
+.admin-inquiry-detail .rtl-quill .ql-editor {
+  text-align: right; /* Ensure the Quill editor text is right to left */
+  direction: rtl; /* Ensure the Quill editor text is right to left */
 }
 
 .admin-inquiry-detail form label {

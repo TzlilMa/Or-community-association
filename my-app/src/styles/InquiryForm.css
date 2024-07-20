@@ -211,8 +211,8 @@
 }
 
 .ql-editor {
-  padding: 0; /* Remove extra padding */
-  background-color: transparent; /* Make the background transparent */
+  text-align: right; /* Ensure the Quill editor text is right to left */
+  direction: rtl; /* Ensure the Quill editor text is right to left */
   min-height: 50px; /* Ensure the minimum height is the same */
   margin-right: 3%;
 }
