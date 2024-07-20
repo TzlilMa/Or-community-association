@@ -19,7 +19,7 @@ import UserManagement from "./components/Admin/UserManagementAdmin";
 import ChatLogPage from "./components/Admin/ChatLogAdminPage";
 import PrivateRoute from "./PrivateRoute";
 import { auth, db } from "./fireBase/firebase";
-import { getDoc, doc } from "firebase/firestore";
+import { getDoc, doc, onSnapshot } from "firebase/firestore";
 import { UserProvider } from './UserContext';
 import "./App.css";
 
@@ -31,19 +31,27 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.email));
+        const userDocRef = doc(db, "users", user.email);
+        const userDoc = await getDoc(userDocRef);
         if (userDoc.exists() && !userDoc.data().disabled) {
-          console.log('User authenticated', userDoc.data());
           setIsAuthenticated(true);
           setIsAdmin(userDoc.data().isAdmin);
+          
+          const unsubscribeUserDoc = onSnapshot(userDocRef, (docSnapshot) => {
+            if (docSnapshot.exists() && docSnapshot.data().disabled) {
+              setIsAuthenticated(false);
+              setIsAdmin(false);
+              auth.signOut();
+            }
+          });
+
+          return () => unsubscribeUserDoc();
         } else {
-          console.log('User not authenticated or disabled');
           setIsAuthenticated(false);
           setIsAdmin(false);
           await auth.signOut(); // Ensure the user is signed out if they are disabled
         }
       } else {
-        console.log('No user signed in');
         setIsAuthenticated(false);
         setIsAdmin(false);
       }
