@@ -1,13 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  db,
-  doc,
-  getDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-} from "../fireBase/firebase";
+import { db, doc, getDoc } from "../fireBase/firebase";
 import BulletinBoard from "../components/NotificationComponent/BulletinBoard";
 import InstagramPhotos from "../components/InstagramPhotos";
 import Management from "../components/Management/Management";

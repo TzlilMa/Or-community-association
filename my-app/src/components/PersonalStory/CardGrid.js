@@ -4,8 +4,8 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../fireBase/firebase";
 import StoryCard from "./StoryCard";
 import DOMPurify from "dompurify";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import "../../styles/CardGrid.css";
 
 const useQuery = () => {
@@ -22,7 +22,10 @@ const CardGrid = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(collection(db, "users"), where("isStoryPublic", "==", true));
+      const q = query(
+        collection(db, "users"),
+        where("isStoryPublic", "==", true)
+      );
       const querySnapshot = await getDocs(q);
       const cardData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -64,17 +67,30 @@ const CardGrid = () => {
     <div className="card-grid-container">
       <div className="card-grid">
         {cards.map((card, index) => (
-          <StoryCard key={card.userId} card={card} onClick={() => setExpandedCardIndex(index)} />
+          <StoryCard
+            key={card.userId}
+            card={card}
+            onClick={() => setExpandedCardIndex(index)}
+          />
         ))}
       </div>
       {expandedCardIndex !== null && (
         <div className="expanded-card-container">
-          <div className="expanded-backdrop" onClick={() => setExpandedCardIndex(null)}></div>
+          <div
+            className="expanded-backdrop"
+            onClick={() => setExpandedCardIndex(null)}
+          ></div>
           <div className="expanded-card" ref={expandedCardRef}>
-            <h2 className="expanded-card-title">הסיפור של {cards[expandedCardIndex].name}</h2>
+            <h2 className="expanded-card-title">
+              הסיפור של {cards[expandedCardIndex].name}
+            </h2>
             <div className="font-size-controls">
-              <button onClick={decreaseFontSize}><FontAwesomeIcon icon={faMinus} /></button>
-              <button onClick={increaseFontSize}><FontAwesomeIcon icon={faPlus} /></button>
+              <button onClick={decreaseFontSize}>
+                <FontAwesomeIcon icon={faMinus} />
+              </button>
+              <button onClick={increaseFontSize}>
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
             </div>
             <div className="expanded-card-full-view">
               <div
