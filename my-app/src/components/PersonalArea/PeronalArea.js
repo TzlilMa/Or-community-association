@@ -443,7 +443,7 @@ const PersonalArea = () => {
           onClick={() => setCurrentSection('password')}
           className={currentSection === 'password' ? 'active' : ''}
         >
-          שינוי סיסמא
+          שינוי סיסמה
         </button>
       </div>
       {renderSection()}
