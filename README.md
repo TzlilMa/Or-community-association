@@ -53,4 +53,4 @@ Anyone who has experienced a brain injury for any reason.
   - Site administrators can view various reports on user activity and inquiries.
 
 ## Links
-  Live website: https://or-project-da21f.web.app/login
+  Live website: https://or-project-da21f.web.app
